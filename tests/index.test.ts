@@ -1,5 +1,5 @@
 import Telegram from '../src/index'
-import { Message } from 'telegram-typings'
+import { Message } from '@queelag/telegram-types'
 import { HandlerType } from '../src/definitions/enum'
 import { get } from 'lodash'
 import dotenv from 'dotenv'

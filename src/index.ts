@@ -3,7 +3,7 @@ import { HandlerType } from './definitions/enum'
 import Dummy from './modules/dummy'
 import { Express, Request, Response } from 'express'
 import API from './modules/api'
-import { Update } from 'telegram-typings'
+import { Update } from '@queelag/telegram-types'
 import { has, last } from 'lodash'
 import ID from './modules/id'
 import Regex from './modules/regex'
@@ -33,7 +33,7 @@ class Telegram {
   listen(): void {
     this.express.post('/bot' + this.token, (request: Request<any, any, Update>, response: Response) => {
       this.handle(request.body)
-      response.status(200).send('{}')
+      response.status(200).send()
     })
   }
 
@@ -50,10 +50,7 @@ class Telegram {
         handler.middleware(update.message)
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
-        handler = this.findMatchingHandler(
-          this.extrapolateCommand(update.callback_query.data),
-          HandlerType.CALLBACK_QUERY
-        )
+        handler = this.findMatchingHandler(this.extrapolateCommand(update.callback_query.data), HandlerType.CALLBACK_QUERY)
         handler.middleware(update.callback_query)
         break
     }

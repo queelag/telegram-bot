@@ -1,5 +1,5 @@
 import { HandlerType } from './enum'
-import { Message, CallbackQuery } from 'telegram-typings'
+import { Message, CallbackQuery } from '@queelag/telegram-types'
 
 export type HandlerMiddleware = (context: Message | CallbackQuery) => any
 

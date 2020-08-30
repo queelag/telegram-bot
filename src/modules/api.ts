@@ -4,6 +4,7 @@ import tc from './tc'
 import JSONUtils from '../utils/json.utils'
 import FormData from 'form-data'
 import { Protocol } from '../definitions/types'
+import tcp from './tcp'
 
 class API {
   private host: string = ''
@@ -41,11 +42,11 @@ class API {
     })
   }
 
-  async post<T extends object, U>(path: string, body: T = { a: 0 } as T): Promise<U | Error> {
-    return new Promise((resolve) => {
+  async post<T extends object, U>(path: string, body: T = [0] as T): Promise<U | Error> {
+    return new Promise(async (resolve) => {
       let form: FormData | Error, request: ClientRequest, chunks: any
 
-      form = tc<FormData>(() => JSONUtils.toFormData(body))
+      form = await tcp<FormData>(() => JSONUtils.toFormData(body))
       if (form instanceof Error) return resolve(form)
 
       request = this.module.request(this.options(path, 'POST', form.getHeaders()))
@@ -54,9 +55,7 @@ class API {
       request.on('response', (response: IncomingMessage) => {
         response.on('data', (chunk: any) => (chunks += chunk))
         response.on('close', () => {
-          resolve(
-            tc<U>(() => JSON.parse(chunks))
-          )
+          resolve(tc<U>(() => JSON.parse(chunks).result))
         })
       })
 

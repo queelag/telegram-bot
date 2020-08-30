@@ -1,18 +1,18 @@
 import Telegram from '..'
 import Component from '../modules/component'
+import { SetWebhook } from '@queelag/telegram-types'
 
 class Webhook extends Component {
   async set(): Promise<boolean | Error> {
-    return this.telegram.api.post('setWebhook', {
+    return this.telegram.api.post<SetWebhook, boolean>('setWebhook', {
       url: this.url,
-      token: this.telegram.token,
       max_connections: 50,
       allowed_updates: ['message', 'callback_query']
     })
   }
 
   async delete(): Promise<boolean | Error> {
-    return this.telegram.api.post('deleteWebhook')
+    return this.telegram.api.post<null, boolean>('deleteWebhook')
   }
 
   get url(): string {
