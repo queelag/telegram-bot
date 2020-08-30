@@ -3,15 +3,15 @@ import { Message } from 'telegram-typings'
 import { HandlerType } from '../src/definitions/enum'
 import { get } from 'lodash'
 import dotenv from 'dotenv'
-import API from '../src/modules/api'
 import express, { Express } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import { Server } from 'http'
+import Axios, { AxiosInstance } from 'axios'
 
 describe('Telegram', () => {
   let e: Express, s: Server
-  let telegram: Telegram, fake: API, check: boolean
+  let telegram: Telegram, fake: AxiosInstance, check: boolean
 
   beforeAll(async () => {
     dotenv.config()
@@ -21,10 +21,10 @@ describe('Telegram', () => {
     e.use(bodyParser.json())
     await new Promise((r) => (s = e.listen(5000, () => r())))
 
-    telegram = new Telegram(e, process.env.TOKEN, 'localhost')
+    telegram = new Telegram(e, 'localhost', process.env.TOKEN)
     telegram.listen()
 
-    fake = new API('localhost', '/bot' + process.env.TOKEN, 5000, 'http')
+    fake = Axios.create({ baseURL: 'http://localhost:5000/bot' + process.env.TOKEN + '/' })
   })
 
   it('registers handler', () => {

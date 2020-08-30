@@ -3,3 +3,4 @@ database
 dist
 declarations
 .env
+.DS_Store

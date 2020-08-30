@@ -13,6 +13,7 @@ import Poll from './components/poll'
 
 class Telegram {
   public api: API = new API('', '')
+  public hostname: string = ''
   public token: string = ''
 
   public poll: Poll = new Poll(this)
@@ -21,10 +22,8 @@ class Telegram {
 
   private express: Express = {} as any
   private handlers: Handler[] = []
-  private hostname: string = ''
-  private offset: number = 0
 
-  constructor(express: Express, token: string, hostname: string) {
+  constructor(express: Express, hostname: string, token: string) {
     this.api = new API('api.telegram.org', '/bot' + token + '/')
     this.express = express
     this.hostname = hostname
@@ -42,12 +41,12 @@ class Telegram {
     let handler: Handler
 
     switch (true) {
-      case has(update, 'message') && has(update, 'message.text'):
-        handler = this.findMatchingHandler(this.extrapolateCommand(update.message.text), HandlerType.TEXT)
-        handler.middleware(update.message)
-        break
       case has(update, 'message') && has(update, 'message.text') && has(update, 'message.document'):
         handler = this.findMatchingHandler(this.extrapolateCommand(update.message.text), HandlerType.DOCUMENT)
+        handler.middleware(update.message)
+        break
+      case has(update, 'message') && has(update, 'message.text'):
+        handler = this.findMatchingHandler(this.extrapolateCommand(update.message.text), HandlerType.TEXT)
         handler.middleware(update.message)
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
@@ -83,10 +82,6 @@ class Telegram {
 
   private get handlerIds(): string[] {
     return this.handlers.reduce((r: string[], v: Handler) => [...r, v.id], [])
-  }
-
-  get url(): string {
-    return 'https://' + this.hostname + ':' + process.env.PORT + '/bot' + this.token
   }
 }
 

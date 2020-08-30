@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import Regex from './regex'
 
 class ID {
-  static unique(exclude: string[]): string {
+  static unique(exclude: string[] = []): string {
     let id: string
 
     while (true) {

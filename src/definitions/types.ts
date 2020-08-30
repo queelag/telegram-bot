@@ -9,3 +9,5 @@ export type Handler = {
   middleware: HandlerMiddleware
   type: HandlerType
 }
+
+export type Protocol = 'http' | 'https'

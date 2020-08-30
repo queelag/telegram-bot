@@ -29,7 +29,7 @@ class Poll extends Component {
     updates.result.forEach((v: Update) => this.telegram.handle(v))
     this.offset = updates.result.length > 0 ? last(updates.result).update_id + 1 : this.offset
 
-    this.polling && (await this.get())
+    this.polling && setTimeout(() => this.get(), 1000)
   }
 }
 
