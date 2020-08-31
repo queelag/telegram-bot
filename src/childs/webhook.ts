@@ -1,8 +1,8 @@
 import Telegram from '..'
-import Component from '../modules/component'
+import Child from '../modules/child'
 import { SetWebhook } from '@queelag/telegram-types'
 
-class Webhook extends Component {
+class Webhook extends Child {
   async set(): Promise<boolean | Error> {
     return this.telegram.api.post<SetWebhook, boolean>('setWebhook', {
       url: this.url,

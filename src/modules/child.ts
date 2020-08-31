@@ -1,6 +1,6 @@
 import Telegram from '..'
 
-class Component {
+class Child {
   protected telegram: Telegram
 
   constructor(telegram: Telegram) {
@@ -8,4 +8,4 @@ class Component {
   }
 }
 
-export default Component
+export default Child

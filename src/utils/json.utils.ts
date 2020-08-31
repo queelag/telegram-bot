@@ -1,16 +1,13 @@
-import { forEach, reduce, size } from 'lodash'
+import { reduce } from 'lodash'
 import FormData from 'form-data'
 import ID from '../modules/id'
-import FileType from 'file-type'
 import BufferUtils from './buffer.utils'
 
 class JSONUtils {
   static async toFormData(json: object): Promise<FormData> {
-    let form: FormData, keys: string[], values: any[], iteratee: (v: any, k: string) => any
+    let form: FormData, iteratee: (v: any, k: string) => any
 
     form = new FormData()
-    keys = Object.keys(json)
-    values = Object.values(json)
 
     iteratee = async (v: any, k: string) => {
       switch (true) {
@@ -32,10 +29,7 @@ class JSONUtils {
       }
     }
 
-    for (let i = 0; i < size(json); ) {
-      await iteratee(values[i], keys[i])
-      i++
-    }
+    await Promise.all(reduce(json, (r: Promise<any>[], v: any, k: string) => [...r, () => iteratee(v, k)], []))
 
     return form
   }

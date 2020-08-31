@@ -7,17 +7,53 @@ import { Update } from '@queelag/telegram-types'
 import { has, last } from 'lodash'
 import ID from './modules/id'
 import Regex from './modules/regex'
-import Webhook from './components/webhook'
-import Send from './components/send'
-import Poll from './components/poll'
+import Webhook from './childs/webhook'
+import Send from './childs/send'
+import Polling from './childs/polling'
+import Get from './childs/get'
+import Edit from './childs/edit'
+import Delete from './childs/delete'
+import Add from './childs/add'
+import Answer from './childs/answer'
+import Create from './childs/create'
+import Export from './childs/export'
+import Forward from './childs/forward'
+import Kick from './childs/kick'
+import Leave from './childs/leave'
+import Pin from './childs/pin'
+import Promote from './childs/promote'
+import Restrict from './childs/restrict'
+import Set from './childs/set'
+import Stop from './childs/stop'
+import Unban from './childs/unban'
+import Unpin from './childs/unpin'
+import Upload from './childs/upload'
 
 class Telegram {
-  public api: API = new API('', '')
+  public api: API = new API('api.telegram.org', '/bot/')
   public hostname: string = ''
   public token: string = ''
 
-  public poll: Poll = new Poll(this)
+  public add: Add = new Add(this)
+  public answer: Answer = new Answer(this)
+  public create: Create = new Create(this)
+  public delete: Delete = new Delete(this)
+  public edit: Edit = new Edit(this)
+  public export: Export = new Export(this)
+  public forward: Forward = new Forward(this)
+  public get: Get = new Get(this)
+  public kick: Kick = new Kick(this)
+  public leave: Leave = new Leave(this)
+  public pin: Pin = new Pin(this)
+  public polling: Polling = new Polling(this)
+  public promote: Promote = new Promote(this)
+  public restrict: Restrict = new Restrict(this)
   public send: Send = new Send(this)
+  public set: Set = new Set(this)
+  public stop: Stop = new Stop(this)
+  public unban: Unban = new Unban(this)
+  public unpin: Unpin = new Unpin(this)
+  public upload: Upload = new Upload(this)
   public webhook: Webhook = new Webhook(this)
 
   private express: Express = {} as any
@@ -43,6 +79,10 @@ class Telegram {
     switch (true) {
       case has(update, 'message') && has(update, 'message.text') && has(update, 'message.document'):
         handler = this.findMatchingHandler(this.extrapolateCommand(update.message.text), HandlerType.DOCUMENT)
+        handler.middleware(update.message)
+        break
+      case has(update, 'message') && has(update, 'message.text') && has(update, 'message.reply_to_message'):
+        handler = this.findMatchingHandler(this.extrapolateCommand(update.message.text), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message)
         break
       case has(update, 'message') && has(update, 'message.text'):

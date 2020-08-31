@@ -1,8 +1,8 @@
-import Component from '../modules/component'
+import Child from '../modules/child'
 import { Update, GetUpdates } from '@queelag/telegram-types'
 import { last } from 'lodash'
 
-class Poll extends Component {
+class Polling extends Child {
   private offset: number = 0
   private polling: boolean = false
 
@@ -29,8 +29,8 @@ class Poll extends Component {
     updates.forEach((v: Update) => this.telegram.handle(v))
     this.offset = updates.length > 0 ? last(updates).update_id + 1 : this.offset
 
-    this.polling && setTimeout(() => this.get(), 1000)
+    if (this.polling) setTimeout(() => this.get(), 1000)
   }
 }
 
-export default Poll
+export default Polling
