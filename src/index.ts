@@ -1,12 +1,11 @@
-import { Handler, HandlerMiddleware } from './definitions/types'
+import { Handler, HandlerMiddleware, HandlerOptions } from './definitions/types'
 import { HandlerType } from './definitions/enum'
 import Dummy from './modules/dummy'
 import { Express, Request, Response } from 'express'
 import API from './modules/api'
-import { Update } from '@queelag/telegram-types'
-import { has, last } from 'lodash'
+import { Update, Message, CallbackQuery } from '@queelag/telegram-types'
+import { has } from 'lodash'
 import ID from './modules/id'
-import Regex from './modules/regex'
 import Webhook from './childs/webhook'
 import Send from './childs/send'
 import Polling from './childs/polling'
@@ -28,6 +27,7 @@ import Stop from './childs/stop'
 import Unban from './childs/unban'
 import Unpin from './childs/unpin'
 import Upload from './childs/upload'
+import Utils from './childs/utils'
 
 class Telegram {
   public api: API = new API('api.telegram.org', '/bot/')
@@ -45,7 +45,6 @@ class Telegram {
   public kick: Kick = new Kick(this)
   public leave: Leave = new Leave(this)
   public pin: Pin = new Pin(this)
-  public polling: Polling = new Polling(this)
   public promote: Promote = new Promote(this)
   public restrict: Restrict = new Restrict(this)
   public send: Send = new Send(this)
@@ -55,6 +54,9 @@ class Telegram {
   public unpin: Unpin = new Unpin(this)
   public upload: Upload = new Upload(this)
   public webhook: Webhook = new Webhook(this)
+
+  public polling: Polling = new Polling(this)
+  public utils: Utils = new Utils(this)
 
   private express: Express = {} as any
   private handlers: Handler[] = []
@@ -73,30 +75,7 @@ class Telegram {
     })
   }
 
-  handle(update: Update): void {
-    let handler: Handler
-
-    switch (true) {
-      case has(update, 'message') && has(update, 'message.text') && has(update, 'message.document'):
-        handler = this.findMatchingHandler(this.extrapolateCommand(update.message.text), HandlerType.DOCUMENT)
-        handler.middleware(update.message)
-        break
-      case has(update, 'message') && has(update, 'message.text') && has(update, 'message.reply_to_message'):
-        handler = this.findMatchingHandler(this.extrapolateCommand(update.message.text), HandlerType.REPLY_TO_MESSAGE)
-        handler.middleware(update.message)
-        break
-      case has(update, 'message') && has(update, 'message.text'):
-        handler = this.findMatchingHandler(this.extrapolateCommand(update.message.text), HandlerType.TEXT)
-        handler.middleware(update.message)
-        break
-      case has(update, 'callback_query') && has(update, 'callback_query.data'):
-        handler = this.findMatchingHandler(this.extrapolateCommand(update.callback_query.data), HandlerType.CALLBACK_QUERY)
-        handler.middleware(update.callback_query)
-        break
-    }
-  }
-
-  on(command: string, middleware: HandlerMiddleware, type: HandlerType): void {
+  on(command: string, middleware: HandlerMiddleware, type: HandlerType, options?: HandlerOptions): void {
     let handler: Handler, potential: Handler
 
     handler = Dummy.handler
@@ -104,13 +83,36 @@ class Telegram {
     handler.command = command
     handler.middleware = middleware
     handler.type = type
+    handler.options = Object.assign(handler.options, options)
 
     potential = this.findMatchingHandler(handler.command, handler.type)
     potential.id ? (potential.middleware = middleware) : this.handlers.push(handler)
   }
 
-  private extrapolateCommand(string: string): string {
-    return (Regex.command.exec(string) || [''])[0].substring(1)
+  handle(update: Update): void {
+    let handler: Handler
+
+    switch (true) {
+      case has(update, 'message') && has(update, 'message.text') && has(update, 'message.document'):
+        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.DOCUMENT)
+        handler.middleware(update.message as Message)
+        break
+      case has(update, 'message') && has(update, 'message.text') && has(update, 'message.reply_to_message'):
+        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
+        handler.middleware(update.message as Message)
+        break
+      case has(update, 'message') && has(update, 'message.text'):
+        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.TEXT)
+        handler.middleware(update.message as Message)
+        break
+      case has(update, 'callback_query') && has(update, 'callback_query.data'):
+        handler = this.findMatchingHandler(this.utils.findCommand(update.callback_query), HandlerType.CALLBACK_QUERY)
+        handler.middleware(update.callback_query as CallbackQuery)
+
+        if (handler.options.deleteOnCallback) this.delete.message(update.callback_query.message.chat.id, update.callback_query.message.message_id)
+
+        break
+    }
   }
 
   private findMatchingHandler(command: string, type: HandlerType): Handler {

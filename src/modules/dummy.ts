@@ -3,7 +3,7 @@ import { HandlerType } from '../definitions/enum'
 
 class Dummy {
   static get handler(): Handler {
-    return { id: '', command: '', middleware: () => null, type: HandlerType.TEXT }
+    return { id: '', command: '', middleware: () => null, type: HandlerType.TEXT, options: { deleteOnCallback: true } }
   }
 }
 
