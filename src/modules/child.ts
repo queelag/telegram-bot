@@ -1,9 +1,9 @@
-import Core from '../components/core'
+import Telegram from '../components/telegram'
 
 class Child {
-  protected telegram: Core
+  protected telegram: Telegram
 
-  constructor(telegram: Core) {
+  constructor(telegram: Telegram) {
     this.telegram = telegram
   }
 }

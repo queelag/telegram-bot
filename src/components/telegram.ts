@@ -28,11 +28,16 @@ import Unpin from '../childs/unpin'
 import Upload from '../childs/upload'
 import Utils from '../modules/utils'
 import Download from '../childs/download'
+import TelegramStatic from './telegram.static'
 
-class Core {
+class Telegram {
   public api: API
   public hostname: string
   public token: string
+
+  public static api: API = TelegramStatic.api
+  public static hostname: string = TelegramStatic.hostname
+  public static token: string = TelegramStatic.token
 
   public add: Add
   public answer: Answer
@@ -56,8 +61,33 @@ class Core {
   public upload: Upload
   public webhook: Webhook
 
+  public static add: Add = TelegramStatic.add
+  public static answer: Answer = TelegramStatic.answer
+  public static create: Create = TelegramStatic.create
+  public static delete: Delete = TelegramStatic.delete
+  public static download: Download = TelegramStatic.download
+  public static edit: Edit = TelegramStatic.edit
+  public static export: Export = TelegramStatic.export
+  public static forward: Forward = TelegramStatic.forward
+  public static get: Get = TelegramStatic.get
+  public static kick: Kick = TelegramStatic.kick
+  public static leave: Leave = TelegramStatic.leave
+  public static pin: Pin = TelegramStatic.pin
+  public static promote: Promote = TelegramStatic.promote
+  public static restrict: Restrict = TelegramStatic.restrict
+  public static send: Send = TelegramStatic.send
+  public static set: Set = TelegramStatic.set
+  public static stop: Stop = TelegramStatic.stop
+  public static unban: Unban = TelegramStatic.unban
+  public static unpin: Unpin = TelegramStatic.unpin
+  public static upload: Upload = TelegramStatic.upload
+  public static webhook: Webhook = TelegramStatic.webhook
+
   public polling: Polling
   public utils: Utils
+
+  public static polling: Polling = TelegramStatic.polling
+  public static utils: Utils = TelegramStatic.utils
 
   private handlers: Handler[]
 
@@ -153,4 +183,4 @@ class Core {
   }
 }
 
-export default Core
+export default Telegram
