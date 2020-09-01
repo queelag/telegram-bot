@@ -39,6 +39,5 @@ module.exports = {
       })
     ]
   },
-  externals: (context, request, callback) =>
-    /^\.\.?/.test(request) ? callback() : callback(null, 'commonjs ' + request)
+  externals: (context, request, callback) => (/^\.\.?/.test(request) ? callback() : callback(null, 'commonjs ' + request))
 }

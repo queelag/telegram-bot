@@ -23,7 +23,7 @@ class API {
     return new Promise((resolve) => {
       let request: ClientRequest, data: any
 
-      request = this.module.request(this.options(path, 'GET'))
+      request = this.request(this.options(path, 'GET'))
       data = ''
 
       request.on('response', (response: IncomingMessage) => {
@@ -49,7 +49,7 @@ class API {
       form = await tcp<FormData>(() => JSONUtils.toFormData(body))
       if (form instanceof Error) return resolve(form)
 
-      request = this.module.request(this.options(path, 'POST', form.getHeaders()))
+      request = this.request(this.options(path, 'POST', form.getHeaders()))
       chunks = ''
 
       request.on('response', (response: IncomingMessage) => {
@@ -80,14 +80,14 @@ class API {
     }
   }
 
-  get module(): typeof http | typeof https {
+  get request(): (options: RequestOptions | string | URL, callback?: (res: IncomingMessage) => void) => ClientRequest {
     switch (this.protocol) {
       case 'http':
-        return http
+        return http.request
       case 'https':
-        return https
+        return https.request
       default:
-        return https
+        return https.request
     }
   }
 }
