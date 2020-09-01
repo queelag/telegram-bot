@@ -1,6 +1,6 @@
 import Telegram from '../src/index'
 import { Message, Update } from '@queelag/telegram-types'
-import { HandlerType } from '../src/definitions/enum'
+import { HandlerType } from '../src/definitions/enums'
 import { get } from 'lodash'
 import dotenv from 'dotenv'
 import express, { Express, Request, Response } from 'express'
