@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { PromoteChatMember } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Promote extends Child {
   async chatMember(chat: number, user: number, parameters?: Partial<PromoteChatMember>): Promise<boolean | Error> {

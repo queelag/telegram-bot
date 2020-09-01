@@ -1,6 +1,6 @@
-import Child from '../modules/child'
-import { Update, GetUpdates } from '@queelag/telegram-types'
+import { GetUpdates, Update } from '@queelag/telegram-types'
 import { last } from 'lodash'
+import Child from '../modules/child'
 
 class Polling extends Child {
   private offset: number = 0

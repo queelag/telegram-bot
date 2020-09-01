@@ -1,10 +1,9 @@
-import { Message, CallbackQuery, Chat, User } from '@queelag/telegram-types'
-import Regex from './regex'
+import { CallbackQuery, Chat, Message, User } from '@queelag/telegram-types'
 import { has, reduce } from 'lodash'
 import { Context } from '../definitions/types'
-import Child from './child'
+import Regex from './regex'
 
-class Utils extends Child {
+class Utils {
   parseStringParameters<T extends object>(string: string): T {
     return reduce(
       this.removeCommand(string).split(' '),
@@ -77,7 +76,7 @@ class Utils extends Child {
       case has(context, 'from'):
         return context.from
       default:
-        return { id: 0, is_bot: false, first_name: '', username: '' }
+        return { id: 0, is_bot: false, first_name: '' }
     }
   }
 
@@ -102,8 +101,16 @@ class Utils extends Child {
     }
   }
 
+  fakeChat(id: number, type: string, fields?: Partial<Chat>): Chat {
+    return { id: id, type: type, ...fields }
+  }
+
+  fakeUser(id: number, isBot: boolean, firstName: string, fields?: Partial<User>): User {
+    return { id: id, is_bot: isBot, first_name: firstName, ...fields }
+  }
+
   fakeContext(chat: number = 0, username: string = ''): Message {
-    return { message_id: 0, date: 0, chat: { id: chat, type: '' }, from: { id: 0, is_bot: false, first_name: '', username: username } }
+    return { message_id: 0, date: 0, chat: this.fakeChat(chat, ''), from: this.fakeUser(0, false, '', { username: username }) }
   }
 }
 

@@ -1,6 +1,6 @@
-import Child from '../modules/child'
 import { File } from '@queelag/telegram-types'
 import API from '../modules/api'
+import Child from '../modules/child'
 
 class Download extends Child {
   api: API = new API('api.telegram.org', '/file/bot' + this.telegram.token + '/')

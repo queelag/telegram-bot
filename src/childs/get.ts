@@ -1,22 +1,22 @@
-import Child from '../modules/child'
 import {
-  User,
-  File,
-  GetFile,
-  UserProfilePhotos,
-  GetUserProfilePhotos,
+  BotCommand,
   Chat,
+  ChatMember,
+  File,
+  GameHighScore,
   GetChat,
   GetChatAdministrators,
-  GetChatMembersCount,
-  ChatMember,
   GetChatMember,
-  BotCommand,
-  StickerSet,
+  GetChatMembersCount,
+  GetFile,
+  GetGameHighScores,
   GetStickerSet,
-  GameHighScore,
-  GetGameHighScores
+  GetUserProfilePhotos,
+  StickerSet,
+  User,
+  UserProfilePhotos
 } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Get extends Child {
   async me(): Promise<User | Error> {

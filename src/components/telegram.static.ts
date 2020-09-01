@@ -1,27 +1,28 @@
-import API from '../modules/api'
-import Webhook from '../childs/webhook'
-import Send from '../childs/send'
-import Polling from '../childs/polling'
-import Get from '../childs/get'
-import Edit from '../childs/edit'
-import Delete from '../childs/delete'
 import Add from '../childs/add'
 import Answer from '../childs/answer'
 import Create from '../childs/create'
+import Delete from '../childs/delete'
+import Download from '../childs/download'
+import Edit from '../childs/edit'
 import Export from '../childs/export'
 import Forward from '../childs/forward'
+import Get from '../childs/get'
 import Kick from '../childs/kick'
 import Leave from '../childs/leave'
 import Pin from '../childs/pin'
+import Polling from '../childs/polling'
 import Promote from '../childs/promote'
 import Restrict from '../childs/restrict'
+import Send from '../childs/send'
 import Set from '../childs/set'
 import Stop from '../childs/stop'
 import Unban from '../childs/unban'
 import Unpin from '../childs/unpin'
 import Upload from '../childs/upload'
+import Webhook from '../childs/webhook'
+import API from '../modules/api'
+import Builder from '../modules/builder'
 import Utils from '../modules/utils'
-import Download from '../childs/download'
 
 class Telegram {
   public api: API
@@ -49,6 +50,7 @@ const _get: Get = new Get(_telegram as any)
 const _kick: Kick = new Kick(_telegram as any)
 const _leave: Leave = new Leave(_telegram as any)
 const _pin: Pin = new Pin(_telegram as any)
+const _polling: Polling = new Polling(_telegram as any)
 const _promote: Promote = new Promote(_telegram as any)
 const _restrict: Restrict = new Restrict(_telegram as any)
 const _send: Send = new Send(_telegram as any)
@@ -59,8 +61,8 @@ const _unpin: Unpin = new Unpin(_telegram as any)
 const _upload: Upload = new Upload(_telegram as any)
 const _webhook: Webhook = new Webhook(_telegram as any)
 
-const _polling: Polling = new Polling(_telegram as any)
-const _utils: Utils = new Utils(_telegram as any)
+const _builder: Builder = new Builder()
+const _utils: Utils = new Utils()
 
 class TelegramStatic {
   static api: API = _telegram.api
@@ -79,6 +81,7 @@ class TelegramStatic {
   static kick: Kick = _kick
   static leave: Leave = _leave
   static pin: Pin = _pin
+  static polling: Polling = _polling
   static promote: Promote = _promote
   static restrict: Restrict = _restrict
   static send: Send = _send
@@ -89,7 +92,7 @@ class TelegramStatic {
   static upload: Upload = _upload
   static webhook: Webhook = _webhook
 
-  static polling: Polling = _polling
+  static builder: Builder = _builder
   static utils: Utils = _utils
 }
 

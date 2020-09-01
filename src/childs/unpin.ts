@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { UnpinChatMessage } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Unpin extends Child {
   async chatMessage(chat: number): Promise<boolean | Error> {

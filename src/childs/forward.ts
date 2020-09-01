@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { ForwardMessage, Message } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Forward extends Child {
   async message(chat: number, fromChat: number, message: number, parameters?: Partial<ForwardMessage>): Promise<Message | Error> {

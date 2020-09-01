@@ -1,5 +1,5 @@
+import { CallbackQuery, Message } from '@queelag/telegram-types'
 import { HandlerType } from './enums'
-import { Message, CallbackQuery } from '@queelag/telegram-types'
 
 export type Context = Message | CallbackQuery
 

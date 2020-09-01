@@ -1,33 +1,34 @@
-import { Handler, HandlerMiddleware, HandlerOptions } from '../definitions/types'
-import { HandlerType } from '../definitions/enums'
-import Dummy from '../modules/dummy'
-import API from '../modules/api'
-import { Update, Message, CallbackQuery, BotCommand } from '@queelag/telegram-types'
+import { BotCommand, CallbackQuery, Message, Update } from '@queelag/telegram-types'
 import { has } from 'lodash'
-import ID from '../modules/id'
-import Webhook from '../childs/webhook'
-import Send from '../childs/send'
-import Polling from '../childs/polling'
-import Get from '../childs/get'
-import Edit from '../childs/edit'
-import Delete from '../childs/delete'
 import Add from '../childs/add'
 import Answer from '../childs/answer'
 import Create from '../childs/create'
+import Delete from '../childs/delete'
+import Download from '../childs/download'
+import Edit from '../childs/edit'
 import Export from '../childs/export'
 import Forward from '../childs/forward'
+import Get from '../childs/get'
 import Kick from '../childs/kick'
 import Leave from '../childs/leave'
 import Pin from '../childs/pin'
+import Polling from '../childs/polling'
 import Promote from '../childs/promote'
 import Restrict from '../childs/restrict'
+import Send from '../childs/send'
 import Set from '../childs/set'
 import Stop from '../childs/stop'
 import Unban from '../childs/unban'
 import Unpin from '../childs/unpin'
 import Upload from '../childs/upload'
+import Webhook from '../childs/webhook'
+import { HandlerType } from '../definitions/enums'
+import { Handler, HandlerMiddleware, HandlerOptions } from '../definitions/types'
+import API from '../modules/api'
+import Builder from '../modules/builder'
+import Dummy from '../modules/dummy'
+import ID from '../modules/id'
 import Utils from '../modules/utils'
-import Download from '../childs/download'
 import TelegramStatic from './telegram.static'
 
 class Telegram {
@@ -51,6 +52,7 @@ class Telegram {
   public kick: Kick
   public leave: Leave
   public pin: Pin
+  public polling: Polling
   public promote: Promote
   public restrict: Restrict
   public send: Send
@@ -73,6 +75,7 @@ class Telegram {
   public static kick: Kick = TelegramStatic.kick
   public static leave: Leave = TelegramStatic.leave
   public static pin: Pin = TelegramStatic.pin
+  public static polling: Polling = TelegramStatic.polling
   public static promote: Promote = TelegramStatic.promote
   public static restrict: Restrict = TelegramStatic.restrict
   public static send: Send = TelegramStatic.send
@@ -83,10 +86,10 @@ class Telegram {
   public static upload: Upload = TelegramStatic.upload
   public static webhook: Webhook = TelegramStatic.webhook
 
-  public polling: Polling
+  public builder: Builder
   public utils: Utils
 
-  public static polling: Polling = TelegramStatic.polling
+  public static builder: Builder = TelegramStatic.builder
   public static utils: Utils = TelegramStatic.utils
 
   private handlers: Handler[]
@@ -108,6 +111,7 @@ class Telegram {
     this.kick = new Kick(this)
     this.leave = new Leave(this)
     this.pin = new Pin(this)
+    this.polling = new Polling(this)
     this.promote = new Promote(this)
     this.restrict = new Restrict(this)
     this.send = new Send(this)
@@ -118,8 +122,8 @@ class Telegram {
     this.upload = new Upload(this)
     this.webhook = new Webhook(this)
 
-    this.polling = new Polling(this)
-    this.utils = new Utils(this)
+    this.builder = new Builder()
+    this.utils = new Utils()
 
     this.handlers = []
   }

@@ -1,5 +1,5 @@
+import { Message, Poll, StopMessageLiveLocation, StopPoll } from '@queelag/telegram-types'
 import Child from '../modules/child'
-import { StopMessageLiveLocation, Message, StopPoll, Poll } from '@queelag/telegram-types'
 
 class Stop extends Child {
   async messageLiveLocation(parameters: StopMessageLiveLocation): Promise<(Message | boolean) | Error> {

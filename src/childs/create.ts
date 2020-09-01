@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { CreateNewStickerSet } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Create extends Child {
   async stickerSet(user: number, name: string, title: string, emojis: string, parameters: Partial<CreateNewStickerSet>): Promise<boolean | Error> {

@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { UnbanChatMember } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Unban extends Child {
   async chatMember(chat: number, user: number): Promise<boolean | Error> {

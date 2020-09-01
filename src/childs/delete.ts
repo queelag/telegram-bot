@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { DeleteChatPhoto, DeleteChatStickerSet, DeleteMessage, DeleteStickerFromSet } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Delete extends Child {
   async chatPhoto(chat: number): Promise<boolean | Error> {

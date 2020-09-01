@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { LeaveChat } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Leave extends Child {
   async chat(id: number): Promise<boolean | Error> {

@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { SetWebhook } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Webhook extends Child {
   async set(): Promise<boolean | Error> {

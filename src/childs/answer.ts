@@ -1,5 +1,5 @@
+import { AnswerCallbackQuery, AnswerInlineQuery, AnswerPreCheckoutQuery, AnswerShippingQuery, InlineQueryResult } from '@queelag/telegram-types'
 import Child from '../modules/child'
-import { AnswerCallbackQuery, InlineQueryResult, AnswerInlineQuery, AnswerShippingQuery, AnswerPreCheckoutQuery } from '@queelag/telegram-types'
 
 class Answer extends Child {
   async callbackQuery(id: string, parameters?: Partial<AnswerCallbackQuery>): Promise<boolean | Error> {

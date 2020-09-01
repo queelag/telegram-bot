@@ -1,6 +1,6 @@
-import Child from '../modules/child'
 import { File, UploadStickerFile } from '@queelag/telegram-types'
 import { InputFile } from '../definitions/types'
+import Child from '../modules/child'
 
 class Upload extends Child {
   async stickerFile(user: number, png: InputFile): Promise<File | Error> {

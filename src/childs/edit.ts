@@ -1,14 +1,13 @@
-import Child from '../modules/child'
 import {
-  EditMessageText,
-  Message,
   EditMessageCaption,
-  InputMediaVideo,
-  InputMedia,
+  EditMessageLiveLocation,
   EditMessageMedia,
   EditMessageReplyMarkup,
-  EditMessageLiveLocation
+  EditMessageText,
+  InputMedia,
+  Message
 } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Edit extends Child {
   async messageLiveLocation(latitude: number, longitude: number, parameters: Partial<EditMessageLiveLocation>): Promise<Message | Error> {

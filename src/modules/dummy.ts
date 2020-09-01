@@ -1,5 +1,5 @@
-import { Handler } from '../definitions/types'
 import { HandlerType } from '../definitions/enums'
+import { Handler } from '../definitions/types'
 
 class Dummy {
   static get handler(): Handler {

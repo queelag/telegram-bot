@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { ExportChatInviteLink } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Export extends Child {
   async chatInviteLink(chat: number): Promise<string | Error> {

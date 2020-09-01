@@ -1,5 +1,5 @@
-import { reduce } from 'lodash'
 import FormData from 'form-data'
+import { reduce } from 'lodash'
 import ID from '../modules/id'
 import BufferUtils from './buffer.utils'
 

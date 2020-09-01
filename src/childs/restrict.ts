@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { ChatPermissions, RestrictChatMember } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Restrict extends Child {
   async chatMember(chat: number, user: number, permissions: ChatPermissions, parameters?: Partial<RestrictChatMember>): Promise<boolean | Error> {

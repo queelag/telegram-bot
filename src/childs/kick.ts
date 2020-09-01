@@ -1,5 +1,5 @@
-import Child from '../modules/child'
 import { KickChatMember } from '@queelag/telegram-types'
+import Child from '../modules/child'
 
 class Kick extends Child {
   async chatMember(chat: number, user: number, parameters?: Partial<KickChatMember>): Promise<boolean | Error> {

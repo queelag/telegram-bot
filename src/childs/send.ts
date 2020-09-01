@@ -1,32 +1,32 @@
-import Child from '../modules/child'
 import {
-  Message,
   InlineKeyboardButton,
-  SendMessage,
-  SendPhoto,
-  SendDocument,
-  SendAudio,
-  SendVideo,
-  SendAnimation,
-  SendVoice,
-  SendVideoNote,
-  SendMediaGroup,
   InputMediaPhoto,
   InputMediaVideo,
-  SendLocation,
-  SendVenue,
-  SendContact,
-  SendPoll,
-  SendDice,
-  SendChatAction,
-  SendSticker,
   LabeledPrice,
+  Message,
+  SendAnimation,
+  SendAudio,
+  SendChatAction,
+  SendContact,
+  SendDice,
+  SendDocument,
+  SendGame,
   SendInvoice,
-  SendGame
+  SendLocation,
+  SendMediaGroup,
+  SendMessage,
+  SendPhoto,
+  SendPoll,
+  SendSticker,
+  SendVenue,
+  SendVideo,
+  SendVideoNote,
+  SendVoice
 } from '@queelag/telegram-types'
+import { InputFile } from '../definitions/types'
+import Child from '../modules/child'
 import HTMLUtils from '../utils/html.utils'
 import StringUtils from '../utils/string.utils'
-import { InputFile } from '../definitions/types'
 
 class Send extends Child {
   async message(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | Error> {

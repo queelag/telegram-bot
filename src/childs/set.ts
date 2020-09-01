@@ -1,21 +1,21 @@
-import Child from '../modules/child'
 import {
-  SetGameScore,
-  PassportElementError,
-  SetPassportDataErrors,
-  SetStickerSetThumb,
-  SetStickerPositionInSet,
   BotCommand,
-  SetMyCommands,
-  SetChatStickerSet,
-  SetChatDescription,
-  SetChatTitle,
   ChatPermissions,
-  SetChatPermissions,
+  PassportElementError,
   SetChatAdministratorCustomTitle,
-  SetChatPhoto
+  SetChatDescription,
+  SetChatPermissions,
+  SetChatPhoto,
+  SetChatStickerSet,
+  SetChatTitle,
+  SetGameScore,
+  SetMyCommands,
+  SetPassportDataErrors,
+  SetStickerPositionInSet,
+  SetStickerSetThumb
 } from '@queelag/telegram-types'
 import { InputFile } from '../definitions/types'
+import Child from '../modules/child'
 
 class Set extends Child {
   async chatAdministratorCustomTitle(chat: number, user: number, customTitle: string): Promise<boolean | Error> {
