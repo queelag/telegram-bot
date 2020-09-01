@@ -21,35 +21,46 @@ import Unban from '../childs/unban'
 import Unpin from '../childs/unpin'
 import Upload from '../childs/upload'
 import Utils from '../modules/utils'
-import Telegram from './telegram'
 import Download from '../childs/download'
+
+class Telegram {
+  public api: API
+  public hostname: string
+  public token: string
+
+  constructor(token: string, hostname: string = '') {
+    this.api = new API('api.telegram.org', '/bot' + token + '/')
+    this.hostname = hostname
+    this.token = token
+  }
+}
 
 const _telegram: Telegram = new Telegram(process.env.TOKEN || process.env.TELEGRAM_TOKEN, process.env.HOST || process.env.HOSTNAME || process.env.HOST_NAME)
 
-const _add: Add = new Add(_telegram)
-const _answer: Answer = new Answer(_telegram)
-const _create: Create = new Create(_telegram)
-const _delete: Delete = new Delete(_telegram)
-const _download: Download = new Download(_telegram)
-const _edit: Edit = new Edit(_telegram)
-const _export: Export = new Export(_telegram)
-const _forward: Forward = new Forward(_telegram)
-const _get: Get = new Get(_telegram)
-const _kick: Kick = new Kick(_telegram)
-const _leave: Leave = new Leave(_telegram)
-const _pin: Pin = new Pin(_telegram)
-const _promote: Promote = new Promote(_telegram)
-const _restrict: Restrict = new Restrict(_telegram)
-const _send: Send = new Send(_telegram)
-const _set: Set = new Set(_telegram)
-const _stop: Stop = new Stop(_telegram)
-const _unban: Unban = new Unban(_telegram)
-const _unpin: Unpin = new Unpin(_telegram)
-const _upload: Upload = new Upload(_telegram)
-const _webhook: Webhook = new Webhook(_telegram)
+const _add: Add = new Add(_telegram as any)
+const _answer: Answer = new Answer(_telegram as any)
+const _create: Create = new Create(_telegram as any)
+const _delete: Delete = new Delete(_telegram as any)
+const _download: Download = new Download(_telegram as any)
+const _edit: Edit = new Edit(_telegram as any)
+const _export: Export = new Export(_telegram as any)
+const _forward: Forward = new Forward(_telegram as any)
+const _get: Get = new Get(_telegram as any)
+const _kick: Kick = new Kick(_telegram as any)
+const _leave: Leave = new Leave(_telegram as any)
+const _pin: Pin = new Pin(_telegram as any)
+const _promote: Promote = new Promote(_telegram as any)
+const _restrict: Restrict = new Restrict(_telegram as any)
+const _send: Send = new Send(_telegram as any)
+const _set: Set = new Set(_telegram as any)
+const _stop: Stop = new Stop(_telegram as any)
+const _unban: Unban = new Unban(_telegram as any)
+const _unpin: Unpin = new Unpin(_telegram as any)
+const _upload: Upload = new Upload(_telegram as any)
+const _webhook: Webhook = new Webhook(_telegram as any)
 
-const _polling: Polling = new Polling(_telegram)
-const _utils: Utils = new Utils(_telegram)
+const _polling: Polling = new Polling(_telegram as any)
+const _utils: Utils = new Utils(_telegram as any)
 
 class TelegramStatic {
   static api: API = _telegram.api
