@@ -1,9 +1,9 @@
 import Telegram from '../src/index'
-import { Message } from '@queelag/telegram-types'
+import { Message, Update } from '@queelag/telegram-types'
 import { HandlerType } from '../src/definitions/enum'
 import { get } from 'lodash'
 import dotenv from 'dotenv'
-import express, { Express } from 'express'
+import express, { Express, Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import { Server } from 'http'
@@ -21,8 +21,11 @@ describe('Telegram', () => {
     e.use(bodyParser.json())
     await new Promise((r) => (s = e.listen(5000, () => r())))
 
-    telegram = new Telegram(e, 'localhost', process.env.TOKEN)
-    telegram.listen()
+    telegram = new Telegram(process.env.TOKEN, 'localhost')
+    e.post('/bot' + telegram.token, (req: Request<any, any, Update>, res: Response) => {
+      telegram.handle(req.body)
+      res.status(200).send()
+    })
 
     fake = Axios.create({ baseURL: 'http://localhost:5000/bot' + process.env.TOKEN + '/' })
   })
