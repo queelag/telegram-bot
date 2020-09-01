@@ -29,7 +29,7 @@ class API {
       request.on('response', (response: IncomingMessage) => {
         response.on('data', (chunk: any) => chunks.push(chunk))
         response.on('close', () => {
-          if (response.statusCode === 200) {
+          if (response.statusCode !== 200) {
             tc<void>(() => console.error(chunks))
             return resolve(new Error(response.statusMessage))
           }
@@ -60,7 +60,7 @@ class API {
       request.on('response', (response: IncomingMessage) => {
         response.on('data', (chunk: any) => (chunks += chunk))
         response.on('close', () => {
-          if (response.statusCode === 200) {
+          if (response.statusCode !== 200) {
             tc<void>(() => console.error(JSON.parse(chunks)))
             return resolve(new Error(response.statusMessage))
           }
