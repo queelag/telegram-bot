@@ -1,5 +1,5 @@
 import Child from '../modules/child'
-import { Update, Message, CallbackQuery } from '@queelag/telegram-types'
+import { Update, Message, CallbackQuery, Chat, User } from '@queelag/telegram-types'
 import Regex from '../modules/regex'
 import { has, reduce } from 'lodash'
 import { Context } from '../definitions/types'
@@ -44,23 +44,39 @@ class Utils extends Child {
   }
 
   findChatId(context: Context): number {
+    return this.findChat(context).id
+  }
+
+  findChatType(context: Context): string {
+    return this.findChat(context).type
+  }
+
+  findChat(context: Context): Chat {
     switch (true) {
-      case has(context, 'chat.id'):
-        return (context as Message).chat.id
-      case has(context, 'message.chat.id'):
-        return (context as CallbackQuery).message.chat.id
+      case has(context, 'chat'):
+        return (context as Message).chat
+      case has(context, 'message.chat'):
+        return (context as CallbackQuery).message.chat
       default:
-        return 0
+        return { id: 0, type: '' }
     }
   }
 
-  findUsername(context: Context): string {
+  findUser(context: Context): User {
     switch (true) {
-      case has(context, 'from.username'):
-        return context.from.username
+      case has(context, 'from'):
+        return context.from
       default:
-        return ''
+        return { id: 0, is_bot: false, first_name: '', username: '' }
     }
+  }
+
+  findUserId(context: Context): number {
+    return this.findUser(context).id
+  }
+
+  findUsername(context: Context): string {
+    return this.findUser(context).username
   }
 }
 
