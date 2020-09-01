@@ -47,6 +47,10 @@ class Utils extends Child {
     return this.findChat(context).id
   }
 
+  findPrivateChatId(context: Context): number {
+    return this.findUserId(context)
+  }
+
   findChatType(context: Context): string {
     return this.findChat(context).type
   }
