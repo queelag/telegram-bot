@@ -1,9 +1,9 @@
-import http, { ClientRequest, IncomingMessage, RequestOptions, OutgoingHttpHeaders } from 'http'
-import https from 'https'
-import tc from './tc'
-import JSONUtils from '../utils/json.utils'
 import FormData from 'form-data'
+import http, { ClientRequest, IncomingMessage, OutgoingHttpHeaders, RequestOptions } from 'http'
+import https from 'https'
 import { Protocol } from '../definitions/types'
+import JSONUtils from '../utils/json.utils'
+import tc from './tc'
 import tcp from './tcp'
 
 class API {
@@ -29,6 +29,11 @@ class API {
       request.on('response', (response: IncomingMessage) => {
         response.on('data', (chunk: any) => chunks.push(chunk))
         response.on('close', () => {
+          if (response.statusCode === 200) {
+            tc<void>(() => console.error(chunks))
+            return resolve(new Error(response.statusMessage))
+          }
+
           resolve(tc<T>(() => Buffer.concat(chunks) as any))
         })
       })
@@ -55,6 +60,11 @@ class API {
       request.on('response', (response: IncomingMessage) => {
         response.on('data', (chunk: any) => (chunks += chunk))
         response.on('close', () => {
+          if (response.statusCode === 200) {
+            tc<void>(() => console.error(JSON.parse(chunks)))
+            return resolve(new Error(response.statusMessage))
+          }
+
           resolve(tc<U>(() => JSON.parse(chunks).result))
         })
       })
