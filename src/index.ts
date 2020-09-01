@@ -1,7 +1,6 @@
 import { Handler, HandlerMiddleware, HandlerOptions, Context } from './definitions/types'
 import { HandlerType } from './definitions/enum'
 import Dummy from './modules/dummy'
-import { Express, Request, Response } from 'express'
 import API from './modules/api'
 import { Update, Message, CallbackQuery, BotCommand } from '@queelag/telegram-types'
 import { has } from 'lodash'
@@ -28,11 +27,16 @@ import Unban from './childs/unban'
 import Unpin from './childs/unpin'
 import Upload from './childs/upload'
 import Utils from './modules/utils'
+import ENV from './modules/env'
 
 class Telegram {
   public api: API = new API('api.telegram.org', '/bot/')
   public hostname: string = ''
   public token: string = ''
+
+  public static api: API = ENV.api
+  public static hostname: string = ENV.hostname
+  public static token: string = ENV.token
 
   public add: Add = new Add(this)
   public answer: Answer = new Answer(this)
@@ -55,31 +59,46 @@ class Telegram {
   public upload: Upload = new Upload(this)
   public webhook: Webhook = new Webhook(this)
 
-  public polling: Polling = new Polling(this)
-  public static utils: Utils = new Utils()
+  public static add: Add = new Add(ENV)
+  public static answer: Answer = new Answer(ENV)
+  public static create: Create = new Create(ENV)
+  public static delete: Delete = new Delete(ENV)
+  public static edit: Edit = new Edit(ENV)
+  public static export: Export = new Export(ENV)
+  public static forward: Forward = new Forward(ENV)
+  public static get: Get = new Get(ENV)
+  public static kick: Kick = new Kick(ENV)
+  public static leave: Leave = new Leave(ENV)
+  public static pin: Pin = new Pin(ENV)
+  public static promote: Promote = new Promote(ENV)
+  public static restrict: Restrict = new Restrict(ENV)
+  public static send: Send = new Send(ENV)
+  public static set: Set = new Set(ENV)
+  public static stop: Stop = new Stop(ENV)
+  public static unban: Unban = new Unban(ENV)
+  public static unpin: Unpin = new Unpin(ENV)
+  public static upload: Upload = new Upload(ENV)
+  public static webhook: Webhook = new Webhook(ENV)
 
-  private express: Express = {} as any
+  public polling: Polling = new Polling(this)
+  public utils: Utils = new Utils(this)
+
+  public static polling: Polling = new Polling(ENV)
+  public static utils: Utils = new Utils(ENV)
+
   private handlers: Handler[] = []
 
-  constructor(express: Express, hostname: string, token: string) {
+  constructor(token: string, hostname: string = '') {
     this.api = new API('api.telegram.org', '/bot' + token + '/')
-    this.express = express
     this.hostname = hostname
     this.token = token
   }
 
-  listen(): void {
-    this.express.post('/bot' + this.token, (request: Request<any, any, Update>, response: Response) => {
-      this.handle(request.body)
-      response.status(200).send()
-    })
-  }
-
-  on<T extends HandlerOptions>(command: string, middleware: HandlerMiddleware, type: HandlerType, options?: T): void {
+  public on<T extends HandlerOptions>(command: string, middleware: HandlerMiddleware, type: HandlerType, options?: T): void {
     this.register<T>(command, middleware, type, options)
   }
 
-  register<T extends HandlerOptions>(command: string, middleware: HandlerMiddleware, type: HandlerType, options?: T): void {
+  public register<T extends HandlerOptions>(command: string, middleware: HandlerMiddleware, type: HandlerType, options?: T): void {
     let handler: Handler, potential: Handler
 
     handler = Dummy.handler
@@ -93,24 +112,24 @@ class Telegram {
     potential.id ? (potential.middleware = middleware) : this.handlers.push(handler)
   }
 
-  handle(update: Update): void {
+  public handle(update: Update): void {
     let handler: Handler
 
     switch (true) {
       case has(update, 'message') && has(update, 'message.text') && has(update, 'message.document'):
-        handler = this.findMatchingHandler(Telegram.utils.findCommand(update.message), HandlerType.DOCUMENT)
+        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.DOCUMENT)
         handler.middleware(update.message as Message)
         break
       case has(update, 'message') && has(update, 'message.text') && has(update, 'message.reply_to_message'):
-        handler = this.findMatchingHandler(Telegram.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
+        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message as Message)
         break
       case has(update, 'message') && has(update, 'message.text'):
-        handler = this.findMatchingHandler(Telegram.utils.findCommand(update.message), HandlerType.TEXT)
+        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.TEXT)
         handler.middleware(update.message as Message)
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
-        handler = this.findMatchingHandler(Telegram.utils.findCommand(update.callback_query), HandlerType.CALLBACK_QUERY)
+        handler = this.findMatchingHandler(this.utils.findCommand(update.callback_query), HandlerType.CALLBACK_QUERY)
         handler.middleware(update.callback_query as CallbackQuery)
 
         if (handler.options.deleteOnCallback) this.delete.message(update.callback_query.message.chat.id, update.callback_query.message.message_id)
@@ -123,7 +142,7 @@ class Telegram {
     return this.handlers.find((v: Handler) => v.command === command && v.type === type) || Dummy.handler
   }
 
-  get commands(): BotCommand[] {
+  public get commands(): BotCommand[] {
     return this.handlers
       .filter((v: Handler) => v.type === HandlerType.TEXT)
       .reduce((r: BotCommand[], v: Handler) => [...r, { command: v.command, description: v.options.description }], [])

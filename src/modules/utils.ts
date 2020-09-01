@@ -2,8 +2,9 @@ import { Message, CallbackQuery, Chat, User } from '@queelag/telegram-types'
 import Regex from './regex'
 import { has, reduce } from 'lodash'
 import { Context } from '../definitions/types'
+import Child from './child'
 
-class Utils {
+class Utils extends Child {
   parseStringParameters<T extends object>(string: string): T {
     return reduce(
       this.removeCommand(string).split(' '),
