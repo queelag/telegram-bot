@@ -27,16 +27,17 @@ import Unban from './childs/unban'
 import Unpin from './childs/unpin'
 import Upload from './childs/upload'
 import Utils from './modules/utils'
-import ENV from './modules/env'
 
 class Telegram {
+  public static env: Telegram = new Telegram(process.env.TOKEN || process.env.TELEGRAM_TOKEN, process.env.HOST || process.env.HOSTNAME || process.env.HOST_NAME)
+
   public api: API = new API('api.telegram.org', '/bot/')
   public hostname: string = ''
   public token: string = ''
 
-  public static api: API = ENV.api
-  public static hostname: string = ENV.hostname
-  public static token: string = ENV.token
+  public static api: API = Telegram.env.api
+  public static hostname: string = Telegram.env.hostname
+  public static token: string = Telegram.env.token
 
   public add: Add = new Add(this)
   public answer: Answer = new Answer(this)
@@ -59,32 +60,32 @@ class Telegram {
   public upload: Upload = new Upload(this)
   public webhook: Webhook = new Webhook(this)
 
-  public static add: Add = new Add(ENV)
-  public static answer: Answer = new Answer(ENV)
-  public static create: Create = new Create(ENV)
-  public static delete: Delete = new Delete(ENV)
-  public static edit: Edit = new Edit(ENV)
-  public static export: Export = new Export(ENV)
-  public static forward: Forward = new Forward(ENV)
-  public static get: Get = new Get(ENV)
-  public static kick: Kick = new Kick(ENV)
-  public static leave: Leave = new Leave(ENV)
-  public static pin: Pin = new Pin(ENV)
-  public static promote: Promote = new Promote(ENV)
-  public static restrict: Restrict = new Restrict(ENV)
-  public static send: Send = new Send(ENV)
-  public static set: Set = new Set(ENV)
-  public static stop: Stop = new Stop(ENV)
-  public static unban: Unban = new Unban(ENV)
-  public static unpin: Unpin = new Unpin(ENV)
-  public static upload: Upload = new Upload(ENV)
-  public static webhook: Webhook = new Webhook(ENV)
+  public static add: Add = new Add(Telegram.env)
+  public static answer: Answer = new Answer(Telegram.env)
+  public static create: Create = new Create(Telegram.env)
+  public static delete: Delete = new Delete(Telegram.env)
+  public static edit: Edit = new Edit(Telegram.env)
+  public static export: Export = new Export(Telegram.env)
+  public static forward: Forward = new Forward(Telegram.env)
+  public static get: Get = new Get(Telegram.env)
+  public static kick: Kick = new Kick(Telegram.env)
+  public static leave: Leave = new Leave(Telegram.env)
+  public static pin: Pin = new Pin(Telegram.env)
+  public static promote: Promote = new Promote(Telegram.env)
+  public static restrict: Restrict = new Restrict(Telegram.env)
+  public static send: Send = new Send(Telegram.env)
+  public static set: Set = new Set(Telegram.env)
+  public static stop: Stop = new Stop(Telegram.env)
+  public static unban: Unban = new Unban(Telegram.env)
+  public static unpin: Unpin = new Unpin(Telegram.env)
+  public static upload: Upload = new Upload(Telegram.env)
+  public static webhook: Webhook = new Webhook(Telegram.env)
 
   public polling: Polling = new Polling(this)
   public utils: Utils = new Utils(this)
 
-  public static polling: Polling = new Polling(ENV)
-  public static utils: Utils = new Utils(ENV)
+  public static polling: Polling = new Polling(Telegram.env)
+  public static utils: Utils = new Utils(Telegram.env)
 
   private handlers: Handler[] = []
 
