@@ -1,10 +1,9 @@
-import Child from '../modules/child'
-import { Update, Message, CallbackQuery, Chat, User } from '@queelag/telegram-types'
-import Regex from '../modules/regex'
+import { Message, CallbackQuery, Chat, User } from '@queelag/telegram-types'
+import Regex from './regex'
 import { has, reduce } from 'lodash'
 import { Context } from '../definitions/types'
 
-class Utils extends Child {
+class Utils {
   parseStringParameters<T extends object>(string: string): T {
     return reduce(
       this.removeCommand(string).split(' '),
@@ -81,6 +80,19 @@ class Utils extends Child {
 
   findUsername(context: Context): string {
     return this.findUser(context).username
+  }
+
+  findText(context: Context): string {
+    switch (true) {
+      case has(context, 'text'):
+        return (context as Message).text
+      case has(context, 'caption'):
+        return (context as Message).caption
+      case has(context, 'data'):
+        return (context as CallbackQuery).data
+      default:
+        return ''
+    }
   }
 }
 

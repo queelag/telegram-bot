@@ -27,7 +27,7 @@ import Stop from './childs/stop'
 import Unban from './childs/unban'
 import Unpin from './childs/unpin'
 import Upload from './childs/upload'
-import Utils from './childs/utils'
+import Utils from './modules/utils'
 
 class Telegram {
   public api: API = new API('api.telegram.org', '/bot/')
@@ -56,7 +56,7 @@ class Telegram {
   public webhook: Webhook = new Webhook(this)
 
   public polling: Polling = new Polling(this)
-  public utils: Utils = new Utils(this)
+  public static utils: Utils = new Utils()
 
   private express: Express = {} as any
   private handlers: Handler[] = []
@@ -98,19 +98,19 @@ class Telegram {
 
     switch (true) {
       case has(update, 'message') && has(update, 'message.text') && has(update, 'message.document'):
-        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.DOCUMENT)
+        handler = this.findMatchingHandler(Telegram.utils.findCommand(update.message), HandlerType.DOCUMENT)
         handler.middleware(update.message as Message)
         break
       case has(update, 'message') && has(update, 'message.text') && has(update, 'message.reply_to_message'):
-        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
+        handler = this.findMatchingHandler(Telegram.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message as Message)
         break
       case has(update, 'message') && has(update, 'message.text'):
-        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.TEXT)
+        handler = this.findMatchingHandler(Telegram.utils.findCommand(update.message), HandlerType.TEXT)
         handler.middleware(update.message as Message)
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
-        handler = this.findMatchingHandler(this.utils.findCommand(update.callback_query), HandlerType.CALLBACK_QUERY)
+        handler = this.findMatchingHandler(Telegram.utils.findCommand(update.callback_query), HandlerType.CALLBACK_QUERY)
         handler.middleware(update.callback_query as CallbackQuery)
 
         if (handler.options.deleteOnCallback) this.delete.message(update.callback_query.message.chat.id, update.callback_query.message.message_id)
