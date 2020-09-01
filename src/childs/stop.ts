@@ -6,7 +6,7 @@ class Stop extends Child {
     return this.telegram.api.post<StopMessageLiveLocation, Message | boolean>('stopMessageLiveLocation', parameters)
   }
 
-  async poll(chat: number, message: number, parameters?: StopPoll): Promise<Poll | Error> {
+  async poll(chat: number, message: number, parameters?: Partial<StopPoll>): Promise<Poll | Error> {
     return this.telegram.api.post<StopPoll, Poll>('stopPoll', { chat_id: chat, message_id: message, ...parameters })
   }
 }

@@ -11,11 +11,11 @@ import {
 } from '@queelag/telegram-types'
 
 class Edit extends Child {
-  async messageLiveLocation(latitude: number, longitude: number, parameters: EditMessageLiveLocation): Promise<Message | Error> {
+  async messageLiveLocation(latitude: number, longitude: number, parameters: Partial<EditMessageLiveLocation>): Promise<Message | Error> {
     return this.telegram.api.post<EditMessageLiveLocation, Message>('editMessageLiveLocation', { latitude: latitude, longitude: longitude, ...parameters })
   }
 
-  async messageText(text: string, parameters: EditMessageText): Promise<Message | Error> {
+  async messageText(text: string, parameters: Partial<EditMessageText>): Promise<Message | Error> {
     return this.telegram.api.post<EditMessageText, Message>('editMessageText', { text: text, ...parameters })
   }
 
@@ -23,7 +23,7 @@ class Edit extends Child {
     return this.telegram.api.post<EditMessageCaption, Message>('editMessageCaption', parameters)
   }
 
-  async messageMedia(media: InputMedia, parameters: EditMessageMedia): Promise<Message | Error> {
+  async messageMedia(media: InputMedia, parameters: Partial<EditMessageMedia>): Promise<Message | Error> {
     return this.telegram.api.post<EditMessageMedia, Message>('editMessageText', { media: media, ...parameters })
   }
 

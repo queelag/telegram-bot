@@ -53,7 +53,7 @@ class Set extends Child {
     return this.telegram.api.post<SetStickerPositionInSet, boolean>('setStickerPositionInSet', { sticker: sticker, position: position })
   }
 
-  async stickerSetThumb(name: string, user: number, parameters?: SetStickerSetThumb): Promise<boolean | Error> {
+  async stickerSetThumb(name: string, user: number, parameters?: Partial<SetStickerSetThumb>): Promise<boolean | Error> {
     return this.telegram.api.post<SetStickerSetThumb, boolean>('setStickerSetThumb', { name: name, user_id: user, ...parameters })
   }
 
@@ -61,7 +61,7 @@ class Set extends Child {
     return this.telegram.api.post<SetPassportDataErrors, boolean>('setPassportDataErrors', { user_id: user, errors: errors })
   }
 
-  async gameScore(user: number, score: number, parameters?: SetGameScore): Promise<boolean | Error> {
+  async gameScore(user: number, score: number, parameters?: Partial<SetGameScore>): Promise<boolean | Error> {
     return this.telegram.api.post<SetGameScore, boolean>('setGameScore', { user_id: user, score: score, ...parameters })
   }
 }
