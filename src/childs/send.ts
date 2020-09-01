@@ -26,6 +26,7 @@ import {
 } from '@queelag/telegram-types'
 import HTMLUtils from '../utils/html.utils'
 import StringUtils from '../utils/string.utils'
+import { InputFile } from '../definitions/types'
 
 class Send extends Child {
   async message(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | Error> {
@@ -62,7 +63,7 @@ class Send extends Child {
     })
   }
 
-  async card(chat: number, title: string, description: string, sticker?: Buffer, parameters?: Partial<SendMessage>): Promise<Message | Error> {
+  async card(chat: number, title: string, description: string, sticker?: InputFile, parameters?: Partial<SendMessage>): Promise<Message | Error> {
     let response: Message | Error
 
     response = sticker ? await this.sticker(chat, sticker) : null
@@ -71,31 +72,31 @@ class Send extends Child {
     return this.html(chat, [`<b>${title}</b>`, '', description].join('\n'), parameters)
   }
 
-  async photo(chat: number, photo: Buffer, parameters?: Partial<SendPhoto>): Promise<Message | Error> {
+  async photo(chat: number, photo: InputFile, parameters?: Partial<SendPhoto>): Promise<Message | Error> {
     return this.file<SendPhoto, Message>(chat, photo, 'photo', parameters)
   }
 
-  async audio(chat: number, audio: Buffer, parameters?: Partial<SendAudio>): Promise<Message | Error> {
+  async audio(chat: number, audio: InputFile, parameters?: Partial<SendAudio>): Promise<Message | Error> {
     return this.file<SendAudio, Message>(chat, audio, 'audio', parameters)
   }
 
-  async document(chat: number, document: Buffer, parameters?: Partial<SendDocument>): Promise<Message | Error> {
+  async document(chat: number, document: InputFile, parameters?: Partial<SendDocument>): Promise<Message | Error> {
     return this.file<SendDocument, Message>(chat, document, 'document', parameters)
   }
 
-  async video(chat: number, video: Buffer, parameters?: Partial<SendVideo>): Promise<Message | Error> {
+  async video(chat: number, video: InputFile, parameters?: Partial<SendVideo>): Promise<Message | Error> {
     return this.file<SendVideo, Message>(chat, video, 'video', parameters)
   }
 
-  async animation(chat: number, animation: Buffer, parameters?: Partial<SendAnimation>): Promise<Message | Error> {
+  async animation(chat: number, animation: InputFile, parameters?: Partial<SendAnimation>): Promise<Message | Error> {
     return this.file<SendAnimation, Message>(chat, animation, 'animation', parameters)
   }
 
-  async voice(chat: number, voice: Buffer, parameters?: Partial<SendVoice>): Promise<Message | Error> {
+  async voice(chat: number, voice: InputFile, parameters?: Partial<SendVoice>): Promise<Message | Error> {
     return this.file<SendVoice, Message>(chat, voice, 'voice', parameters)
   }
 
-  async videoNote(chat: number, videoNote: Buffer, parameters?: Partial<SendVideoNote>): Promise<Message | Error> {
+  async videoNote(chat: number, videoNote: InputFile, parameters?: Partial<SendVideoNote>): Promise<Message | Error> {
     return this.file<SendVideoNote, Message>(chat, videoNote, 'video_note', parameters)
   }
 
@@ -134,7 +135,7 @@ class Send extends Child {
     return this.telegram.api.post<SendChatAction, boolean>('sendChatAction', { chat_id: chat, action: action })
   }
 
-  async sticker(chat: number, sticker: Buffer, parameters?: Partial<SendSticker>): Promise<Message | Error> {
+  async sticker(chat: number, sticker: InputFile, parameters?: Partial<SendSticker>): Promise<Message | Error> {
     return this.file<SendSticker, Message>(chat, sticker, 'sticker', parameters)
   }
 
@@ -166,10 +167,10 @@ class Send extends Child {
     return this.telegram.api.post<SendGame, Message>('sendGame', { chat_id: chat, game_short_name: gameShortName, ...parameters })
   }
 
-  private file<T extends object, U>(chat: number, buffer: Buffer, type: string, parameters?: Partial<T>): Promise<U | Error> {
+  private file<T extends object, U>(chat: number, data: InputFile, type: string, parameters?: Partial<T>): Promise<U | Error> {
     return this.telegram.api.post<T, U>('send' + StringUtils.startCase(type), {
       chat_id: chat,
-      [type]: buffer,
+      [type]: data,
       ...(parameters as T)
     })
   }

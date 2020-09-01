@@ -19,32 +19,32 @@ class API {
     this.protocol = protocol
   }
 
-  async get<T extends object>(path: string): Promise<T | Error> {
+  async get<T>(path: string): Promise<T | Error> {
     return new Promise((resolve) => {
-      let request: ClientRequest, data: any
+      let request: ClientRequest, chunks: any[]
 
       request = this.request(this.options(path, 'GET'))
-      data = ''
+      chunks = []
 
       request.on('response', (response: IncomingMessage) => {
-        response.on('data', (chunk: any) => (data += chunk))
-        response.on('end', () =>
-          resolve(
-            tc<T>(() => JSON.parse(data))
-          )
-        )
+        response.on('data', (chunk: any) => chunks.push(chunk))
+        response.on('close', () => {
+          resolve(tc<T>(() => Buffer.concat(chunks) as any))
+        })
       })
 
       request.on('error', (error: Error) => {
         console.error(error)
         resolve(error)
       })
+
+      request.end()
     })
   }
 
   async post<T extends object, U>(path: string, body: T = [0] as T): Promise<U | Error> {
     return new Promise(async (resolve) => {
-      let form: FormData | Error, request: ClientRequest, chunks: any
+      let form: FormData | Error, request: ClientRequest, chunks: string
 
       form = await tcp<FormData>(() => JSONUtils.toFormData(body))
       if (form instanceof Error) return resolve(form)

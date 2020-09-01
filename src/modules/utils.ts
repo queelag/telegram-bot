@@ -29,6 +29,12 @@ class Utils extends Child {
     let string: string
 
     switch (true) {
+      case has(context, 'caption'):
+        string = (context as Message).caption
+        break
+      case has(context, 'reply_to_message.text'):
+        string = (context as Message).reply_to_message.text
+        break
       case has(context, 'text'):
         string = (context as Message).text
         break
@@ -40,7 +46,7 @@ class Utils extends Child {
         break
     }
 
-    return (Regex.command.exec(string) || [''])[0].substring(1)
+    return (Regex.command.exec(string.substring(0, 256)) || [''])[0].substring(1)
   }
 
   findChatId(context: Context): number {
@@ -94,6 +100,10 @@ class Utils extends Child {
       default:
         return ''
     }
+  }
+
+  fakeContext(chat: number = 0, username: string = ''): Message {
+    return { message_id: 0, date: 0, chat: { id: chat, type: '' }, from: { id: 0, is_bot: false, first_name: '', username: username } }
   }
 }
 

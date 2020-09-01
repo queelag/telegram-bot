@@ -11,9 +11,6 @@ class JSONUtils {
 
     iteratee = async (v: any, k: string) => {
       switch (true) {
-        case Array.isArray(v):
-          form.append(k, JSON.stringify(v))
-          break
         case Buffer.isBuffer(v):
           form.append(k, v, { filename: ID.unique() + (await BufferUtils.toFileExtension(v)) })
           break

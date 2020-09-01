@@ -19,3 +19,5 @@ export type Handler = {
 }
 
 export type Protocol = 'http' | 'https'
+
+export type InputFile = Buffer | string

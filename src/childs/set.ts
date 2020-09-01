@@ -15,6 +15,7 @@ import {
   SetChatAdministratorCustomTitle,
   SetChatPhoto
 } from '@queelag/telegram-types'
+import { InputFile } from '../definitions/types'
 
 class Set extends Child {
   async chatAdministratorCustomTitle(chat: number, user: number, customTitle: string): Promise<boolean | Error> {
@@ -29,7 +30,7 @@ class Set extends Child {
     return this.telegram.api.post<SetChatPermissions, boolean>('setChatTitle', { chat_id: chat, permissions: permissions })
   }
 
-  async chatPhoto(chat: number, photo: Buffer): Promise<boolean | Error> {
+  async chatPhoto(chat: number, photo: InputFile): Promise<boolean | Error> {
     return this.telegram.api.post<SetChatPhoto, boolean>('setChatPhoto', { chat_id: chat, photo: photo })
   }
 

@@ -1,4 +1,3 @@
-import Telegram from '..'
 import Child from '../modules/child'
 import { SetWebhook } from '@queelag/telegram-types'
 

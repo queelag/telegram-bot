@@ -1,13 +1,13 @@
-const dotenv = require('dotenv')
+require('dotenv').config()
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const Telegram = require('../dist/index').default
+const { TelegramStatic } = require('../dist/index')
 const fs = require('fs')
 
-dotenv.config()
-
-let e, t
+let e, t, ts
 
 e = express()
 e.use(cors())
@@ -16,6 +16,8 @@ e.listen(5000, () => console.log('Listening on port 5000'))
 
 t = new Telegram(process.env.TOKEN, 'localhost')
 t.webhook.delete().then(() => t.polling.start())
+
+ts = TelegramStatic
 
 t.on(
   'start',
@@ -37,6 +39,14 @@ t.on(
     ])
   },
   'TEXT'
+)
+
+t.on(
+  'document',
+  (context) => {
+    console.log(context)
+  },
+  'DOCUMENT'
 )
 
 t.on(
