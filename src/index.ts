@@ -75,22 +75,22 @@ class Telegram {
     })
   }
 
-  on(command: string, middleware: HandlerMiddleware, type: HandlerType, options?: HandlerOptions): void {
+  on<T extends HandlerOptions>(command: string, middleware: HandlerMiddleware, type: HandlerType, options?: T): void {
+    this.register<T>(command, middleware, type, options)
+  }
+
+  register<T extends HandlerOptions>(command: string, middleware: HandlerMiddleware, type: HandlerType, options?: T): void {
     let handler: Handler, potential: Handler
 
     handler = Dummy.handler
     handler.id = ID.unique(this.handlerIds)
     handler.command = command
-    handler.middleware = (context: Context) => this.wrap(context, middleware)
+    handler.middleware = middleware
     handler.type = type
     handler.options = Object.assign(handler.options, options)
 
     potential = this.findMatchingHandler(handler.command, handler.type)
     potential.id ? (potential.middleware = middleware) : this.handlers.push(handler)
-  }
-
-  wrap(context: Context, middleware: HandlerMiddleware): void {
-    middleware(context)
   }
 
   handle(update: Update): void {
@@ -119,14 +119,14 @@ class Telegram {
     }
   }
 
+  private findMatchingHandler(command: string, type: HandlerType): Handler {
+    return this.handlers.find((v: Handler) => v.command === command && v.type === type) || Dummy.handler
+  }
+
   get commands(): BotCommand[] {
     return this.handlers
       .filter((v: Handler) => v.type === HandlerType.TEXT)
-      .reduce((r: BotCommand[], v: Handler) => [...r, { command: v.command, description: '' }], [])
-  }
-
-  private findMatchingHandler(command: string, type: HandlerType): Handler {
-    return this.handlers.find((v: Handler) => v.command === command && v.type === type) || Dummy.handler
+      .reduce((r: BotCommand[], v: Handler) => [...r, { command: v.command, description: v.options.description }], [])
   }
 
   private get handlerIds(): string[] {
