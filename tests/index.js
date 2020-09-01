@@ -14,7 +14,7 @@ e.use(cors())
 e.use(bodyParser.json())
 e.listen(5000, () => console.log('Listening on port 5000'))
 
-t = new Telegram(e, 'localhost', process.env.TOKEN)
+t = new Telegram(process.env.TOKEN, 'localhost')
 t.webhook.delete().then(() => t.polling.start())
 
 t.on(
