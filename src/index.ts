@@ -1,5 +1,5 @@
 import { Handler, HandlerMiddleware, HandlerOptions, Context } from './definitions/types'
-import { HandlerType } from './definitions/enum'
+import { HandlerType } from './definitions/enums'
 import Dummy from './modules/dummy'
 import API from './modules/api'
 import { Update, Message, CallbackQuery, BotCommand } from '@queelag/telegram-types'
@@ -155,3 +155,4 @@ class Telegram {
 }
 
 export default Telegram
+export { HandlerType }
