@@ -1,9 +1,9 @@
-import { Handler, HandlerMiddleware, HandlerOptions } from './definitions/types'
+import { Handler, HandlerMiddleware, HandlerOptions, Context } from './definitions/types'
 import { HandlerType } from './definitions/enum'
 import Dummy from './modules/dummy'
 import { Express, Request, Response } from 'express'
 import API from './modules/api'
-import { Update, Message, CallbackQuery } from '@queelag/telegram-types'
+import { Update, Message, CallbackQuery, BotCommand } from '@queelag/telegram-types'
 import { has } from 'lodash'
 import ID from './modules/id'
 import Webhook from './childs/webhook'
@@ -81,12 +81,16 @@ class Telegram {
     handler = Dummy.handler
     handler.id = ID.unique(this.handlerIds)
     handler.command = command
-    handler.middleware = middleware
+    handler.middleware = (context: Context) => this.wrap(context, middleware)
     handler.type = type
     handler.options = Object.assign(handler.options, options)
 
     potential = this.findMatchingHandler(handler.command, handler.type)
     potential.id ? (potential.middleware = middleware) : this.handlers.push(handler)
+  }
+
+  wrap(context: Context, middleware: HandlerMiddleware): void {
+    middleware(context)
   }
 
   handle(update: Update): void {
@@ -113,6 +117,12 @@ class Telegram {
 
         break
     }
+  }
+
+  get commands(): BotCommand[] {
+    return this.handlers
+      .filter((v: Handler) => v.type === HandlerType.TEXT)
+      .reduce((r: BotCommand[], v: Handler) => [...r, { command: v.command, description: '' }], [])
   }
 
   private findMatchingHandler(command: string, type: HandlerType): Handler {

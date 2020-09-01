@@ -6,7 +6,8 @@ export type Context = Message | CallbackQuery
 export type HandlerMiddleware = (context: Context) => any
 
 export type HandlerOptions = {
-  deleteOnCallback: boolean
+  deleteOnCallback?: boolean
+  description?: string
 }
 
 export type Handler = {
