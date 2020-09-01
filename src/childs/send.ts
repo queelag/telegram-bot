@@ -46,7 +46,7 @@ class Send extends Child {
   async buttons(chat: number, text: string, buttons: InlineKeyboardButton[], parameters?: Partial<SendMessage>): Promise<Message | Error> {
     return this.message(chat, text, {
       reply_markup: {
-        inline_keyboard: [buttons]
+        inline_keyboard: buttons.reduce((r: [InlineKeyboardButton][], v: InlineKeyboardButton) => [...r, [v]], [])
       },
       ...parameters
     })
