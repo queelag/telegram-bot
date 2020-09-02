@@ -28,14 +28,14 @@ class Utils {
     let string: string
 
     switch (true) {
-      case has(context, 'caption'):
-        string = (context as Message).caption
-        break
       case has(context, 'reply_to_message.text'):
         string = (context as Message).reply_to_message.text
         break
       case has(context, 'text'):
         string = (context as Message).text
+        break
+      case has(context, 'caption'):
+        string = (context as Message).caption
         break
       case has(context, 'data'):
         string = (context as CallbackQuery).data
@@ -45,7 +45,7 @@ class Utils {
         break
     }
 
-    return (Regex.command.exec(string.substring(0, 256)) || [''])[0].substring(1)
+    return (Regex.command.exec(string.substring(0, 512)) || [''])[0].substring(1)
   }
 
   findChatId(context: Context): number {

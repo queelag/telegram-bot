@@ -1,4 +1,4 @@
-import { CallbackQuery, Message } from '@queelag/telegram-types'
+import { CallbackQuery, InlineKeyboardButton, Message } from '@queelag/telegram-types'
 import { HandlerType } from './enums'
 
 export type Context = Message | CallbackQuery
@@ -21,3 +21,16 @@ export type Handler = {
 export type Protocol = 'http' | 'https'
 
 export type InputFile = Buffer | string
+
+export type ConfigurationDefault = {
+  buttons: {
+    text: InlineKeyboardButton[]
+    url: InlineKeyboardButton[]
+    login: InlineKeyboardButton[]
+    callback: InlineKeyboardButton[]
+    query: InlineKeyboardButton[]
+    queryCurrentChat: InlineKeyboardButton[]
+    game: InlineKeyboardButton[]
+    pay: InlineKeyboardButton[]
+  }
+}
