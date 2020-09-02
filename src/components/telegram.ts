@@ -150,16 +150,16 @@ class Telegram {
     let handler: Handler
 
     switch (true) {
-      case has(update, 'message') && has(update, 'message.document'):
-        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.DOCUMENT)
-        handler.middleware(update.message as Message)
-        break
       case has(update, 'message') && has(update, 'message.text') && has(update, 'message.reply_to_message'):
         handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message as Message)
         break
       case has(update, 'message') && has(update, 'message.text'):
         handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.TEXT)
+        handler.middleware(update.message as Message)
+        break
+      case has(update, 'message') && has(update, 'message.document'):
+        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.DOCUMENT)
         handler.middleware(update.message as Message)
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
