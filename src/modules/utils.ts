@@ -21,7 +21,7 @@ class Utils {
   }
 
   removeCommand(string: string): string {
-    return string.replace(Regex.command, '').trim()
+    return string.replace(Regex.command_with_username, '').trim()
   }
 
   findCommand(context: Context): string {
