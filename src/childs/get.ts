@@ -35,8 +35,8 @@ class Get extends Child {
     return this.telegram.api.post<GetChat, Chat>('getChat', { chat_id: id })
   }
 
-  async chatAdministrators(id: number): Promise<User[] | Error> {
-    return this.telegram.api.post<GetChatAdministrators, User[]>('getChatAdministrators', { chat_id: id })
+  async chatAdministrators(id: number): Promise<ChatMember[] | Error> {
+    return this.telegram.api.post<GetChatAdministrators, ChatMember[]>('getChatAdministrators', { chat_id: id })
   }
 
   async chatMembersCount(id: number): Promise<number | Error> {
