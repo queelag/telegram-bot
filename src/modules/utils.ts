@@ -12,7 +12,7 @@ class Utils {
 
         splitted = v.split(':')
         key = splitted[0]
-        value = splitted[1]
+        value = splitted.slice(1).join(':')
 
         return { ...r, [key]: value }
       },
