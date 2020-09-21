@@ -23,6 +23,8 @@ import {
   SendVideoNote,
   SendVoice
 } from '@queelag/telegram-types'
+import { get } from 'lodash'
+import telegramConfiguration from '../components/configuration'
 import { InputFile } from '../definitions/types'
 import Child from '../modules/child'
 import HTMLUtils from '../utils/html.utils'
@@ -45,12 +47,16 @@ class Send extends Child {
   }
 
   async buttons(chat: number, text: string, buttons: InlineKeyboardButton[], parameters?: Partial<SendMessage>): Promise<Message | Error> {
-    return this.message(chat, text, {
-      reply_markup: {
-        inline_keyboard: buttons.reduce((r: [InlineKeyboardButton][], v: InlineKeyboardButton) => [...r, [v]], [])
-      },
-      ...parameters
-    })
+    return buttons.length <= 0
+      ? telegramConfiguration.handler.send.buttons.empty()
+      : this.message(chat, text, {
+          reply_markup: {
+            inline_keyboard: buttons
+              .reduce((r: [InlineKeyboardButton][], v: InlineKeyboardButton) => [...r, [v]], [])
+              .concat(get(telegramConfiguration.default.buttons, this.telegram.utils.findButtonsType(buttons), []))
+          },
+          ...parameters
+        })
   }
 
   async prompt(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | Error> {

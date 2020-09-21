@@ -34,3 +34,11 @@ export type ConfigurationDefault = {
     pay: InlineKeyboardButton[]
   }
 }
+
+export type ConfigurationHandler = {
+  send: {
+    buttons: {
+      empty: () => Error
+    }
+  }
+}

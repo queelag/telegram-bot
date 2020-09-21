@@ -1,5 +1,5 @@
 import { HandlerType } from '../definitions/enums'
-import { ConfigurationDefault, Handler } from '../definitions/types'
+import { ConfigurationDefault, ConfigurationHandler, Handler } from '../definitions/types'
 
 class Dummy {
   static get handler(): Handler {
@@ -8,6 +8,10 @@ class Dummy {
 
   static get configurationDefault(): ConfigurationDefault {
     return { buttons: { text: [], url: [], login: [], callback: [], query: [], queryCurrentChat: [], game: [], pay: [] } }
+  }
+
+  static get configurationHandler(): ConfigurationHandler {
+    return { send: { buttons: { empty: () => new Error() } } }
   }
 }
 
