@@ -52,8 +52,8 @@ class Send extends Child {
       : this.message(chat, text, {
           reply_markup: {
             inline_keyboard: buttons
-              .reduce((r: [InlineKeyboardButton][], v: InlineKeyboardButton) => [...r, [v]], [])
               .concat(await get(telegramConfiguration.default.buttons, this.telegram.utils.findButtonsType(buttons), async () => [])(chat))
+              .reduce((r: [InlineKeyboardButton][], v: InlineKeyboardButton) => [...r, [v]], [])
           },
           ...parameters
         })
