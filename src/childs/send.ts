@@ -48,12 +48,12 @@ class Send extends Child {
 
   async buttons(chat: number, text: string, buttons: InlineKeyboardButton[], parameters?: Partial<SendMessage>): Promise<Message | Error> {
     return buttons.length <= 0
-      ? telegramConfiguration.handler.send.buttons.empty()
+      ? telegramConfiguration.handler.send.buttons.empty(chat)
       : this.message(chat, text, {
           reply_markup: {
             inline_keyboard: buttons
               .reduce((r: [InlineKeyboardButton][], v: InlineKeyboardButton) => [...r, [v]], [])
-              .concat(get(telegramConfiguration.default.buttons, this.telegram.utils.findButtonsType(buttons), []))
+              .concat(await get(telegramConfiguration.default.buttons, this.telegram.utils.findButtonsType(buttons), async () => [])(chat))
           },
           ...parameters
         })

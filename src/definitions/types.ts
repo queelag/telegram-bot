@@ -24,21 +24,21 @@ export type InputFile = Buffer | string
 
 export type ConfigurationDefault = {
   buttons: {
-    text: InlineKeyboardButton[]
-    url: InlineKeyboardButton[]
-    login: InlineKeyboardButton[]
-    callback: InlineKeyboardButton[]
-    query: InlineKeyboardButton[]
-    queryCurrentChat: InlineKeyboardButton[]
-    game: InlineKeyboardButton[]
-    pay: InlineKeyboardButton[]
+    text: (chat: number) => Promise<InlineKeyboardButton[]>
+    url: (chat: number) => Promise<InlineKeyboardButton[]>
+    login: (chat: number) => Promise<InlineKeyboardButton[]>
+    callback: (chat: number) => Promise<InlineKeyboardButton[]>
+    query: (chat: number) => Promise<InlineKeyboardButton[]>
+    queryCurrentChat: (chat: number) => Promise<InlineKeyboardButton[]>
+    game: (chat: number) => Promise<InlineKeyboardButton[]>
+    pay: (chat: number) => Promise<InlineKeyboardButton[]>
   }
 }
 
 export type ConfigurationHandler = {
   send: {
     buttons: {
-      empty: () => Error
+      empty: (chat: number) => Error
     }
   }
 }

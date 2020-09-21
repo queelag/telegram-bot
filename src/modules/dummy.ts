@@ -7,7 +7,18 @@ class Dummy {
   }
 
   static get configurationDefault(): ConfigurationDefault {
-    return { buttons: { text: [], url: [], login: [], callback: [], query: [], queryCurrentChat: [], game: [], pay: [] } }
+    return {
+      buttons: {
+        text: async () => [],
+        url: async () => [],
+        login: async () => [],
+        callback: async () => [],
+        query: async () => [],
+        queryCurrentChat: async () => [],
+        game: async () => [],
+        pay: async () => []
+      }
+    }
   }
 
   static get configurationHandler(): ConfigurationHandler {
