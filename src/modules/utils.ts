@@ -114,7 +114,7 @@ class Utils {
   }
 
   findButtonsType(buttons: InlineKeyboardButton[]): string {
-    switch (Object.keys(buttons).filter((v: string) => v !== 'text')[0]) {
+    switch (Object.keys(buttons[0]).filter((v: string) => v !== 'text')[0]) {
       case 'url':
         return 'url'
       case 'login_url':
