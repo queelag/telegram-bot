@@ -29,10 +29,16 @@ class Telegram {
   public hostname: string
   public token: string
 
+  public builder: Builder
+  public utils: Utils
+
   constructor(token: string, hostname: string = '') {
     this.api = new API('api.telegram.org', '/bot' + token + '/')
     this.hostname = hostname
     this.token = token
+
+    this.builder = new Builder()
+    this.utils = new Utils()
   }
 }
 
