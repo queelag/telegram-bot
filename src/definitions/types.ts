@@ -7,6 +7,7 @@ export type HandlerMiddleware = (context: Context) => any
 
 export type HandlerOptions = {
   deleteOnCallback?: boolean
+  deleteOnReply?: boolean
   description?: string
 }
 

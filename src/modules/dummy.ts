@@ -3,7 +3,7 @@ import { ConfigurationDefault, ConfigurationHandler, Handler } from '../definiti
 
 class Dummy {
   static get handler(): Handler {
-    return { id: '', command: '', middleware: () => null, type: HandlerType.TEXT, options: { deleteOnCallback: true, description: '' } }
+    return { id: '', command: '', middleware: () => null, type: HandlerType.TEXT, options: { deleteOnCallback: true, deleteOnReply: true, description: '' } }
   }
 
   static get configurationDefault(): ConfigurationDefault {

@@ -153,6 +153,12 @@ class Telegram {
       case has(update, 'message') && has(update, 'message.reply_to_message.text'):
         handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message as Message)
+
+        if (handler.options.deleteOnReply) {
+          this.delete.message(update.message.chat.id, update.message.message_id)
+          this.delete.message(update.message.chat.id, update.message.reply_to_message.message_id)
+        }
+
         break
       case has(update, 'message') && has(update, 'message.text'):
         handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.TEXT)
