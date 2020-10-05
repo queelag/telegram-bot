@@ -154,7 +154,7 @@ class Telegram {
         handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message as Message)
 
-        if (handler.options.deleteOnReply) {
+        if (handler.id.length > 0 && handler.options.deleteOnReply) {
           this.delete.message(update.message.chat.id, update.message.message_id)
           this.delete.message(update.message.chat.id, update.message.reply_to_message.message_id)
         }
