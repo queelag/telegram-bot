@@ -2,7 +2,7 @@ import { get } from 'lodash'
 
 class HTMLUtils {
   static blacklist: string[] = ['<', '>', '&']
-  static tags: string[] = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'a', 'code', 'pre', '/']
+  static tags: string[] = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'a', 'code', 'pre', '/', '"']
 
   static sanitize(text: string): string {
     let splitted: string[]
