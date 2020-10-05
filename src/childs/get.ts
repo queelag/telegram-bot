@@ -20,7 +20,7 @@ import Child from '../modules/child'
 
 class Get extends Child {
   async me(): Promise<User | Error> {
-    return this.telegram.api.post<null, User>('me')
+    return this.telegram.api.post<null, User>('getMe')
   }
 
   async file(id: string): Promise<File | Error> {
