@@ -109,8 +109,8 @@ class Utils {
     return { id: id, is_bot: isBot, first_name: firstName, ...fields }
   }
 
-  fakeContext(chat: number = 0, username: string = ''): Message {
-    return { message_id: 0, date: 0, chat: this.fakeChat(chat, ''), from: this.fakeUser(0, false, '', { username: username }) }
+  fakeContext(chat: number = 0, user: number = 0): Message {
+    return { message_id: 0, date: 0, chat: this.fakeChat(chat, ''), from: this.fakeUser(user, false, '') }
   }
 
   findButtonsType(buttons: InlineKeyboardButton[]): string {
