@@ -76,12 +76,16 @@ class Utils {
       case has(context, 'from'):
         return context.from
       default:
-        return { id: 0, is_bot: false, first_name: '' }
+        return { id: 0, is_bot: false, first_name: '', username: '' }
     }
   }
 
   findUserId(context: Context): number {
     return this.findUser(context).id
+  }
+
+  findUserFirstName(context: Context): string {
+    return this.findUser(context).first_name
   }
 
   findUsername(context: Context): string {
