@@ -155,7 +155,11 @@ class Telegram {
         handler.middleware(update.message as Message)
 
         if (handler.id.length > 0 && handler.options.deleteOnReply) {
-          this.edit.messageText('/' + handler.command, { chat_id: update.message.chat.id, message_id: update.message.reply_to_message.message_id })
+          this.edit.messageText('/' + handler.command, {
+            chat_id: update.message.chat.id,
+            message_id: update.message.reply_to_message.message_id,
+            reply_markup: { inline_keyboard: [] }
+          })
         }
 
         break
