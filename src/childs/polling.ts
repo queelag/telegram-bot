@@ -15,7 +15,7 @@ class Polling extends Child {
     this.polling = false
   }
 
-  private async get(): Promise<void> {
+  private async get(ms: number = 1000): Promise<void> {
     let body: any, updates: Update[] | Error
 
     body = {
@@ -29,7 +29,7 @@ class Polling extends Child {
     updates.forEach((v: Update) => this.telegram.handle(v))
     this.offset = updates.length > 0 ? last(updates).update_id + 1 : this.offset
 
-    if (this.polling) setTimeout(() => this.get(), 1000)
+    if (this.polling) setTimeout(() => this.get(), ms)
   }
 }
 
