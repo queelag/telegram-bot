@@ -14,6 +14,7 @@ import Leave from '../childs/leave'
 import Pin from '../childs/pin'
 import Polling from '../childs/polling'
 import Promote from '../childs/promote'
+import Reply from '../childs/reply'
 import Restrict from '../childs/restrict'
 import Send from '../childs/send'
 import Set from '../childs/set'
@@ -54,6 +55,7 @@ class Telegram {
   public pin: Pin
   public polling: Polling
   public promote: Promote
+  public reply: Reply
   public restrict: Restrict
   public send: Send
   public set: Set
@@ -77,6 +79,7 @@ class Telegram {
   public static pin: Pin = TelegramStatic.pin
   public static polling: Polling = TelegramStatic.polling
   public static promote: Promote = TelegramStatic.promote
+  public static reply: Reply = TelegramStatic.reply
   public static restrict: Restrict = TelegramStatic.restrict
   public static send: Send = TelegramStatic.send
   public static set: Set = TelegramStatic.set
@@ -113,6 +116,7 @@ class Telegram {
     this.pin = new Pin(this)
     this.polling = new Polling(this)
     this.promote = new Promote(this)
+    this.reply = new Reply(this)
     this.restrict = new Restrict(this)
     this.send = new Send(this)
     this.set = new Set(this)

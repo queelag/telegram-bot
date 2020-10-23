@@ -4,6 +4,10 @@ import { Context } from '../definitions/types'
 import Regex from './regex'
 
 class Utils {
+  parseReplyData<T extends object>(string: string): T {
+    return JSON.parse(Buffer.from(string, 'base64').toString('utf8'))
+  }
+
   parseStringParameters<T extends object>(string: string): T {
     return reduce(
       this.removeCommand(string).split(' '),
