@@ -38,11 +38,15 @@ class Utils {
     return '/' + command + ' ' + this.toStringParameters(parameters)
   }
 
+  findCommand(string: string): string {
+    return (Regex.command.exec(string.substring(0, 512)) || [''])[0].substring(1)
+  }
+
   removeCommand(string: string): string {
     return string.replace(Regex.command_with_username, '').trim()
   }
 
-  findCommand(context: Context): string {
+  findCommandByContext(context: Context): string {
     let string: string
 
     switch (true) {
@@ -63,7 +67,7 @@ class Utils {
         break
     }
 
-    return (Regex.command.exec(string.substring(0, 512)) || [''])[0].substring(1)
+    return this.findCommand(string)
   }
 
   findChatId(context: Context): number {

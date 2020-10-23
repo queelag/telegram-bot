@@ -6,7 +6,12 @@ class SendPrivate extends Child {
     return this.telegram.send.buttons(
       chats[1],
       text,
-      buttons.map((v: InlineKeyboardButton) => this.telegram.builder.button.callback(v.text, v.callback_data, { c: chats[0] })),
+      buttons.map((v: InlineKeyboardButton) =>
+        this.telegram.builder.button.callback(v.text, this.telegram.utils.findCommand(v.callback_data), {
+          ...this.telegram.utils.parseStringParameters(v.callback_data),
+          c: chats[0]
+        })
+      ),
       parameters
     )
   }
