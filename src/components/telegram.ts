@@ -151,7 +151,7 @@ class Telegram {
 
     switch (true) {
       case has(update, 'message') && has(update, 'message.reply_to_message.text'):
-        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.REPLY_TO_MESSAGE)
+        handler = this.findMatchingHandler(this.utils.findCommandByContext(update.message), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message as Message)
 
         if (handler.id.length > 0 && handler.options.deleteOnReply) {
@@ -160,18 +160,18 @@ class Telegram {
 
         break
       case has(update, 'message') && has(update, 'message.text'):
-        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.TEXT)
+        handler = this.findMatchingHandler(this.utils.findCommandByContext(update.message), HandlerType.TEXT)
         handler.middleware(update.message as Message)
         break
       case has(update, 'message') && has(update, 'message.document') && has(update, 'message.caption'):
-        handler = this.findMatchingHandler(this.utils.findCommand(update.message), HandlerType.DOCUMENT)
+        handler = this.findMatchingHandler(this.utils.findCommandByContext(update.message), HandlerType.DOCUMENT)
         handler.middleware(update.message as Message)
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
         parameters = this.utils.parseStringParameters(update.callback_query.data)
         update.callback_query.message.chat.id = has(parameters, 'c') ? parameters.c : update.callback_query.message.chat.id
 
-        handler = this.findMatchingHandler(this.utils.findCommand(update.callback_query), HandlerType.CALLBACK_QUERY)
+        handler = this.findMatchingHandler(this.utils.findCommandByContext(update.callback_query), HandlerType.CALLBACK_QUERY)
         handler.middleware(update.callback_query as CallbackQuery)
 
         if (handler.options.deleteOnCallback) this.delete.message(update.callback_query.message.chat.id, update.callback_query.message.message_id)
