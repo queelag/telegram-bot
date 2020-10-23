@@ -8,16 +8,34 @@ class Utils {
     return reduce(
       this.removeCommand(string).split(' '),
       (r: T, v: string) => {
-        let splitted: string[], key: string, value: string
+        let splitted: string[], key: string, value: any
 
         splitted = v.split(':')
         key = splitted[0]
         value = splitted.slice(1).join(':')
 
+        switch (true) {
+          case Regex.number.test(value):
+            value = parseFloat(value)
+            break
+          // case Regex.array.test(value):
+          // case Regex.object.test(value):
+          //   value = JSON.parse(value)
+          //   break
+        }
+
         return { ...r, [key]: value }
       },
       {} as T
     )
+  }
+
+  toStringParameters<T extends object>(parameters: T = {} as T): string {
+    return reduce(parameters, (r: string[], v: any, k: string) => [...r, `${k}:${v}`], []).join(' ')
+  }
+
+  toCallbackData<T extends object>(command: string, parameters?: T): string {
+    return '/' + command + ' ' + this.toStringParameters(parameters)
   }
 
   removeCommand(string: string): string {

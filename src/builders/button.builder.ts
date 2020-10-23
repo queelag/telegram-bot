@@ -1,4 +1,5 @@
 import { InlineKeyboardButton, LoginUrl } from '@queelag/telegram-types'
+import { reduce } from 'lodash'
 
 class ButtonBuilder {
   text(text: string): InlineKeyboardButton {
@@ -13,8 +14,8 @@ class ButtonBuilder {
     return { text: text, login_url: { url: url, ...fields } }
   }
 
-  callback(text: string, data: string): InlineKeyboardButton {
-    return { text: text, callback_data: data }
+  callback<T extends object>(text: string, command: string, parameters?: T): InlineKeyboardButton {
+    return { text: text, callback_data: this.toCallbackData(command, parameters) }
   }
 
   query(text: string, query: string): InlineKeyboardButton {
@@ -31,6 +32,14 @@ class ButtonBuilder {
 
   pay(text: string): InlineKeyboardButton {
     return { text: text, pay: true }
+  }
+
+  private toCallbackData<T extends object>(command: string, parameters?: T): string {
+    return '/' + command + ' ' + this.toStringParameters(parameters)
+  }
+
+  private toStringParameters<T extends object>(parameters: T = {} as T): string {
+    return reduce(parameters, (r: string[], v: any, k: string) => [...r, `${k}:${v}`], []).join(' ')
   }
 }
 
