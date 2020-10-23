@@ -29,8 +29,11 @@ import { InputFile } from '../definitions/types'
 import Child from '../modules/child'
 import HTMLUtils from '../utils/html.utils'
 import StringUtils from '../utils/string.utils'
+import SendPrivate from './privates/send.private'
 
 class Send extends Child {
+  private: SendPrivate = new SendPrivate(this.telegram)
+
   async message(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | Error> {
     return this.telegram.api.post<SendMessage, Message>('sendMessage', {
       chat_id: chat,
@@ -53,7 +56,7 @@ class Send extends Child {
           reply_markup: {
             inline_keyboard: buttons
               .concat(await get(telegramConfiguration.default.buttons, this.telegram.utils.findButtonsType(buttons), async () => [])(chat))
-              .reduce((r: [InlineKeyboardButton][], v: InlineKeyboardButton) => [...r, [v]], [])
+              .map((v: InlineKeyboardButton) => [v])
           },
           ...parameters
         })

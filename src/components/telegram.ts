@@ -147,7 +147,7 @@ class Telegram {
   }
 
   public handle(update: Update): void {
-    let handler: Handler
+    let handler: Handler, parameters: { c: number }
 
     switch (true) {
       case has(update, 'message') && has(update, 'message.reply_to_message.text'):
@@ -168,6 +168,9 @@ class Telegram {
         handler.middleware(update.message as Message)
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
+        parameters = this.utils.parseStringParameters(update.callback_query.data)
+        update.callback_query.message.chat.id = has(parameters, 'c') ? parameters.c : update.callback_query.message.chat.id
+
         handler = this.findMatchingHandler(this.utils.findCommand(update.callback_query), HandlerType.CALLBACK_QUERY)
         handler.middleware(update.callback_query as CallbackQuery)
 
