@@ -12,7 +12,6 @@ import Leave from '../childs/leave'
 import Pin from '../childs/pin'
 import Polling from '../childs/polling'
 import Promote from '../childs/promote'
-import Reply from '../childs/reply'
 import Restrict from '../childs/restrict'
 import Send from '../childs/send'
 import Set from '../childs/set'
@@ -59,7 +58,6 @@ const _leave: Leave = new Leave(_telegram as any)
 const _pin: Pin = new Pin(_telegram as any)
 const _polling: Polling = new Polling(_telegram as any)
 const _promote: Promote = new Promote(_telegram as any)
-const _reply: Reply = new Reply(_telegram as any)
 const _restrict: Restrict = new Restrict(_telegram as any)
 const _send: Send = new Send(_telegram as any)
 const _set: Set = new Set(_telegram as any)
@@ -91,7 +89,6 @@ class TelegramStatic {
   static pin: Pin = _pin
   static polling: Polling = _polling
   static promote: Promote = _promote
-  static reply: Reply = _reply
   static restrict: Restrict = _restrict
   static send: Send = _send
   static set: Set = _set
