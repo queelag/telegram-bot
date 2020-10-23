@@ -1,5 +1,5 @@
 import { BotCommand, CallbackQuery, Message, Update } from '@queelag/telegram-types'
-import { has } from 'lodash'
+import { get, has } from 'lodash'
 import Add from '../childs/add'
 import Answer from '../childs/answer'
 import Create from '../childs/create'
@@ -151,10 +151,15 @@ class Telegram {
 
     switch (true) {
       case has(update, 'message') && has(update, 'message.reply_to_message.text'):
+        update.message.chat.id = this.utils.findRepliableChatId(update.message as Message)
+
         handler = this.findMatchingHandler(this.utils.findCommandByContext(update.message), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message as Message)
 
-        if (handler.id.length > 0 && handler.options.deleteOnReply) this.delete.message(update.message.chat.id, update.message.reply_to_message.message_id)
+        if (handler.id.length > 0 && handler.options.deleteOnReply) {
+          this.delete.message(update.message.from.id, update.message.message_id)
+          this.delete.message(update.message.from.id, update.message.reply_to_message.message_id)
+        }
 
         break
       case has(update, 'message') && has(update, 'message.text'):
@@ -167,16 +172,14 @@ class Telegram {
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
         parameters = this.utils.parseStringParameters(update.callback_query.data)
-        update.callback_query.message.chat.id = has(parameters, 'c') ? parameters.c : update.callback_query.message.chat.id
+        update.callback_query.message.chat.id = get(parameters, 'c', update.callback_query.message.chat.id)
 
         handler = this.findMatchingHandler(this.utils.findCommandByContext(update.callback_query), HandlerType.CALLBACK_QUERY)
         handler.middleware(update.callback_query as CallbackQuery)
 
-        if (handler.options.deleteOnCallback)
-          this.delete.message(
-            has(parameters, 'c') ? update.callback_query.from.id : update.callback_query.message.chat.id,
-            update.callback_query.message.message_id
-          )
+        if (handler.options.deleteOnCallback) {
+          this.delete.message(update.callback_query.from.id, update.callback_query.message.message_id)
+        }
 
         break
     }
