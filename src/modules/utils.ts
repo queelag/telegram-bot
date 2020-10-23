@@ -78,8 +78,8 @@ class Utils {
     return this.findUserId(context)
   }
 
-  findRepliableChatId(context: Context): number {
-    return parseInt((Regex.repliable_chat_id.exec(this.findText(context)) || [this.findChatId(context).toString()])[0].replace(': ', ''))
+  findRepliableChatId(context: Message): number {
+    return parseInt((Regex.repliable_chat_id.exec(context.reply_to_message.text) || [context.chat.id.toString()])[0].replace(': ', ''))
   }
 
   findChatType(context: Context): string {
