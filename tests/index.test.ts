@@ -1,13 +1,13 @@
-import Telegram from '../src/index'
 import { Message, Update } from '@queelag/telegram-types'
-import { HandlerType } from '../src/definitions/enums'
-import { get } from 'lodash'
-import dotenv from 'dotenv'
-import express, { Express, Request, Response } from 'express'
+import Axios, { AxiosInstance } from 'axios'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import dotenv from 'dotenv'
+import express, { Express, Request, Response } from 'express'
 import { Server } from 'http'
-import Axios, { AxiosInstance } from 'axios'
+import { get } from 'lodash'
+import { HandlerType } from '../src/definitions/enums'
+import Telegram from '../src/index'
 
 describe('Telegram', () => {
   let e: Express, s: Server

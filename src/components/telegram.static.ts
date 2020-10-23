@@ -29,6 +29,8 @@ class Telegram {
   public hostname: string
   public token: string
 
+  public send: Send
+
   public builder: Builder
   public utils: Utils
 
@@ -36,6 +38,8 @@ class Telegram {
     this.api = new API('api.telegram.org', '/bot' + token + '/')
     this.hostname = hostname
     this.token = token
+
+    this.send = new Send(this as any)
 
     this.builder = new Builder()
     this.utils = new Utils()
