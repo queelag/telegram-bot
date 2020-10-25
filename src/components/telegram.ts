@@ -1,5 +1,5 @@
 import { BotCommand, CallbackQuery, Message, Update } from '@queelag/telegram-types'
-import { get, has } from 'lodash'
+import { has } from 'lodash'
 import Add from '../childs/add'
 import Answer from '../childs/answer'
 import Create from '../childs/create'
@@ -147,11 +147,11 @@ class Telegram {
   }
 
   public handle(update: Update): void {
-    let handler: Handler, parameters: { c: number }
+    let handler: Handler
 
     switch (true) {
       case has(update, 'message') && has(update, 'message.reply_to_message.text'):
-        update.message.chat.id = this.utils.findRepliableChatId(update.message as Message)
+        update.message.chat.id = this.utils.findReplyToMessageChatId(update.message)
 
         handler = this.findMatchingHandler(this.utils.findCommandByContext(update.message), HandlerType.REPLY_TO_MESSAGE)
         handler.middleware(update.message as Message)
@@ -171,15 +171,14 @@ class Telegram {
         handler.middleware(update.message as Message)
         break
       case has(update, 'callback_query') && has(update, 'callback_query.data'):
-        parameters = this.utils.parseStringParameters(update.callback_query.data)
-        update.callback_query.message.chat.id = get(parameters, 'c', update.callback_query.message.chat.id)
+        update.callback_query.message.chat.id = this.utils.findCallbackQueryChatId(update.callback_query)
 
         handler = this.findMatchingHandler(this.utils.findCommandByContext(update.callback_query), HandlerType.CALLBACK_QUERY)
         handler.middleware(update.callback_query as CallbackQuery)
 
         if (handler.options.deleteOnCallback) {
           this.delete.message(
-            has(parameters, 'c') ? update.callback_query.from.id : update.callback_query.message.chat.id,
+            update.callback_query.data.includes('c:') ? update.callback_query.from.id : update.callback_query.message.chat.id,
             update.callback_query.message.message_id
           )
         }

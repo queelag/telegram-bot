@@ -1,6 +1,7 @@
 import { CallbackQuery, Chat, InlineKeyboardButton, Message, User } from '@queelag/telegram-types'
-import { has, reduce } from 'lodash'
+import { get, has, reduce } from 'lodash'
 import { Context } from '../definitions/types'
+import NumberUtils from '../utils/number.utils'
 import Regex from './regex'
 
 class Utils {
@@ -68,8 +69,12 @@ class Utils {
     return this.findUserId(context)
   }
 
-  findRepliableChatId(context: Message): number {
-    return parseInt((Regex.repliable_chat_id.exec(context.reply_to_message.text) || [context.chat.id.toString()])[0].replace(': ', ''))
+  findCallbackQueryChatId(context: CallbackQuery): number {
+    return NumberUtils.parse(get(this.parseStringParameters(context.data), 'c', context.message.chat.id))
+  }
+
+  findReplyToMessageChatId(context: Message): number {
+    return NumberUtils.parse((Regex.repliable_chat_id.exec(context.reply_to_message.text) || [context.chat.id.toString()])[0].replace(': ', ''))
   }
 
   findChatType(context: Context): string {
