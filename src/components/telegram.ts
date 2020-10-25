@@ -178,7 +178,10 @@ class Telegram {
         handler.middleware(update.callback_query as CallbackQuery)
 
         if (handler.options.deleteOnCallback) {
-          this.delete.message(update.callback_query.from.id, update.callback_query.message.message_id)
+          this.delete.message(
+            has(parameters, 'c') ? update.callback_query.from.id : update.callback_query.message.chat.id,
+            update.callback_query.message.message_id
+          )
         }
 
         break
