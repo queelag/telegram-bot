@@ -14,16 +14,6 @@ class Utils {
         key = splitted[0]
         value = splitted.slice(1).join(':')
 
-        switch (true) {
-          case Regex.number.test(value):
-            value = parseFloat(value)
-            break
-          // case Regex.array.test(value):
-          // case Regex.object.test(value):
-          //   value = JSON.parse(value)
-          //   break
-        }
-
         return { ...r, [key]: value }
       },
       {} as T
