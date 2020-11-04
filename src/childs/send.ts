@@ -1,7 +1,5 @@
 import {
   InlineKeyboardButton,
-  InputMediaPhoto,
-  InputMediaVideo,
   LabeledPrice,
   Message,
   SendAnimation,
@@ -109,7 +107,7 @@ class Send extends Child {
     return this.file<SendVideoNote, Message>(chat, videoNote, 'video_note', parameters)
   }
 
-  async mediaGroup(chat: number, media: (InputMediaPhoto | InputMediaVideo)[], parameters?: Partial<SendMediaGroup>): Promise<Message | Error> {
+  async mediaGroup(chat: number, media: SendMediaGroup['media'], parameters?: Partial<SendMediaGroup>): Promise<Message | Error> {
     return this.telegram.api.post<SendMediaGroup, Message>('sendMediaGroup', { chat_id: chat, media: media, ...parameters })
   }
 
