@@ -503,10 +503,10 @@
   resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.12.19.tgz#2173ccb92469aaf62031fa9499d21b16d07f9b57"
   integrity sha512-IpgPxHrNxZiMNUSXqR1l/gePKPkfAmIKoDRP9hp7OwjU29ZR8WCJsOJ8iBKgw0Qk+pFwR+8Y1cy8ImLY6e9m4A==
 
-"@queelag/telegram-types@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@queelag/telegram-types/-/telegram-types-1.0.7.tgz#53ae2d8321bf4be346cefb1c0421705c8da3c8f3"
-  integrity sha512-o7bwssGbjcRMMMxX2NiSR5aMc8TmAVjageV6nP4PbTZtqdPqZC2HHjOxudbZ6O6a0xablmrZTeed8nrK1dhSHw==
+"@queelag/telegram-types@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@queelag/telegram-types/-/telegram-types-1.0.8.tgz#b4dcffd5acb68d532b2081b8f8cb9453de688444"
+  integrity sha512-GU/TKK95v1RK0E982p7UAhh3W9IJ6FDv64ui8bCr1HL8p4w/MJa9ydYccbzffqpEp6hSg665S/95BckdG71tjA==
 
 "@rushstack/node-core-library@3.34.7":
   version "3.34.7"
