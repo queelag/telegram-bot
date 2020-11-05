@@ -1,4 +1,13 @@
-import { CallbackQuery, InlineKeyboardButton, Message } from '@queelag/telegram-types'
+import {
+  CallbackQuery,
+  InlineKeyboardButton,
+  InputMediaAudio,
+  InputMediaDocument,
+  InputMediaPhoto,
+  InputMediaVideo,
+  Message,
+  SendMediaGroup
+} from '@queelag/telegram-types'
 import { HandlerType } from './enums'
 
 export type Context = Message | CallbackQuery
@@ -43,3 +52,9 @@ export type ConfigurationHandler = {
     }
   }
 }
+
+export type InputMediaAlternative = { media: InputFile } & Omit<InputMediaAudio | InputMediaDocument | InputMediaPhoto | InputMediaVideo, 'media'>
+
+export type SendMediaGroupAlternative = {
+  media: InputMediaAlternative[]
+} & Omit<SendMediaGroup, 'media'>

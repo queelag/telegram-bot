@@ -21,9 +21,9 @@ import {
   SendVideoNote,
   SendVoice
 } from '@queelag/telegram-types'
-import { get } from 'lodash'
+import { every, get } from 'lodash'
 import telegramConfiguration from '../components/configuration'
-import { InputFile } from '../definitions/types'
+import { InputFile, InputMediaAlternative, SendMediaGroupAlternative } from '../definitions/types'
 import Child from '../modules/child'
 import HTMLUtils from '../utils/html.utils'
 import StringUtils from '../utils/string.utils'
@@ -107,8 +107,18 @@ class Send extends Child {
     return this.file<SendVideoNote, Message>(chat, videoNote, 'video_note', parameters)
   }
 
-  async mediaGroup(chat: number, media: SendMediaGroup['media'], parameters?: Partial<SendMediaGroup>): Promise<Message | Error> {
-    return this.telegram.api.post<SendMediaGroup, Message>('sendMediaGroup', { chat_id: chat, media: media, ...parameters })
+  async mediaGroup(chat: number, media: InputMediaAlternative[], parameters?: Partial<SendMediaGroup>): Promise<Message | Error> {
+    return this.telegram.api.post<SendMediaGroupAlternative, Message>(
+      'sendMediaGroup',
+      every(media, (v: InputMediaAlternative) => v.media instanceof Buffer)
+        ? {
+            chat_id: chat,
+            media: media.map((v: InputMediaAlternative, k: number) => ({ ...v, media: `attach://media_${k}` })),
+            ...media.reduce((r: object, v: InputMediaAlternative, k: number) => ({ ...r, [`media_${k}`]: v.media }), {}),
+            ...parameters
+          }
+        : { chat_id: chat, media: media, ...parameters }
+    )
   }
 
   async location(chat: number, latitude: number, longitude: number, parameters?: Partial<SendLocation>): Promise<Message | Error> {
