@@ -27,8 +27,8 @@ class Get extends Child {
     return this.telegram.api.post<GetFile, File>('getFile', { file_id: id })
   }
 
-  async userProfilePhotos(id: number, parameters?: Partial<GetUserProfilePhotos>): Promise<UserProfilePhotos[] | Error> {
-    return this.telegram.api.post<GetUserProfilePhotos, UserProfilePhotos[]>('getUserProfilePhotos', { user_id: id, ...parameters })
+  async userProfilePhotos(id: number, parameters?: Partial<GetUserProfilePhotos>): Promise<UserProfilePhotos | Error> {
+    return this.telegram.api.post<GetUserProfilePhotos, UserProfilePhotos>('getUserProfilePhotos', { user_id: id, ...parameters })
   }
 
   async chat(id: number): Promise<Chat | Error> {

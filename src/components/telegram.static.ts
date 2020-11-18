@@ -29,6 +29,7 @@ class Telegram {
   public hostname: string
   public token: string
 
+  public get: Get
   public send: Send
 
   public builder: Builder
@@ -39,6 +40,7 @@ class Telegram {
     this.hostname = hostname
     this.token = token
 
+    this.get = new Get(this as any)
     this.send = new Send(this as any)
 
     this.builder = new Builder()
