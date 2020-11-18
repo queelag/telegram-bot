@@ -1,6 +1,6 @@
 {
   "name": "@queelag/telegram",
-  "version": "1.5.7",
+  "version": "1.5.8",
   "main": "index.js",
   "author": "Dario Sechi",
   "license": "MIT",
