@@ -74,7 +74,12 @@ class Utils {
   }
 
   findReplyToMessageChatId(context: Message): number {
-    return NumberUtils.parse((Regex.repliable_chat_id.exec(context.reply_to_message.text) || [context.chat.id.toString()])[0].replace(': ', ''))
+    let exec: RegExpExecArray
+
+    exec = Regex.repliable_chat_id.exec(context.reply_to_message.text)
+    if (!exec) return context.chat.id
+
+    return NumberUtils.parse(exec[0].replace(':', '')) || context.chat.id
   }
 
   findChatType(context: Context): string {
