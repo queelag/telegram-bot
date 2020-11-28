@@ -19,7 +19,7 @@ describe('Telegram', () => {
     e = express()
     e.use(cors())
     e.use(bodyParser.json())
-    await new Promise((r) => (s = e.listen(5000, () => r())))
+    await new Promise<void>((r) => (s = e.listen(5000, () => r())))
 
     telegram = new Telegram(process.env.TOKEN, 'localhost')
     e.post('/bot' + telegram.token, (req: Request<any, any, Update>, res: Response) => {
@@ -41,6 +41,6 @@ describe('Telegram', () => {
   })
 
   afterAll(async () => {
-    await new Promise((r) => s.close(() => r()))
+    await new Promise<void>((r) => s.close(() => r()))
   })
 })

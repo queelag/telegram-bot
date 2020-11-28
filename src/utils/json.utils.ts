@@ -26,7 +26,13 @@ class JSONUtils {
       }
     }
 
-    await Promise.all(reduce(json, (r: Promise<any>[], v: any, k: string) => [...r, new Promise((resolve) => iteratee(v, k).then(() => resolve()))], []))
+    await Promise.all(
+      reduce(
+        json,
+        (r: Promise<any>[], v: any, k: string) => [...r, new Promise<void>((resolve) => iteratee(v, k).then(() => resolve()))],
+        []
+      )
+    )
 
     return form
   }
