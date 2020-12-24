@@ -16,7 +16,7 @@ class Webhook extends Child {
   }
 
   url(route: string): string {
-    return 'https://' + this.telegram.hostname + ':' + process.env.PORT + '/' + route + 'bot' + this.telegram.token
+    return 'https://' + this.telegram.hostname + ':' + this.telegram.port + '/' + route + 'bot' + this.telegram.token
   }
 }
 

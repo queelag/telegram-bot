@@ -29,11 +29,13 @@ import Builder from '../modules/builder'
 import Dummy from '../modules/dummy'
 import ID from '../modules/id'
 import Utils from '../modules/utils'
+import NumberUtils from '../utils/number.utils'
 import TelegramStatic from './telegram.static'
 
 class Telegram {
   public api: API
   public hostname: string
+  public port: number
   public token: string
 
   public static api: API = TelegramStatic.api
@@ -94,9 +96,10 @@ class Telegram {
 
   private handlers: Handler[]
 
-  constructor(token: string, hostname: string = '') {
+  constructor(token: string, hostname: string = '', port: number = NumberUtils.parse(process.env.PORT)) {
     this.api = new API('api.telegram.org', '/bot' + token + '/')
     this.hostname = hostname
+    this.port = port
     this.token = token
 
     this.add = new Add(this)
