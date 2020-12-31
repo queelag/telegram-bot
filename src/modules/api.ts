@@ -1,6 +1,7 @@
 import FormData from 'form-data'
 import http, { ClientRequest, IncomingMessage, OutgoingHttpHeaders, RequestOptions } from 'http'
 import https from 'https'
+import telegramConfiguration from '../components/configuration'
 import { Protocol } from '../definitions/types'
 import JSONUtils from '../utils/json.utils'
 import tc from './tc'
@@ -65,6 +66,7 @@ class API {
             return resolve(new Error(response.statusMessage))
           }
 
+          telegramConfiguration.api.post.callback.success(body)
           resolve(tc<U>(() => JSON.parse(chunks).result))
         })
       })

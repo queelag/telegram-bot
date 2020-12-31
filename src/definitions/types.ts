@@ -32,6 +32,14 @@ export type Protocol = 'http' | 'https'
 
 export type InputFile = Buffer | string
 
+export type ConfigurationAPI = {
+  post: {
+    callback: {
+      success: (body: any) => Promise<any>
+    }
+  }
+}
+
 export type ConfigurationDefault = {
   buttons: {
     text: (chat: number) => Promise<InlineKeyboardButton[]>
