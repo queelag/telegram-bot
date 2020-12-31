@@ -50,7 +50,7 @@ class API {
 
   async post<T extends object, U>(path: string, body: T = [0] as T): Promise<U | Error> {
     return new Promise(async (resolve) => {
-      let form: FormData | Error, request: ClientRequest, chunks: string
+      let form: FormData | Error, request: ClientRequest, chunks: string, result: U | Error
 
       form = await tcp<FormData>(() => JSONUtils.toFormData(body))
       if (form instanceof Error) return resolve(form)
@@ -66,8 +66,12 @@ class API {
             return resolve(new Error(response.statusMessage))
           }
 
-          telegramConfiguration.api.post.callback.success(body)
-          resolve(tc<U>(() => JSON.parse(chunks).result))
+          result = tc<U>(() => JSON.parse(chunks).result)
+          if (result instanceof Error) return resolve(result)
+
+          tc<void>(() => telegramConfiguration.api.post.callback.success(body, result))
+
+          resolve(result)
         })
       })
 

@@ -35,7 +35,7 @@ export type InputFile = Buffer | string
 export type ConfigurationAPI = {
   post: {
     callback: {
-      success: (body: any) => Promise<any>
+      success: <T, U>(body: T, result: U | Error) => void
     }
   }
 }
