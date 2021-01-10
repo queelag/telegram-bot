@@ -500,10 +500,10 @@
   resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.12.24.tgz#30728e34ebc90351dd3aff4e18d038eed2c3e098"
   integrity sha512-Mfmij13RUTmHEMi9vRUhMXD7rnGR2VvxeNYtaGtaJ4redwwjT4UXYJ+nzmVJF7hhd4pn/Fx5sncDKxMVFJSWPg==
 
-"@queelag/telegram-types@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@queelag/telegram-types/-/telegram-types-1.1.0.tgz#e738def62bf6c591da67a9009a5fa9df38652d5a"
-  integrity sha512-dhnpKhWSr7cB80lxdLwENFvyTsvlriZzzD/YkyhAYKFE+RPUGXHA4muGjORYYV7IUC1ViPV24g/fI3H80FOJQQ==
+"@queelag/telegram-types@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@queelag/telegram-types/-/telegram-types-1.1.2.tgz#ebd21ae5708d13e63b1d44b0a1df713bb952af10"
+  integrity sha512-lLftGvU/1SZcMhcsgl1xReIgS3rbKujALz2rfHDwA8nVPN72iioTL/9rkQ8x/+EoZUXGbLZ+i5Y4PJljDl0doA==
 
 "@rushstack/node-core-library@3.35.2":
   version "3.35.2"
