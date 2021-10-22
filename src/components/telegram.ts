@@ -2,6 +2,7 @@ import { BotCommand, CallbackQuery, Message, Update } from '@queelag/telegram-ty
 import { has } from 'lodash'
 import Add from '../childs/add'
 import Answer from '../childs/answer'
+import Ban from '../childs/ban'
 import Create from '../childs/create'
 import Delete from '../childs/delete'
 import Download from '../childs/download'
@@ -9,7 +10,6 @@ import Edit from '../childs/edit'
 import Export from '../childs/export'
 import Forward from '../childs/forward'
 import Get from '../childs/get'
-import Kick from '../childs/kick'
 import Leave from '../childs/leave'
 import Pin from '../childs/pin'
 import Polling from '../childs/polling'
@@ -51,7 +51,7 @@ class Telegram {
   public export: Export
   public forward: Forward
   public get: Get
-  public kick: Kick
+  public ban: Ban
   public leave: Leave
   public pin: Pin
   public polling: Polling
@@ -74,7 +74,7 @@ class Telegram {
   public static export: Export = TelegramStatic.export
   public static forward: Forward = TelegramStatic.forward
   public static get: Get = TelegramStatic.get
-  public static kick: Kick = TelegramStatic.kick
+  public static ban: Ban = TelegramStatic.ban
   public static leave: Leave = TelegramStatic.leave
   public static pin: Pin = TelegramStatic.pin
   public static polling: Polling = TelegramStatic.polling
@@ -111,7 +111,7 @@ class Telegram {
     this.export = new Export(this)
     this.forward = new Forward(this)
     this.get = new Get(this)
-    this.kick = new Kick(this)
+    this.ban = new Ban(this)
     this.leave = new Leave(this)
     this.pin = new Pin(this)
     this.polling = new Polling(this)

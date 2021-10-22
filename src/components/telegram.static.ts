@@ -1,5 +1,6 @@
 import Add from '../childs/add'
 import Answer from '../childs/answer'
+import Ban from '../childs/ban'
 import Create from '../childs/create'
 import Delete from '../childs/delete'
 import Download from '../childs/download'
@@ -7,7 +8,6 @@ import Edit from '../childs/edit'
 import Export from '../childs/export'
 import Forward from '../childs/forward'
 import Get from '../childs/get'
-import Kick from '../childs/kick'
 import Leave from '../childs/leave'
 import Pin from '../childs/pin'
 import Polling from '../childs/polling'
@@ -59,7 +59,7 @@ const _edit: Edit = new Edit(_telegram as any)
 const _export: Export = new Export(_telegram as any)
 const _forward: Forward = new Forward(_telegram as any)
 const _get: Get = new Get(_telegram as any)
-const _kick: Kick = new Kick(_telegram as any)
+const _ban: Ban = new Ban(_telegram as any)
 const _leave: Leave = new Leave(_telegram as any)
 const _pin: Pin = new Pin(_telegram as any)
 const _polling: Polling = new Polling(_telegram as any)
@@ -90,7 +90,7 @@ class TelegramStatic {
   static export: Export = _export
   static forward: Forward = _forward
   static get: Get = _get
-  static kick: Kick = _kick
+  static ban: Ban = _ban
   static leave: Leave = _leave
   static pin: Pin = _pin
   static polling: Polling = _polling

@@ -7,7 +7,7 @@ import {
   GetChat,
   GetChatAdministrators,
   GetChatMember,
-  GetChatMembersCount,
+  GetChatMemberCount,
   GetFile,
   GetGameHighScores,
   GetStickerSet,
@@ -39,8 +39,8 @@ class Get extends Child {
     return this.telegram.api.post<GetChatAdministrators, ChatMember[]>('getChatAdministrators', { chat_id: id })
   }
 
-  async chatMembersCount(id: number): Promise<number | Error> {
-    return this.telegram.api.post<GetChatMembersCount, number>('getChatMembersCount', { chat_id: id })
+  async chatMemberCount(id: number): Promise<number | Error> {
+    return this.telegram.api.post<GetChatMemberCount, number>('getChatMemberCount', { chat_id: id })
   }
 
   async chatMember(chat: number, user: number): Promise<ChatMember | Error> {
