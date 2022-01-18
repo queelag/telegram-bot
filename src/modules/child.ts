@@ -1,11 +1,9 @@
-import Telegram from '../components/telegram'
+import type { Telegram } from './telegram'
 
-class Child {
+export class Child {
   protected telegram: Telegram
 
   constructor(telegram: Telegram) {
     this.telegram = telegram
   }
 }
-
-export default Child

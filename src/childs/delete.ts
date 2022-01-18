@@ -1,22 +1,21 @@
+import { FetchError } from '@queelag/core'
 import { DeleteChatPhoto, DeleteChatStickerSet, DeleteMessage, DeleteStickerFromSet } from '@queelag/telegram-types'
-import Child from '../modules/child'
+import { Child } from '../modules/child'
 
-class Delete extends Child {
-  async chatPhoto(chat: number): Promise<boolean | Error> {
-    return this.telegram.api.post<DeleteChatPhoto, boolean>('deleteChatPhoto', { chat_id: chat })
+export class Delete extends Child {
+  async chatPhoto(chat: number): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, DeleteChatPhoto>('deleteChatPhoto', { chat_id: chat })
   }
 
-  async chatStickerSet(chat: number): Promise<boolean | Error> {
-    return this.telegram.api.post<DeleteChatStickerSet, boolean>('deleteChatStickerSet', { chat_id: chat })
+  async chatStickerSet(chat: number): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, DeleteChatStickerSet>('deleteChatStickerSet', { chat_id: chat })
   }
 
-  async message(chat: number, message: number): Promise<boolean | Error> {
-    return this.telegram.api.post<DeleteMessage, boolean>('deleteMessage', { chat_id: chat, message_id: message })
+  async message(chat: number, message: number): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, DeleteMessage>('deleteMessage', { chat_id: chat, message_id: message })
   }
 
-  async stickerFromSet(sticker: string): Promise<boolean | Error> {
-    return this.telegram.api.post<DeleteStickerFromSet, boolean>('deleteStickerFromSet', { sticker: sticker })
+  async stickerFromSet(sticker: string): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, DeleteStickerFromSet>('deleteStickerFromSet', { sticker: sticker })
   }
 }
-
-export default Delete

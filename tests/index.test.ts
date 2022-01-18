@@ -1,3 +1,4 @@
+import { ObjectUtils } from '@queelag/core'
 import { Message, Update } from '@queelag/telegram-types'
 import Axios, { AxiosInstance } from 'axios'
 import bodyParser from 'body-parser'
@@ -5,9 +6,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import express, { Express, Request, Response } from 'express'
 import { Server } from 'http'
-import { get } from 'lodash'
-import { HandlerType } from '../src/definitions/enums'
-import Telegram from '../src/index'
+import { UpdateType } from '../src/definitions/enums'
+import { Telegram } from '../src/index'
 
 describe('Telegram', () => {
   let e: Express, s: Server
@@ -31,8 +31,8 @@ describe('Telegram', () => {
   })
 
   it('registers handler', () => {
-    telegram.on('start', (context: Message) => (check = true), HandlerType.TEXT)
-    expect(get(telegram, 'handlers').length).toBe(1)
+    telegram.on('start', (context: Message) => (check = true), UpdateType.MESSAGE)
+    expect(ObjectUtils.get(telegram, 'handlers', []).length).toBe(1)
   })
 
   it('listens to telegram', async () => {

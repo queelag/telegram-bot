@@ -1,3 +1,4 @@
+import { FetchError, ObjectUtils, StringUtils } from '@queelag/core'
 import {
   InlineKeyboardButton,
   LabeledPrice,
@@ -21,46 +22,45 @@ import {
   SendVideoNote,
   SendVoice
 } from '@queelag/telegram-types'
-import { every, get } from 'lodash'
-import telegramConfiguration from '../components/configuration'
-import { InputFile, InputMediaAlternative, SendMediaGroupAlternative } from '../definitions/types'
-import Child from '../modules/child'
-import HTMLUtils from '../utils/html.utils'
-import StringUtils from '../utils/string.utils'
-import SendPrivate from './privates/send.private'
+import { InputMediaAlternative, SendMediaGroupAlternative } from '../definitions/interfaces'
+import { InputFile } from '../definitions/types'
+import { Child } from '../modules/child'
+import { Configuration } from '../modules/configuration'
+import { HTMLUtils } from '../utils/html.utils'
+import { SendPrivate } from './privates/send.private'
 
-class Send extends Child {
+export class Send extends Child {
   private: SendPrivate = new SendPrivate(this.telegram)
 
-  async message(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | Error> {
-    return this.telegram.api.post<SendMessage, Message>('sendMessage', {
+  async message(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendMessage>('sendMessage', {
       chat_id: chat,
       text: text.substring(0, 4096),
       ...parameters
     })
   }
 
-  async html(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | Error> {
+  async html(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | FetchError> {
     return this.message(chat, HTMLUtils.sanitize(text), {
       parse_mode: 'HTML',
       ...parameters
     })
   }
 
-  async buttons(chat: number, text: string, buttons: InlineKeyboardButton[], parameters?: Partial<SendMessage>): Promise<Message | Error> {
+  async buttons(chat: number, text: string, buttons: InlineKeyboardButton[], parameters?: Partial<SendMessage>): Promise<Message | FetchError | Error> {
     return buttons.length <= 0
-      ? telegramConfiguration.handler.send.buttons.empty(chat)
+      ? Configuration.handler.send.buttons.empty(chat)
       : this.message(chat, text, {
           reply_markup: {
             inline_keyboard: buttons
-              .concat(await get(telegramConfiguration.default.buttons, this.telegram.utils.findButtonsType(buttons), async () => [])(chat))
+              .concat(await ObjectUtils.get(Configuration.default.buttons, this.telegram.utils.findButtonsType(buttons), async (chat: number) => [])(chat))
               .map((v: InlineKeyboardButton) => [v])
           },
           ...parameters
         })
   }
 
-  async prompt(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | Error> {
+  async prompt(chat: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | FetchError> {
     return this.message(chat, text, {
       reply_markup: {
         force_reply: true,
@@ -70,8 +70,8 @@ class Send extends Child {
     })
   }
 
-  async card(chat: number, title: string, description: string, sticker?: InputFile, parameters?: Partial<SendMessage>): Promise<Message | Error> {
-    let response: Message | Error
+  async card(chat: number, title: string, description: string, sticker?: InputFile, parameters?: Partial<SendMessage>): Promise<Message | FetchError> {
+    let response: Message | FetchError
 
     response = sticker ? await this.sticker(chat, sticker) : null
     if (response instanceof Error) return response
@@ -79,38 +79,38 @@ class Send extends Child {
     return this.html(chat, [`<b>${title}</b>`, '', description].join('\n'), parameters)
   }
 
-  async photo(chat: number, photo: InputFile, parameters?: Partial<SendPhoto>): Promise<Message | Error> {
-    return this.file<SendPhoto, Message>(chat, photo, 'photo', parameters)
+  async photo(chat: number, photo: InputFile, parameters?: Partial<SendPhoto>): Promise<Message | FetchError> {
+    return this.file<Message, SendPhoto>(chat, photo, 'photo', parameters)
   }
 
-  async audio(chat: number, audio: InputFile, parameters?: Partial<SendAudio>): Promise<Message | Error> {
-    return this.file<SendAudio, Message>(chat, audio, 'audio', parameters)
+  async audio(chat: number, audio: InputFile, parameters?: Partial<SendAudio>): Promise<Message | FetchError> {
+    return this.file<Message, SendAudio>(chat, audio, 'audio', parameters)
   }
 
-  async document(chat: number, document: InputFile, parameters?: Partial<SendDocument>): Promise<Message | Error> {
-    return this.file<SendDocument, Message>(chat, document, 'document', parameters)
+  async document(chat: number, document: InputFile, parameters?: Partial<SendDocument>): Promise<Message | FetchError> {
+    return this.file<Message, SendDocument>(chat, document, 'document', parameters)
   }
 
-  async video(chat: number, video: InputFile, parameters?: Partial<SendVideo>): Promise<Message | Error> {
-    return this.file<SendVideo, Message>(chat, video, 'video', parameters)
+  async video(chat: number, video: InputFile, parameters?: Partial<SendVideo>): Promise<Message | FetchError> {
+    return this.file<Message, SendVideo>(chat, video, 'video', parameters)
   }
 
-  async animation(chat: number, animation: InputFile, parameters?: Partial<SendAnimation>): Promise<Message | Error> {
-    return this.file<SendAnimation, Message>(chat, animation, 'animation', parameters)
+  async animation(chat: number, animation: InputFile, parameters?: Partial<SendAnimation>): Promise<Message | FetchError> {
+    return this.file<Message, SendAnimation>(chat, animation, 'animation', parameters)
   }
 
-  async voice(chat: number, voice: InputFile, parameters?: Partial<SendVoice>): Promise<Message | Error> {
-    return this.file<SendVoice, Message>(chat, voice, 'voice', parameters)
+  async voice(chat: number, voice: InputFile, parameters?: Partial<SendVoice>): Promise<Message | FetchError> {
+    return this.file<Message, SendVoice>(chat, voice, 'voice', parameters)
   }
 
-  async videoNote(chat: number, videoNote: InputFile, parameters?: Partial<SendVideoNote>): Promise<Message | Error> {
-    return this.file<SendVideoNote, Message>(chat, videoNote, 'video_note', parameters)
+  async videoNote(chat: number, videoNote: InputFile, parameters?: Partial<SendVideoNote>): Promise<Message | FetchError> {
+    return this.file<Message, SendVideoNote>(chat, videoNote, 'video_note', parameters)
   }
 
-  async mediaGroup(chat: number, media: InputMediaAlternative[], parameters?: Partial<SendMediaGroup>): Promise<Message | Error> {
-    return this.telegram.api.post<SendMediaGroupAlternative, Message>(
+  async mediaGroup(chat: number, media: InputMediaAlternative[], parameters?: Partial<SendMediaGroup>): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendMediaGroupAlternative>(
       'sendMediaGroup',
-      every(media, (v: InputMediaAlternative) => v.media instanceof Buffer)
+      media.every((v: InputMediaAlternative) => v.media instanceof Buffer)
         ? {
             chat_id: chat,
             media: media.map((v: InputMediaAlternative, k: number) => ({ ...v, media: `attach://media_${k}` })),
@@ -121,12 +121,19 @@ class Send extends Child {
     )
   }
 
-  async location(chat: number, latitude: number, longitude: number, parameters?: Partial<SendLocation>): Promise<Message | Error> {
-    return this.telegram.api.post<SendLocation, Message>('sendLocation', { chat_id: chat, latitude: latitude, longitude: longitude, ...parameters })
+  async location(chat: number, latitude: number, longitude: number, parameters?: Partial<SendLocation>): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendLocation>('sendLocation', { chat_id: chat, latitude: latitude, longitude: longitude, ...parameters })
   }
 
-  async venue(chat: number, latitude: number, longitude: number, title: string, address: string, parameters?: Partial<SendVenue>): Promise<Message | Error> {
-    return this.telegram.api.post<SendVenue, Message>('sendVanue', {
+  async venue(
+    chat: number,
+    latitude: number,
+    longitude: number,
+    title: string,
+    address: string,
+    parameters?: Partial<SendVenue>
+  ): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendVenue>('sendVanue', {
       chat_id: chat,
       latitude: latitude,
       longitude: longitude,
@@ -136,24 +143,24 @@ class Send extends Child {
     })
   }
 
-  async contact(chat: number, phoneNumber: string, firstName: string, parameters?: Partial<SendContact>): Promise<Message | Error> {
-    return this.telegram.api.post<SendContact, Message>('sendContact', { chat_id: chat, phone_number: phoneNumber, first_name: firstName, ...parameters })
+  async contact(chat: number, phoneNumber: string, firstName: string, parameters?: Partial<SendContact>): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendContact>('sendContact', { chat_id: chat, phone_number: phoneNumber, first_name: firstName, ...parameters })
   }
 
-  async poll(chat: number, question: string, options: string[], parameters?: Partial<SendPoll>): Promise<Message | Error> {
-    return this.telegram.api.post<SendPoll, Message>('sendPoll', { chat_id: chat, question: question, options: options, ...parameters })
+  async poll(chat: number, question: string, options: string[], parameters?: Partial<SendPoll>): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendPoll>('sendPoll', { chat_id: chat, question: question, options: options, ...parameters })
   }
 
-  async dice(chat: number, parameters?: Partial<SendDice>): Promise<Message | Error> {
-    return this.telegram.api.post<SendDice, Message>('sendDice', { chat_id: chat, ...parameters })
+  async dice(chat: number, parameters?: Partial<SendDice>): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendDice>('sendDice', { chat_id: chat, ...parameters })
   }
 
-  async chatAction(chat: number, action: string): Promise<boolean | Error> {
-    return this.telegram.api.post<SendChatAction, boolean>('sendChatAction', { chat_id: chat, action: action })
+  async chatAction(chat: number, action: string): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SendChatAction>('sendChatAction', { chat_id: chat, action: action })
   }
 
-  async sticker(chat: number, sticker: InputFile, parameters?: Partial<SendSticker>): Promise<Message | Error> {
-    return this.file<SendSticker, Message>(chat, sticker, 'sticker', parameters)
+  async sticker(chat: number, sticker: InputFile, parameters?: Partial<SendSticker>): Promise<Message | FetchError> {
+    return this.file<Message, SendSticker>(chat, sticker, 'sticker', parameters)
   }
 
   async invoice(
@@ -166,8 +173,8 @@ class Send extends Child {
     currency: string,
     prices: LabeledPrice[],
     parameters?: Partial<SendInvoice>
-  ): Promise<Message | Error> {
-    return this.telegram.api.post<SendInvoice, Message>('sendInvoice', {
+  ): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendInvoice>('sendInvoice', {
       chat_id: chat,
       title: title,
       description: description,
@@ -180,17 +187,15 @@ class Send extends Child {
     })
   }
 
-  async game(chat: number, gameShortName: string, parameters?: Partial<SendGame>): Promise<Message | Error> {
-    return this.telegram.api.post<SendGame, Message>('sendGame', { chat_id: chat, game_short_name: gameShortName, ...parameters })
+  async game(chat: number, gameShortName: string, parameters?: Partial<SendGame>): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, SendGame>('sendGame', { chat_id: chat, game_short_name: gameShortName, ...parameters })
   }
 
-  private file<T extends object, U>(chat: number, data: InputFile, type: string, parameters?: Partial<T>): Promise<U | Error> {
+  private file<T, U extends object>(chat: number, data: InputFile, type: string, parameters?: Partial<U>): Promise<T | FetchError> {
     return this.telegram.api.post<T, U>('send' + StringUtils.startCase(type), {
       chat_id: chat,
       [type]: data,
-      ...(parameters as T)
+      ...(parameters as U)
     })
   }
 }
-
-export default Send

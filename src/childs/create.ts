@@ -1,9 +1,10 @@
+import { FetchError } from '@queelag/core'
 import { CreateNewStickerSet } from '@queelag/telegram-types'
-import Child from '../modules/child'
+import { Child } from '../modules/child'
 
-class Create extends Child {
-  async stickerSet(user: number, name: string, title: string, emojis: string, parameters: Partial<CreateNewStickerSet>): Promise<boolean | Error> {
-    return this.telegram.api.post<CreateNewStickerSet, boolean>('createNewStickerSet', {
+export class Create extends Child {
+  async stickerSet(user: number, name: string, title: string, emojis: string, parameters: Partial<CreateNewStickerSet>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, CreateNewStickerSet>('createNewStickerSet', {
       user_id: user,
       name: name,
       title: title,
@@ -12,5 +13,3 @@ class Create extends Child {
     })
   }
 }
-
-export default Create

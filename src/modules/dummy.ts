@@ -1,9 +1,15 @@
-import { HandlerType } from '../definitions/enums'
-import { ConfigurationAPI, ConfigurationDefault, ConfigurationHandler, Handler } from '../definitions/types'
+import { UpdateType } from '../definitions/enums'
+import { ConfigurationAPI, ConfigurationDefault, ConfigurationHandler, Handler } from '../definitions/interfaces'
 
-class Dummy {
-  static get handler(): Handler {
-    return { id: '', command: '', middleware: () => null, type: HandlerType.TEXT, options: { deleteOnCallback: true, deleteOnReply: true, description: '' } }
+export class Dummy {
+  static get handler(): Handler<any, any> {
+    return {
+      id: '',
+      key: '',
+      middleware: () => null,
+      options: { deleteOnCallbackQuery: true, deleteOnReply: true, description: '' },
+      type: UpdateType.MESSAGE
+    }
   }
 
   static get configurationAPI(): ConfigurationAPI {
@@ -19,14 +25,14 @@ class Dummy {
   static get configurationDefault(): ConfigurationDefault {
     return {
       buttons: {
-        text: async () => [],
-        url: async () => [],
-        login: async () => [],
         callback: async () => [],
+        game: async () => [],
+        login: async () => [],
+        pay: async () => [],
         query: async () => [],
         queryCurrentChat: async () => [],
-        game: async () => [],
-        pay: async () => []
+        text: async () => [],
+        url: async () => []
       }
     }
   }
@@ -35,5 +41,3 @@ class Dummy {
     return { send: { buttons: { empty: () => new Error() } } }
   }
 }
-
-export default Dummy

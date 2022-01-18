@@ -1,36 +1,40 @@
+import { FetchError } from '@queelag/core'
 import { GetUpdates, Update } from '@queelag/telegram-types'
-import { last } from 'lodash'
-import Child from '../modules/child'
+import { UpdateType } from '../definitions/enums'
+import { Child } from '../modules/child'
 
-class Polling extends Child {
-  private offset: number = 0
-  private polling: boolean = false
+export class Polling extends Child {
+  active: boolean = false
+  offset: number = 0
 
-  start(ms: number = 1000): void {
-    this.polling = true
-    this.get(ms)
+  start(ms: number = 1000, parameters: Partial<GetUpdates>): void {
+    this.active = true
+    this.get(ms, parameters)
   }
 
   stop(): void {
-    this.polling = false
+    this.active = false
   }
 
-  private async get(ms: number): Promise<void> {
-    let body: any, updates: Update[] | Error
+  private async get(ms: number, parameters: Partial<GetUpdates>): Promise<Update[] | FetchError> {
+    let body: GetUpdates, updates: Update[] | FetchError
 
     body = {
+      allowed_updates: Object.values(UpdateType).map((v: UpdateType) => v.toLowerCase()),
       offset: this.offset,
-      allowed_updates: ['message', 'callback_query']
+      ...parameters
     }
 
-    updates = await this.telegram.api.post<GetUpdates, Update[]>('getUpdates', body)
-    if (updates instanceof Error) return
+    updates = await this.telegram.api.post('getUpdates', body)
+    if (updates instanceof Error) return updates
 
     updates.forEach((v: Update) => this.telegram.handle(v))
-    this.offset = updates.length > 0 ? last(updates).update_id + 1 : this.offset
+    this.offset = updates.length > 0 ? updates[updates.length - 1].update_id + 1 : this.offset
 
-    if (this.polling) setTimeout(() => this.get(ms), ms)
+    if (this.active) {
+      setTimeout(() => this.get(ms, parameters), ms)
+    }
+
+    return updates
   }
 }
-
-export default Polling

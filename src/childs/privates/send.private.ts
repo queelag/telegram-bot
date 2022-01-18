@@ -1,8 +1,14 @@
+import { FetchError } from '@queelag/core'
 import { InlineKeyboardButton, Message, SendMessage } from '@queelag/telegram-types'
-import Child from '../../modules/child'
+import { Child } from '../../modules/child'
 
-class SendPrivate extends Child {
-  async buttons(chats: [number, number], text: string, buttons: InlineKeyboardButton[], parameters?: Partial<SendMessage>): Promise<Message | Error> {
+export class SendPrivate extends Child {
+  async buttons(
+    chats: [number, number],
+    text: string,
+    buttons: InlineKeyboardButton[],
+    parameters?: Partial<SendMessage>
+  ): Promise<Message | FetchError | Error> {
     return this.telegram.send.buttons(
       chats[1],
       text,
@@ -16,5 +22,3 @@ class SendPrivate extends Child {
     )
   }
 }
-
-export default SendPrivate

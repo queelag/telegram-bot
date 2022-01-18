@@ -1,23 +1,23 @@
+import { FetchError } from '@queelag/core'
 import { SetWebhook } from '@queelag/telegram-types'
-import Child from '../modules/child'
+import { UpdateType } from '../definitions/enums'
+import { Child } from '../modules/child'
 
-class Webhook extends Child {
-  async set(route: string = '', parameters?: Partial<SetWebhook>): Promise<boolean | Error> {
-    return this.telegram.api.post<SetWebhook, boolean>('setWebhook', {
+export class Webhook extends Child {
+  async set(route: string = '', parameters?: Partial<SetWebhook>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetWebhook>('setWebhook', {
+      allowed_updates: Object.values(UpdateType).map((v: UpdateType) => v.toLowerCase()),
+      max_connections: 100,
       url: this.url(route),
-      max_connections: 50,
-      allowed_updates: ['message', 'callback_query'],
       ...parameters
     })
   }
 
-  async delete(): Promise<boolean | Error> {
-    return this.telegram.api.post<null, boolean>('deleteWebhook')
+  async delete(): Promise<boolean | FetchError> {
+    return this.telegram.api.post('deleteWebhook')
   }
 
   url(route: string): string {
     return 'https://' + this.telegram.hostname + ':' + this.telegram.port + '/' + route + 'bot' + this.telegram.token
   }
 }
-
-export default Webhook

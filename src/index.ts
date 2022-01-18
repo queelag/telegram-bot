@@ -1,9 +1,5 @@
-import TelegramConfiguration from './components/configuration'
-import Telegram from './components/telegram'
-import { HandlerType } from './definitions/enums'
-import { Context, Handler, HandlerMiddleware, HandlerOptions, InputFile } from './definitions/types'
-
-export default Telegram
-export { TelegramConfiguration }
-export { HandlerType }
-export { Context, HandlerMiddleware, HandlerOptions, Handler, InputFile }
+export { UpdateType } from './definitions/enums'
+export { Context, Handler, HandlerOptions } from './definitions/interfaces'
+export { HandlerMiddleware, InputFile } from './definitions/types'
+export { Configuration as TelegramConfiguration } from './modules/configuration'
+export { Telegram } from './modules/telegram'

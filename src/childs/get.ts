@@ -1,3 +1,4 @@
+import { FetchError } from '@queelag/core'
 import {
   BotCommand,
   Chat,
@@ -16,48 +17,46 @@ import {
   User,
   UserProfilePhotos
 } from '@queelag/telegram-types'
-import Child from '../modules/child'
+import { Child } from '../modules/child'
 
-class Get extends Child {
-  async me(): Promise<User | Error> {
-    return this.telegram.api.post<null, User>('getMe')
+export class Get extends Child {
+  async me(): Promise<User | FetchError> {
+    return this.telegram.api.post('getMe')
   }
 
-  async file(id: string): Promise<File | Error> {
-    return this.telegram.api.post<GetFile, File>('getFile', { file_id: id })
+  async file(id: string): Promise<File | FetchError> {
+    return this.telegram.api.post<File, GetFile>('getFile', { file_id: id })
   }
 
-  async userProfilePhotos(id: number, parameters?: Partial<GetUserProfilePhotos>): Promise<UserProfilePhotos | Error> {
-    return this.telegram.api.post<GetUserProfilePhotos, UserProfilePhotos>('getUserProfilePhotos', { user_id: id, ...parameters })
+  async userProfilePhotos(id: number, parameters?: Partial<GetUserProfilePhotos>): Promise<UserProfilePhotos | FetchError> {
+    return this.telegram.api.post<UserProfilePhotos, GetUserProfilePhotos>('getUserProfilePhotos', { user_id: id, ...parameters })
   }
 
-  async chat(id: number): Promise<Chat | Error> {
-    return this.telegram.api.post<GetChat, Chat>('getChat', { chat_id: id })
+  async chat(id: number): Promise<Chat | FetchError> {
+    return this.telegram.api.post<Chat, GetChat>('getChat', { chat_id: id })
   }
 
-  async chatAdministrators(id: number): Promise<ChatMember[] | Error> {
-    return this.telegram.api.post<GetChatAdministrators, ChatMember[]>('getChatAdministrators', { chat_id: id })
+  async chatAdministrators(id: number): Promise<ChatMember[] | FetchError> {
+    return this.telegram.api.post<ChatMember[], GetChatAdministrators>('getChatAdministrators', { chat_id: id })
   }
 
-  async chatMemberCount(id: number): Promise<number | Error> {
-    return this.telegram.api.post<GetChatMemberCount, number>('getChatMemberCount', { chat_id: id })
+  async chatMemberCount(id: number): Promise<number | FetchError> {
+    return this.telegram.api.post<number, GetChatMemberCount>('getChatMemberCount', { chat_id: id })
   }
 
-  async chatMember(chat: number, user: number): Promise<ChatMember | Error> {
-    return this.telegram.api.post<GetChatMember, ChatMember>('getChatMember', { chat_id: chat, user_id: user })
+  async chatMember(chat: number, user: number): Promise<ChatMember | FetchError> {
+    return this.telegram.api.post<ChatMember, GetChatMember>('getChatMember', { chat_id: chat, user_id: user })
   }
 
-  async commands(): Promise<BotCommand[] | Error> {
-    return this.telegram.api.post<null, BotCommand[]>('getMyCommands')
+  async commands(): Promise<BotCommand[] | FetchError> {
+    return this.telegram.api.post('getMyCommands')
   }
 
-  async stickerSet(name: string): Promise<StickerSet | Error> {
-    return this.telegram.api.post<GetStickerSet, StickerSet>('getStickerSet', { name: name })
+  async stickerSet(name: string): Promise<StickerSet | FetchError> {
+    return this.telegram.api.post<StickerSet, GetStickerSet>('getStickerSet', { name: name })
   }
 
-  async gameHighScores(user: number, parameters?: Partial<GetGameHighScores>): Promise<GameHighScore | Error> {
-    return this.telegram.api.post<GetGameHighScores, GameHighScore>('getGameHighScores', { user_id: user, ...parameters })
+  async gameHighScores(user: number, parameters?: Partial<GetGameHighScores>): Promise<GameHighScore | FetchError> {
+    return this.telegram.api.post<GameHighScore, GetGameHighScores>('getGameHighScores', { user_id: user, ...parameters })
   }
 }
-
-export default Get

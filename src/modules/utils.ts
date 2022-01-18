@@ -1,14 +1,14 @@
+import { NumberUtils, ObjectUtils } from '@queelag/core'
 import { CallbackQuery, Chat, InlineKeyboardButton, Message, User } from '@queelag/telegram-types'
-import { get, has, reduce } from 'lodash'
-import { Context } from '../definitions/types'
-import NumberUtils from '../utils/number.utils'
-import Regex from './regex'
+import { UpdateType } from '../definitions/enums'
+import { Context } from '../definitions/interfaces'
+import { Regex } from './regex'
 
-class Utils {
+export class Utils {
   parseStringParameters<T extends object>(string: string): T {
-    return reduce(
-      this.removeCommand(string).split(' '),
-      (r: T, v: string) => {
+    return this.removeCommand(string)
+      .split(' ')
+      .reduce((r: T, v: string) => {
         let splitted: string[], key: string, value: any
 
         splitted = v.split(':')
@@ -16,13 +16,13 @@ class Utils {
         value = splitted.slice(1).join(':')
 
         return { ...r, [key]: value }
-      },
-      {} as T
-    )
+      }, {} as T)
   }
 
   toStringParameters<T extends object>(parameters: T = {} as T): string {
-    return reduce(parameters, (r: string[], v: any, k: string) => [...r, `${k}:${v}`], []).join(' ')
+    return Object.entries(parameters)
+      .reduce((r: string[], [k, v]: [string, any]) => [...r, `${k}:${v}`], [])
+      .join(' ')
   }
 
   toCallbackData<T extends object>(command: string, parameters?: T): string {
@@ -37,21 +37,21 @@ class Utils {
     return string.replace(Regex.command_with_username, '').trim()
   }
 
-  findCommandByContext(context: Context): string {
+  findCommandByContext<T extends UpdateType>(context: Context[T]): string {
     let string: string
 
     switch (true) {
-      case has(context, 'reply_to_message.text'):
-        string = (context as Message).reply_to_message.text
-        break
-      case has(context, 'text'):
-        string = (context as Message).text
-        break
-      case has(context, 'caption'):
+      case ObjectUtils.has(context, 'caption'):
         string = (context as Message).caption
         break
-      case has(context, 'data'):
+      case ObjectUtils.has(context, 'data'):
         string = (context as CallbackQuery).data
+        break
+      case ObjectUtils.has(context, 'reply_to_message.text'):
+        string = (context as Message).reply_to_message.text
+        break
+      case ObjectUtils.has(context, 'text'):
+        string = (context as Message).text
         break
       default:
         string = ''
@@ -61,16 +61,16 @@ class Utils {
     return this.findCommand(string)
   }
 
-  findChatId(context: Context): number {
+  findChatId<T extends UpdateType>(context: Context[T]): number {
     return this.findChat(context).id
   }
 
-  findPrivateChatId(context: Context): number {
+  findPrivateChatId<T extends UpdateType>(context: Context[T]): number {
     return this.findUserId(context)
   }
 
   findCallbackQueryChatId(context: CallbackQuery): number {
-    return NumberUtils.parse(get(this.parseStringParameters(context.data), 'c', context.message.chat.id))
+    return NumberUtils.parseInt(ObjectUtils.get(this.parseStringParameters(context.data), 'c', context.message.chat.id))
   }
 
   findReplyToMessageChatId(context: Message): number {
@@ -79,53 +79,53 @@ class Utils {
     exec = Regex.repliable_chat_id.exec(context.reply_to_message.text)
     if (!exec) return context.chat.id
 
-    return NumberUtils.parse(exec[0].replace(':', '')) || context.chat.id
+    return NumberUtils.parseInt(exec[0].replace(':', '')) || context.chat.id
   }
 
-  findChatType(context: Context): string {
+  findChatType<T extends UpdateType>(context: Context[T]): string {
     return this.findChat(context).type
   }
 
-  findChat(context: Context): Chat {
+  findChat<T extends UpdateType>(context: Context[T]): Chat {
     switch (true) {
-      case has(context, 'chat'):
+      case ObjectUtils.has(context, 'chat'):
         return (context as Message).chat
-      case has(context, 'message.chat'):
+      case ObjectUtils.has(context, 'message.chat'):
         return (context as CallbackQuery).message.chat
       default:
         return { id: 0, type: '' }
     }
   }
 
-  findUser(context: Context): User {
+  findUser<T extends UpdateType>(context: Context[T]): User {
     switch (true) {
-      case has(context, 'from'):
-        return context.from
+      case ObjectUtils.has(context, 'from'):
+        return (context as Message).from
       default:
         return { id: 0, is_bot: false, first_name: '', username: '' }
     }
   }
 
-  findUserId(context: Context): number {
+  findUserId<T extends UpdateType>(context: Context[T]): number {
     return this.findUser(context).id
   }
 
-  findUserFirstName(context: Context): string {
+  findUserFirstName<T extends UpdateType>(context: Context[T]): string {
     return this.findUser(context).first_name
   }
 
-  findUsername(context: Context): string {
+  findUsername<T extends UpdateType>(context: Context[T]): string {
     return this.findUser(context).username
   }
 
-  findText(context: Context): string {
+  findText<T extends UpdateType>(context: Context[T]): string {
     switch (true) {
-      case has(context, 'text'):
-        return (context as Message).text
-      case has(context, 'caption'):
+      case ObjectUtils.has(context, 'caption'):
         return (context as Message).caption
-      case has(context, 'data'):
+      case ObjectUtils.has(context, 'data'):
         return (context as CallbackQuery).data
+      case ObjectUtils.has(context, 'text'):
+        return (context as Message).text
       default:
         return ''
     }
@@ -164,5 +164,3 @@ class Utils {
     }
   }
 }
-
-export default Utils

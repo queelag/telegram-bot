@@ -1,10 +1,9 @@
+import { FetchError } from '@queelag/core'
 import { PinChatMessage } from '@queelag/telegram-types'
-import Child from '../modules/child'
+import { Child } from '../modules/child'
 
-class Pin extends Child {
-  async chatMessage(chat: number, message: number, parameters?: Partial<PinChatMessage>): Promise<boolean | Error> {
-    return this.telegram.api.post<PinChatMessage, boolean>('pinChatMessage', { chat_id: chat, message_id: message, ...parameters })
+export class Pin extends Child {
+  async chatMessage(chat: number, message: number, parameters?: Partial<PinChatMessage>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, PinChatMessage>('pinChatMessage', { chat_id: chat, message_id: message, ...parameters })
   }
 }
-
-export default Pin

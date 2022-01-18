@@ -1,20 +1,15 @@
 {
   "author": "Dario Sechi",
   "dependencies": {
-    "file-type": "^16.3.0",
-    "form-data": "^4.0.0",
-    "fs-extra": "^10.0.0",
-    "lodash": "^4.17.21",
-    "queue": "^6.0.2"
+    "file-type": "^16.3.0"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.14.0",
+    "@queelag/core": "^1.0.54",
     "@types/chance": "^1.1.1",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
-    "@types/fs-extra": "^9.0.11",
     "@types/jest": "^27.0.2",
-    "@types/lodash": "^4.14.168",
     "@types/node": "^16.11.2",
     "axios": "^0.23.0",
     "body-parser": "^1.19.0",
@@ -30,6 +25,7 @@
   "main": "index.js",
   "name": "@queelag/telegram",
   "peerDependencies": {
+    "@queelag/core": ">= 1.0.0",
     "@queelag/telegram-types": ">= 1.0.0"
   },
   "publishConfig": {
@@ -37,10 +33,9 @@
   },
   "scripts": {
     "start": "node dist/index.js",
-    "build": "rm -rf dist && rm -rf declarations && yarn tsc && cd ..",
+    "build": "rm -rf dist && yarn tsc && yarn api-extractor run --local",
     "test": "yarn jest index",
     "tarball": "yarn version && cp package.json dist/. && cd dist && yarn pack",
-    "dts": "yarn api-extractor run --local",
     "deploy": "yarn test && yarn build && yarn dts && yarn tarball && yarn publish dist/*.tgz --access public && git push"
   },
   "version": "1.7.3"

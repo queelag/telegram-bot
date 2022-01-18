@@ -1,7 +1,6 @@
 import { InlineKeyboardButton, LoginUrl } from '@queelag/telegram-types'
-import { reduce } from 'lodash'
 
-class ButtonBuilder {
+export class ButtonBuilder {
   text(text: string): InlineKeyboardButton {
     return { text: text }
   }
@@ -39,8 +38,8 @@ class ButtonBuilder {
   }
 
   private toStringParameters<T extends object>(parameters: T = {} as T): string {
-    return reduce(parameters, (r: string[], v: any, k: string) => [...r, `${k}:${v}`], []).join(' ')
+    return Object.entries(parameters)
+      .reduce((r: string[], [k, v]: [string, any]) => [...r, `${k}:${v}`], [])
+      .join(' ')
   }
 }
-
-export default ButtonBuilder
