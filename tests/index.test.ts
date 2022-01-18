@@ -31,7 +31,7 @@ describe('Telegram', () => {
   })
 
   it('registers handler', () => {
-    telegram.on('start', (context: Message) => (check = true), UpdateType.MESSAGE)
+    telegram.on(UpdateType.MESSAGE, (context: Message) => (check = true), 'start')
     expect(ObjectUtils.get(telegram, 'handlers', []).length).toBe(1)
   })
 
