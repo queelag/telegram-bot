@@ -108,7 +108,7 @@ export class Telegram {
     handler.key = key
     handler.middleware = middleware
     handler.type = type
-    handler.options = ObjectUtils.merge(handler.options, options)
+    handler.options = ObjectUtils.merge(handler.options, options || {})
 
     potential = this.findMatchingHandler(handler.type, handler.key)
     potential.id ? (potential.middleware = middleware) : this.handlers.push(handler)
