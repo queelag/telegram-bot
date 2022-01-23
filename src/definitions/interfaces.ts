@@ -87,18 +87,18 @@ export interface Context {
 }
 
 export interface Handler<T extends UpdateType = any, U extends HandlerOptions = HandlerOptions> {
+  description?: string
   id: string
-  key: string
+  key?: string
   middleware: HandlerMiddleware<T>
-  type: UpdateType
   options: U
+  type: UpdateType
 }
 
 export interface HandlerOptions {
   deleteOnCallbackQuery?: boolean
   deleteOnReply?: boolean
   deleteOnMessageStart?: boolean
-  description?: string
 }
 
 export interface InputMediaAlternative extends Omit<InputMediaAudio | InputMediaDocument | InputMediaPhoto | InputMediaVideo, 'media'> {

@@ -4,13 +4,19 @@ import { Dummy } from '../modules/dummy'
 
 export class ReplyToMessageUtils {
   static decodeBody<T>(text?: string): MessageBody<T> {
-    let body: MessageBody | Error
+    let body: MessageBody | Error, match: RegExpMatchArray | null, href: string
 
     if (!text) {
       return Dummy.messageBody
     }
 
-    body = tc(() => JSON.parse(Buffer.from(((text as string).match(/<spoiler>[^<>]+<\/spoiler>\z/m) || [''])[0], 'base64').toString()))
+    match = text.match(/<a>[^<>]+<\/a>\z/m)
+    if (!match) return Dummy.messageBody
+
+    href = match[0].replace('<a href="', '').replace('"></a>', '')
+    if (!href) return Dummy.messageBody
+
+    body = tc(() => JSON.parse(Buffer.from(href, 'base64').toString()))
     if (body instanceof Error) return Dummy.messageBody
 
     return body
@@ -24,6 +30,6 @@ export class ReplyToMessageUtils {
     body.data = data
     body.type = type
 
-    return `<spoiler>${Buffer.from(JSON.stringify(body)).toString('base64')}</spoiler>`
+    return `<a href="${Buffer.from(JSON.stringify(body)).toString('base64')}"></a>`
   }
 }

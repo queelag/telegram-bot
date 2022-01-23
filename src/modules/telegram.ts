@@ -131,10 +131,11 @@ export class Telegram {
     })
   }
 
-  on<T extends UpdateType, U extends HandlerOptions>(type: T, middleware: HandlerMiddleware<T>, key: string = '', options?: U): void {
+  on<T extends UpdateType, U extends HandlerOptions>(type: T, middleware: HandlerMiddleware<T>, key?: string, description?: string, options?: U): void {
     let handler: Handler<T, U>, potential: Handler<T, U>
 
     handler = Dummy.handler
+    handler.description = description
     handler.id = IDUtils.unique(this.handlerIDs)
     handler.key = key
     handler.middleware = middleware
@@ -430,7 +431,7 @@ export class Telegram {
   get commands(): BotCommand[] {
     return this.handlers
       .filter((v: Handler) => v.key && v.type === UpdateType.MESSAGE)
-      .reduce((r: BotCommand[], v: Handler) => [...r, { command: v.key, description: v.options.description || '' }], [])
+      .map((v: Handler) => ({ command: v.key || '', description: v.description || '' }))
   }
 
   private get handlerIDs(): string[] {

@@ -23,7 +23,7 @@ export class CommandUtils {
   }
 
   static get(string?: string): string {
-    return (REGEXP_COMMAND.exec(string?.substring(0, 512) || '') || [''])[0].substring(1)
+    return (REGEXP_COMMAND.exec(string?.slice(0, 512) || '') || [''])[0].slice(1)
   }
 
   static omit(string: string): string {

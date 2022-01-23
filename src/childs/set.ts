@@ -47,8 +47,8 @@ export class Set extends Child {
     return this.telegram.api.post<boolean, SetChatTitle>('setChatTitle', { chat_id: chatID, title: title })
   }
 
-  async commands(commands: BotCommand[]): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetMyCommands>('setMyCommands', { commands: commands })
+  async commands(commands: BotCommand[], parameters?: Partial<SetMyCommands>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetMyCommands>('setMyCommands', { commands: commands, ...parameters })
   }
 
   async gameScore(userID: number, score: number, parameters?: Partial<SetGameScore>): Promise<boolean | FetchError> {

@@ -127,7 +127,7 @@ export class Send extends Child {
   async message(chatID: number, text: string, parameters?: Partial<SendMessage>): Promise<Message | FetchError> {
     return this.telegram.api.post<Message, SendMessage>('sendMessage', {
       chat_id: chatID,
-      text: text.substring(0, 4096),
+      text: text,
       ...parameters
     })
   }
