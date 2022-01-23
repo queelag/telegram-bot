@@ -11,11 +11,11 @@ export class Answer extends Child {
     return this.telegram.api.post<boolean, AnswerInlineQuery>('answerInlineQuery', { inline_query_id: id, results: results, ...parameters })
   }
 
-  async shippingQuery(id: string, ok: boolean, parameters?: Partial<AnswerShippingQuery>): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, AnswerShippingQuery>('answerShippingQuery', { shipping_query_id: id, ok: ok, ...parameters })
+  async preCheckoutQuery(id: string, ok: boolean, parameters?: Partial<AnswerPreCheckoutQuery>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, AnswerPreCheckoutQuery>('answerPreCheckoutQuery', { ok: ok, pre_checkout_query_id: id, ...parameters })
   }
 
-  async preCheckoutQuery(id: string, ok: boolean, parameters?: Partial<AnswerPreCheckoutQuery>): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, AnswerPreCheckoutQuery>('answerPreCheckoutQuery', { pre_checkout_query_id: id, ok: ok, ...parameters })
+  async shippingQuery(id: string, ok: boolean, parameters?: Partial<AnswerShippingQuery>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, AnswerShippingQuery>('answerShippingQuery', { ok: ok, shipping_query_id: id, ...parameters })
   }
 }

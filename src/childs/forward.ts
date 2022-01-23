@@ -3,7 +3,12 @@ import { ForwardMessage, Message } from '@queelag/telegram-types'
 import { Child } from '../modules/child'
 
 export class Forward extends Child {
-  async message(chat: number, fromChat: number, message: number, parameters?: Partial<ForwardMessage>): Promise<Message | FetchError> {
-    return this.telegram.api.post<Message, ForwardMessage>('forwardMessage', { chat_id: chat, from_chat_id: fromChat, message_id: message, ...parameters })
+  async message(chatID: number, fromChatID: number, messageID: number, parameters?: Partial<ForwardMessage>): Promise<Message | FetchError> {
+    return this.telegram.api.post<Message, ForwardMessage>('forwardMessage', {
+      chat_id: chatID,
+      from_chat_id: fromChatID,
+      message_id: messageID,
+      ...parameters
+    })
   }
 }

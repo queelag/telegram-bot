@@ -1,14 +1,12 @@
 import { UpdateType } from '../definitions/enums'
-import { ConfigurationAPI, ConfigurationDefault, ConfigurationHandler, Handler } from '../definitions/interfaces'
+import { CallbackQueryBody, ConfigurationAPI, ConfigurationDefault, ConfigurationHandler, Handler, MessageBody } from '../definitions/interfaces'
 
 export class Dummy {
-  static get handler(): Handler<any, any> {
+  static get callbackQueryBody(): CallbackQueryBody {
     return {
-      id: '',
-      key: '',
-      middleware: () => null,
-      options: { deleteOnCallbackQuery: true, deleteOnReply: true, description: '' },
-      type: UpdateType.MESSAGE
+      c: undefined,
+      d: 0,
+      t: ''
     }
   }
 
@@ -39,5 +37,22 @@ export class Dummy {
 
   static get configurationHandler(): ConfigurationHandler {
     return { send: { buttons: { empty: () => new Error() } } }
+  }
+  static get handler(): Handler<any, any> {
+    return {
+      id: '',
+      key: '',
+      middleware: () => null,
+      options: {
+        deleteOnCallbackQuery: true,
+        deleteOnMessageStart: true,
+        deleteOnReply: true
+      },
+      type: UpdateType.MESSAGE
+    }
+  }
+
+  static get messageBody(): MessageBody {
+    return { chatID: undefined, data: undefined, type: '' }
   }
 }

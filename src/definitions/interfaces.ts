@@ -1,6 +1,6 @@
 import { FetchResponse } from '@queelag/core'
 import {
-  CallbackQuery,
+  CallbackQuery as NativeCallbackQuery,
   ChatJoinRequest,
   ChatMemberUpdated,
   ChosenInlineResult,
@@ -27,6 +27,16 @@ export interface APIResponseData<T> {
   result: T
 }
 
+export interface CallbackQuery<T = any> extends NativeCallbackQuery {
+  body: CallbackQueryBody<T>
+}
+
+export interface CallbackQueryBody<T = any> {
+  c?: number
+  d: T
+  t: string
+}
+
 export interface ConfigurationAPI {
   post: {
     callback: {
@@ -37,21 +47,21 @@ export interface ConfigurationAPI {
 
 export interface ConfigurationDefault {
   buttons: {
-    text: (chat: number) => Promise<InlineKeyboardButton[]>
-    url: (chat: number) => Promise<InlineKeyboardButton[]>
-    login: (chat: number) => Promise<InlineKeyboardButton[]>
-    callback: (chat: number) => Promise<InlineKeyboardButton[]>
-    query: (chat: number) => Promise<InlineKeyboardButton[]>
-    queryCurrentChat: (chat: number) => Promise<InlineKeyboardButton[]>
-    game: (chat: number) => Promise<InlineKeyboardButton[]>
-    pay: (chat: number) => Promise<InlineKeyboardButton[]>
+    text: (chatID: number) => Promise<InlineKeyboardButton[]>
+    url: (chatID: number) => Promise<InlineKeyboardButton[]>
+    login: (chatID: number) => Promise<InlineKeyboardButton[]>
+    callback: (chatID: number) => Promise<InlineKeyboardButton[]>
+    query: (chatID: number) => Promise<InlineKeyboardButton[]>
+    queryCurrentChat: (chatID: number) => Promise<InlineKeyboardButton[]>
+    game: (chatID: number) => Promise<InlineKeyboardButton[]>
+    pay: (chatID: number) => Promise<InlineKeyboardButton[]>
   }
 }
 
 export interface ConfigurationHandler {
   send: {
     buttons: {
-      empty: (chat: number) => Error
+      empty: (chatID: number) => Error
     }
   }
 }
@@ -71,14 +81,9 @@ export interface Context {
   [UpdateType.POLL]: Poll
   [UpdateType.POLL_ANSWER]: PollAnswer
   [UpdateType.PRE_CHECKOUT_QUERY]: PreCheckoutQuery
-  [UpdateType.REPLY_TO_MESSAGE]: Message
+  [UpdateType.REPLY_TO_MESSAGE]: ReplyToMessage
   [UpdateType.SHIPPING_QUERY]: ShippingQuery
-}
-
-export interface HandlerOptions {
-  deleteOnCallbackQuery?: boolean
-  deleteOnReply?: boolean
-  description?: string
+  [UpdateType.START]: Start
 }
 
 export interface Handler<T extends UpdateType = any, U extends HandlerOptions = HandlerOptions> {
@@ -89,10 +94,36 @@ export interface Handler<T extends UpdateType = any, U extends HandlerOptions = 
   options: U
 }
 
+export interface HandlerOptions {
+  deleteOnCallbackQuery?: boolean
+  deleteOnReply?: boolean
+  deleteOnMessageStart?: boolean
+  description?: string
+}
+
 export interface InputMediaAlternative extends Omit<InputMediaAudio | InputMediaDocument | InputMediaPhoto | InputMediaVideo, 'media'> {
   media: InputFile
 }
 
+export interface MessageBody<T = any> {
+  chatID?: number
+  data: T
+  type: string
+}
+
+export interface ReplyToMessage<T = any> extends Message {
+  body: MessageBody<T>
+}
+
 export interface SendMediaGroupAlternative extends Omit<SendMediaGroup, 'media'> {
   media: InputMediaAlternative[]
+}
+
+export interface Start<T = any> extends Message {
+  body: MessageBody<T>
+}
+
+export interface TelegramName {
+  first: string
+  last: string
 }

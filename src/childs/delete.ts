@@ -3,16 +3,16 @@ import { DeleteChatPhoto, DeleteChatStickerSet, DeleteMessage, DeleteStickerFrom
 import { Child } from '../modules/child'
 
 export class Delete extends Child {
-  async chatPhoto(chat: number): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, DeleteChatPhoto>('deleteChatPhoto', { chat_id: chat })
+  async chatPhoto(chatID: number): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, DeleteChatPhoto>('deleteChatPhoto', { chat_id: chatID })
   }
 
-  async chatStickerSet(chat: number): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, DeleteChatStickerSet>('deleteChatStickerSet', { chat_id: chat })
+  async chatStickerSet(chatID: number): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, DeleteChatStickerSet>('deleteChatStickerSet', { chat_id: chatID })
   }
 
-  async message(chat: number, message: number): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, DeleteMessage>('deleteMessage', { chat_id: chat, message_id: message })
+  async message(chatID: number, message: number): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, DeleteMessage>('deleteMessage', { chat_id: chatID, message_id: message })
   }
 
   async stickerFromSet(sticker: string): Promise<boolean | FetchError> {

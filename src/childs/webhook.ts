@@ -4,6 +4,10 @@ import { UpdateType } from '../definitions/enums'
 import { Child } from '../modules/child'
 
 export class Webhook extends Child {
+  async delete(): Promise<boolean | FetchError> {
+    return this.telegram.api.post('deleteWebhook')
+  }
+
   async set(route: string = '', parameters?: Partial<SetWebhook>): Promise<boolean | FetchError> {
     return this.telegram.api.post<boolean, SetWebhook>('setWebhook', {
       allowed_updates: Object.values(UpdateType).map((v: UpdateType) => v.toLowerCase()),
@@ -11,10 +15,6 @@ export class Webhook extends Child {
       url: this.url(route),
       ...parameters
     })
-  }
-
-  async delete(): Promise<boolean | FetchError> {
-    return this.telegram.api.post('deleteWebhook')
   }
 
   url(route: string): string {

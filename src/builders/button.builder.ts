@@ -1,20 +1,21 @@
 import { InlineKeyboardButton, LoginUrl } from '@queelag/telegram-types'
+import { CallbackQueryUtils } from '../utils/callback.query.utils'
 
 export class ButtonBuilder {
-  text(text: string): InlineKeyboardButton {
-    return { text: text }
+  callback<T>(text: string, data: T, type: string, chatID?: number): InlineKeyboardButton {
+    return { text: text, callback_data: CallbackQueryUtils.encodeBody(data, type, chatID) }
   }
 
-  url(text: string, url: string): InlineKeyboardButton {
-    return { text: text, url: url }
+  game(text: string, game: string): InlineKeyboardButton {
+    return { text: text, callback_game: game }
   }
 
   login(text: string, url: string, fields?: Partial<LoginUrl>): InlineKeyboardButton {
     return { text: text, login_url: { url: url, ...fields } }
   }
 
-  callback<T extends object>(text: string, command: string, parameters?: T): InlineKeyboardButton {
-    return { text: text, callback_data: this.toCallbackData(command, parameters) }
+  pay(text: string): InlineKeyboardButton {
+    return { text: text, pay: true }
   }
 
   query(text: string, query: string): InlineKeyboardButton {
@@ -25,21 +26,11 @@ export class ButtonBuilder {
     return { text: text, switch_inline_query_current_chat: query }
   }
 
-  game(text: string, game: string): InlineKeyboardButton {
-    return { text: text, callback_game: game }
+  text(text: string): InlineKeyboardButton {
+    return { text: text }
   }
 
-  pay(text: string): InlineKeyboardButton {
-    return { text: text, pay: true }
-  }
-
-  private toCallbackData<T extends object>(command: string, parameters?: T): string {
-    return '/' + command + ' ' + this.toStringParameters(parameters)
-  }
-
-  private toStringParameters<T extends object>(parameters: T = {} as T): string {
-    return Object.entries(parameters)
-      .reduce((r: string[], [k, v]: [string, any]) => [...r, `${k}:${v}`], [])
-      .join(' ')
+  url(text: string, url: string): InlineKeyboardButton {
+    return { text: text, url: url }
   }
 }

@@ -19,51 +19,51 @@ import { InputFile } from '../definitions/types'
 import { Child } from '../modules/child'
 
 export class Set extends Child {
-  async chatAdministratorCustomTitle(chat: number, user: number, customTitle: string): Promise<boolean | FetchError> {
+  async chatAdministratorCustomTitle(chatID: number, userID: number, customTitle: string): Promise<boolean | FetchError> {
     return this.telegram.api.post<boolean, SetChatAdministratorCustomTitle>('setChatAdministratorCustomTitle', {
-      chat_id: chat,
-      user_id: user,
-      custom_title: customTitle
+      custom_title: customTitle,
+      chat_id: chatID,
+      user_id: userID
     })
   }
 
-  async chatPermissions(chat: number, permissions: ChatPermissions): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetChatPermissions>('setChatTitle', { chat_id: chat, permissions: permissions })
+  async chatDescription(chatID: number, description: string): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetChatDescription>('setChatDescription', { chat_id: chatID, description: description })
   }
 
-  async chatPhoto(chat: number, photo: InputFile): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetChatPhoto>('setChatPhoto', { chat_id: chat, photo: photo })
+  async chatPermissions(chatID: number, permissions: ChatPermissions): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetChatPermissions>('setChatTitle', { chat_id: chatID, permissions: permissions })
   }
 
-  async chatTitle(chat: number, title: string): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetChatTitle>('setChatTitle', { chat_id: chat, title: title })
+  async chatPhoto(chatID: number, photo: InputFile): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetChatPhoto>('setChatPhoto', { chat_id: chatID, photo: photo })
   }
 
-  async chatDescription(chat: number, description: string): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetChatDescription>('setChatDescription', { chat_id: chat, description: description })
+  async chatStickerSet(chatID: number, stickerSetName: string): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetChatStickerSet>('setChatStickerSet', { chat_id: chatID, sticker_set_name: stickerSetName })
   }
 
-  async chatStickerSet(chat: number, stickerSetName: string): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetChatStickerSet>('setChatStickerSet', { chat_id: chat, sticker_set_name: stickerSetName })
+  async chatTitle(chatID: number, title: string): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetChatTitle>('setChatTitle', { chat_id: chatID, title: title })
   }
 
   async commands(commands: BotCommand[]): Promise<boolean | FetchError> {
     return this.telegram.api.post<boolean, SetMyCommands>('setMyCommands', { commands: commands })
   }
 
+  async gameScore(userID: number, score: number, parameters?: Partial<SetGameScore>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetGameScore>('setGameScore', { score: score, user_id: userID, ...parameters })
+  }
+
+  async passportDataErrors(userID: number, errors: PassportElementError[]): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetPassportDataErrors>('setPassportDataErrors', { errors: errors, user_id: userID })
+  }
+
   async stickerPositionInSet(sticker: string, position: number): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetStickerPositionInSet>('setStickerPositionInSet', { sticker: sticker, position: position })
+    return this.telegram.api.post<boolean, SetStickerPositionInSet>('setStickerPositionInSet', { position: position, sticker: sticker })
   }
 
-  async stickerSetThumb(name: string, user: number, parameters?: Partial<SetStickerSetThumb>): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetStickerSetThumb>('setStickerSetThumb', { name: name, user_id: user, ...parameters })
-  }
-
-  async passportDataErrors(user: number, errors: PassportElementError[]): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetPassportDataErrors>('setPassportDataErrors', { user_id: user, errors: errors })
-  }
-
-  async gameScore(user: number, score: number, parameters?: Partial<SetGameScore>): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetGameScore>('setGameScore', { user_id: user, score: score, ...parameters })
+  async stickerSetThumb(name: string, userID: number, parameters?: Partial<SetStickerSetThumb>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetStickerSetThumb>('setStickerSetThumb', { name: name, user_id: userID, ...parameters })
   }
 }

@@ -3,12 +3,12 @@ import { CreateNewStickerSet } from '@queelag/telegram-types'
 import { Child } from '../modules/child'
 
 export class Create extends Child {
-  async stickerSet(user: number, name: string, title: string, emojis: string, parameters: Partial<CreateNewStickerSet>): Promise<boolean | FetchError> {
+  async stickerSet(userID: number, name: string, title: string, emojis: string, parameters: Partial<CreateNewStickerSet>): Promise<boolean | FetchError> {
     return this.telegram.api.post<boolean, CreateNewStickerSet>('createNewStickerSet', {
-      user_id: user,
+      emojis: emojis,
       name: name,
       title: title,
-      emojis: emojis,
+      user_id: userID,
       ...parameters
     })
   }
