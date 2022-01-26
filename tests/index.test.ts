@@ -1,7 +1,6 @@
-import { ObjectUtils } from '@queelag/core'
+import { API, ObjectUtils } from '@queelag/core'
 import { Message, Update } from '@queelag/telegram-types'
-import Axios, { AxiosInstance } from 'axios'
-import bodyParser from 'body-parser'
+import { json } from 'body-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express, { Express, Request, Response } from 'express'
@@ -11,23 +10,24 @@ import { Telegram } from '../src/index'
 
 describe('Telegram', () => {
   let e: Express, s: Server
-  let telegram: Telegram, fake: AxiosInstance, check: boolean
+  let telegram: Telegram, fake: API, check: boolean
 
   beforeAll(async () => {
     dotenv.config()
 
     e = express()
     e.use(cors())
-    e.use(bodyParser.json())
+    e.use(json())
+
     await new Promise<void>((r) => (s = e.listen(5000, () => r())))
 
-    telegram = new Telegram(process.env.TOKEN, 'localhost')
+    telegram = new Telegram(process.env.TOKEN || '', 'localhost')
     e.post('/bot' + telegram.token, (req: Request<any, any, Update>, res: Response) => {
       telegram.handle(req.body)
       res.status(200).send()
     })
 
-    fake = Axios.create({ baseURL: 'http://localhost:5000/bot' + process.env.TOKEN + '/' })
+    fake = new API('http://localhost:5000/bot' + process.env.TOKEN + '/')
   })
 
   it('registers handler', () => {
