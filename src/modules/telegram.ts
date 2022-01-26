@@ -379,7 +379,7 @@ export class Telegram {
   handleReplyToMessage(reply: Message): Handler {
     let body: MessageBody, handler: Handler
 
-    body = ReplyToMessageUtils.decodeBody(reply.text)
+    body = ReplyToMessageUtils.decodeBody(reply.reply_to_message?.entities || [])
 
     handler = this.findMatchingHandler(UpdateType.REPLY_TO_MESSAGE, body.type)
     if (!handler.id) return handler

@@ -1,28 +1,26 @@
 import { tc } from '@queelag/core'
+import { MessageEntity } from '@queelag/telegram-types'
 import { MessageBody } from '../definitions/interfaces'
 import { Dummy } from '../modules/dummy'
 
 export class ReplyToMessageUtils {
-  static decodeBody<T>(text?: string): MessageBody<T> {
-    let body: MessageBody | Error, match: RegExpMatchArray | null, href: string
+  static decodeBody<T>(entities: MessageEntity[]): MessageBody<T> {
+    let entity: MessageEntity | undefined, encoded: string, body: MessageBody | Error
 
-    if (!text) {
-      return Dummy.messageBody
-    }
+    entity = entities[entities.length - 1]
+    if (!entity || !entity.url) return Dummy.messageBody
 
-    match = text.match(/<a>[^<>]+<\/a>\z/m)
-    if (!match) return Dummy.messageBody
+    encoded = entity.url.replace('https://t.me/?a=', '')
+    console.log(entity.url, entity.url.replace('https://t.me/?a=', ''), encoded)
 
-    href = match[0].replace('<a href="', '').replace('"></a>', '')
-    if (!href) return Dummy.messageBody
-
-    body = tc(() => JSON.parse(Buffer.from(href, 'base64').toString()))
+    body = tc(() => JSON.parse(Buffer.from(encoded, 'base64').toString()))
+    console.log(body)
     if (body instanceof Error) return Dummy.messageBody
 
     return body
   }
 
-  static encodeBody<T>(data: T, type: string, chatID: number = 0): string {
+  static encodeBody<T>(data: T, type: string, chatID?: number): string {
     let body: MessageBody
 
     body = Dummy.messageBody
@@ -30,6 +28,6 @@ export class ReplyToMessageUtils {
     body.data = data
     body.type = type
 
-    return `<a href="${Buffer.from(JSON.stringify(body)).toString('base64')}"></a>`
+    return `<a href="https://t.me/?a=${Buffer.from(JSON.stringify(body)).toString('base64')}">_</a>`
   }
 }
