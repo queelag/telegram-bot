@@ -11,10 +11,8 @@ export class ReplyToMessageUtils {
     if (!entity || !entity.url) return Dummy.messageBody
 
     encoded = entity.url.replace('https://t.me/?a=', '')
-    console.log(entity.url, entity.url.replace('https://t.me/?a=', ''), encoded)
 
     body = tc(() => JSON.parse(Buffer.from(encoded, 'base64').toString()))
-    console.log(body)
     if (body instanceof Error) return Dummy.messageBody
 
     return body
@@ -28,6 +26,6 @@ export class ReplyToMessageUtils {
     body.data = data
     body.type = type
 
-    return `<a href="https://t.me/?a=${Buffer.from(JSON.stringify(body)).toString('base64')}">_</a>`
+    return `<a href="https://t.me/?a=${Buffer.from(JSON.stringify(body)).toString('base64')}">ㅤ</a>`
   }
 }

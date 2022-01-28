@@ -148,8 +148,7 @@ export class Send extends Child {
     parameters?: Partial<SendMessage>,
     fromChatID?: number
   ): Promise<Message | FetchError> {
-    return this.message(chatID, text + '\n\n' + ReplyToMessageUtils.encodeBody(data, type, fromChatID), {
-      parse_mode: 'HTML',
+    return this.html(chatID, text + ReplyToMessageUtils.encodeBody(data, type, fromChatID), {
       reply_markup: {
         force_reply: true,
         selective: true
