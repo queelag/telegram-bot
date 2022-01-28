@@ -218,12 +218,12 @@ export class Telegram {
     let handler: Handler, body: CallbackQueryBody
 
     body = CallbackQueryUtils.decodeBody(query.data)
+    ObjectUtils.set(query, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.CALLBACK_QUERY, body.t)
     if (!handler.id) return handler
 
     handler.middleware(query)
-    ModuleLogger.debug('Telegram', 'handleCallbackQuery', `A ${handler.type} update has been handled.`, query, handler)
 
     if (handler.options.deleteOnCallbackQuery && query.message) {
       this.delete.message(body.c ? query.from.id : query.message.chat.id, query.message.message_id)
@@ -380,6 +380,7 @@ export class Telegram {
     let body: MessageBody, handler: Handler
 
     body = ReplyToMessageUtils.decodeBody(reply.reply_to_message?.entities || [])
+    ObjectUtils.set(reply, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.REPLY_TO_MESSAGE, body.type)
     if (!handler.id) return handler
@@ -409,11 +410,10 @@ export class Telegram {
     let handler: Handler, body: MessageBody
 
     body = StartUtils.decodeBody(start.text)
+    ObjectUtils.set(start, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.START, body.type)
     if (!handler.id) return handler
-
-    ObjectUtils.set(start, 'body', body)
 
     handler.middleware(start)
 
