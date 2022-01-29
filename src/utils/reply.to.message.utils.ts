@@ -26,6 +26,6 @@ export class ReplyToMessageUtils {
     body.data = data
     body.type = type
 
-    return `<a href="https://t.me/?a=${Buffer.from(JSON.stringify(body)).toString('base64')}">ㅤ</a>`
+    return `\n<a href="https://t.me/?a=${Buffer.from(JSON.stringify(body)).toString('base64')}">ㅤ</a>`
   }
 }

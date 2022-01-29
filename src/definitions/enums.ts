@@ -1,3 +1,7 @@
+export enum LoggerName {
+  MODULE = 'TELEGRAM_MODULE'
+}
+
 export enum UpdateType {
   CALLBACK_QUERY = 'CALLBACK_QUERY',
   CHANNEL_POST = 'CHANNEL_POST',
