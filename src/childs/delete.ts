@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { DeleteChatPhoto, DeleteChatStickerSet, DeleteMessage, DeleteStickerFromSet } from '@queelag/telegram-types'
+import { DeleteChatPhoto, DeleteChatStickerSet, DeleteMessage, DeleteStickerFromSet } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Delete extends Child {

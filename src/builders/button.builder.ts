@@ -1,4 +1,4 @@
-import { InlineKeyboardButton, LoginUrl } from '@queelag/telegram-types'
+import { InlineKeyboardButton, LoginUrl } from '@queelag/telegram-bot-types'
 import { CallbackQueryUtils } from '../utils/callback.query.utils'
 
 export class ButtonBuilder {

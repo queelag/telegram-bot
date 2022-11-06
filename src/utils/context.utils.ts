@@ -1,5 +1,5 @@
-import { ObjectUtils } from '@queelag/core'
-import { Chat, User } from '@queelag/telegram-types'
+import { getObjectProperty, hasObjectProperty } from '@queelag/core'
+import { Chat, User } from '@queelag/telegram-bot-types'
 import { UpdateType } from '../definitions/enums'
 import { Context } from '../definitions/interfaces'
 
@@ -14,10 +14,10 @@ export class ContextUtils {
 
   static getChat<T extends UpdateType>(context: Context[T]): Chat {
     switch (true) {
-      case ObjectUtils.has(context, 'chat'):
-        return ObjectUtils.get(context, 'chat', { id: 0, type: '' })
-      case ObjectUtils.has(context, 'message.chat'):
-        return ObjectUtils.get(context, 'chat', { id: 0, type: '' })
+      case hasObjectProperty(context, 'chat'):
+        return getObjectProperty(context, 'chat', { id: 0, type: '' })
+      case hasObjectProperty(context, 'message.chat'):
+        return getObjectProperty(context, 'chat', { id: 0, type: '' })
       default:
         return { id: 0, type: '' }
     }
@@ -41,8 +41,8 @@ export class ContextUtils {
 
   static getUser<T extends UpdateType>(context: Context[T]): User {
     switch (true) {
-      case ObjectUtils.has(context, 'from'):
-        return ObjectUtils.get(context, 'from', { first_name: '', id: 0, is_bot: false, username: '' })
+      case hasObjectProperty(context, 'from'):
+        return getObjectProperty(context, 'from', { first_name: '', id: 0, is_bot: false, username: '' })
       default:
         return { first_name: '', id: 0, is_bot: false, username: '' }
     }

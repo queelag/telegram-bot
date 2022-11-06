@@ -1,5 +1,5 @@
 import { tc } from '@queelag/core'
-import { MessageEntity } from '@queelag/telegram-types'
+import { MessageEntity } from '@queelag/telegram-bot-types'
 import { MessageBody } from '../definitions/interfaces'
 import { Dummy } from '../modules/dummy'
 

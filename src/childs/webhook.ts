@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { SetWebhook } from '@queelag/telegram-types'
+import { SetWebhook } from '@queelag/telegram-bot-types'
 import { UpdateType } from '../definitions/enums'
 import { Child } from '../modules/child'
 

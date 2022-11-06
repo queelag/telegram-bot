@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { Message, Poll, StopMessageLiveLocation, StopPoll } from '@queelag/telegram-types'
+import { Message, Poll, StopMessageLiveLocation, StopPoll } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Stop extends Child {

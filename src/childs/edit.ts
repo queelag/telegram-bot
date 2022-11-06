@@ -7,7 +7,7 @@ import {
   EditMessageText,
   InputMedia,
   Message
-} from '@queelag/telegram-types'
+} from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Edit extends Child {

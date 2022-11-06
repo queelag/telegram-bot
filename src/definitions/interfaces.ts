@@ -16,7 +16,7 @@ import {
   PreCheckoutQuery,
   SendMediaGroup,
   ShippingQuery
-} from '@queelag/telegram-types'
+} from '@queelag/telegram-bot-types'
 import { UpdateType } from './enums'
 import { HandlerMiddleware, InputFile } from './types'
 

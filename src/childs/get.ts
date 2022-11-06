@@ -16,7 +16,7 @@ import {
   StickerSet,
   User,
   UserProfilePhotos
-} from '@queelag/telegram-types'
+} from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Get extends Child {

@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { CreateNewStickerSet } from '@queelag/telegram-types'
+import { CreateNewStickerSet } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Create extends Child {

@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { AnswerCallbackQuery, AnswerInlineQuery, AnswerPreCheckoutQuery, AnswerShippingQuery, InlineQueryResult } from '@queelag/telegram-types'
+import { AnswerCallbackQuery, AnswerInlineQuery, AnswerPreCheckoutQuery, AnswerShippingQuery, InlineQueryResult } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Answer extends Child {

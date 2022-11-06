@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { File, UploadStickerFile } from '@queelag/telegram-types'
+import { File, UploadStickerFile } from '@queelag/telegram-bot-types'
 import { InputFile } from '../definitions/types'
 import { Child } from '../modules/child'
 

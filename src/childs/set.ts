@@ -14,7 +14,7 @@ import {
   SetPassportDataErrors,
   SetStickerPositionInSet,
   SetStickerSetThumb
-} from '@queelag/telegram-types'
+} from '@queelag/telegram-bot-types'
 import { InputFile } from '../definitions/types'
 import { Child } from '../modules/child'
 

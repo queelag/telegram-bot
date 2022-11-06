@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { PromoteChatMember } from '@queelag/telegram-types'
+import { PromoteChatMember } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Promote extends Child {

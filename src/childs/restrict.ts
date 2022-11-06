@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { ChatPermissions, RestrictChatMember } from '@queelag/telegram-types'
+import { ChatPermissions, RestrictChatMember } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Restrict extends Child {

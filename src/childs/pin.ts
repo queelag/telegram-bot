@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { PinChatMessage } from '@queelag/telegram-types'
+import { PinChatMessage } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Pin extends Child {

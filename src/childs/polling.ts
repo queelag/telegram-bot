@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { GetUpdates, Update } from '@queelag/telegram-types'
+import { GetUpdates, Update } from '@queelag/telegram-bot-types'
 import { UpdateType } from '../definitions/enums'
 import { Child } from '../modules/child'
 

@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { UnpinChatMessage } from '@queelag/telegram-types'
+import { UnpinChatMessage } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Unpin extends Child {

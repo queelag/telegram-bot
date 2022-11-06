@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { ForwardMessage, Message } from '@queelag/telegram-types'
+import { ForwardMessage, Message } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Forward extends Child {

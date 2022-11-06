@@ -1,4 +1,4 @@
-import { FetchError, IDUtils, NumberUtils, ObjectUtils } from '@queelag/core'
+import { FetchError, getObjectProperty, hasObjectProperty, ID, mergeObjects, parseNumber, setObjectProperty } from '@queelag/core'
 import {
   BotCommand,
   CallbackQuery,
@@ -13,7 +13,7 @@ import {
   ShippingQuery,
   Update,
   User
-} from '@queelag/telegram-types'
+} from '@queelag/telegram-bot-types'
 import { Add } from '../childs/add'
 import { Answer } from '../childs/answer'
 import { Ban } from '../childs/ban'
@@ -86,7 +86,7 @@ export class Telegram {
   upload: Upload
   webhook: Webhook
 
-  constructor(token: string, hostname: string = '', port: number = NumberUtils.parseInt(process.env.PORT)) {
+  constructor(token: string, hostname: string = '', port: number = parseNumber(process.env.PORT)) {
     this.api = new API('https://api.telegram.org/bot' + token + '/')
     this.handlers = []
     this.hostname = hostname
@@ -136,11 +136,11 @@ export class Telegram {
 
     handler = Dummy.handler
     handler.description = description
-    handler.id = IDUtils.unique(this.handlerIDs)
+    handler.id = ID.generate({ blacklist: this.handlerIDs })
     handler.key = key
     handler.middleware = middleware
     handler.type = type
-    handler.options = ObjectUtils.merge(handler.options, options || {})
+    handler.options = mergeObjects(handler.options, options || {})
 
     potential = this.findMatchingHandler(handler.type, handler.key)
     potential.id ? (potential.middleware = middleware) : this.handlers.push(handler)
@@ -152,56 +152,56 @@ export class Telegram {
     let handler: Handler
 
     switch (true) {
-      case ObjectUtils.has(update, 'callback_query.data'):
+      case hasObjectProperty(update, 'callback_query.data'):
         handler = this.handleCallbackQuery(update.callback_query as any)
         break
-      case ObjectUtils.has(update, 'channel_post'):
+      case hasObjectProperty(update, 'channel_post'):
         handler = this.handleChannelPost(update.channel_post as any)
         break
-      case ObjectUtils.has(update, 'chat_join_request'):
+      case hasObjectProperty(update, 'chat_join_request'):
         handler = this.handleChatJoinRequest(update.chat_join_request as any)
         break
-      case ObjectUtils.has(update, 'chat_member'):
+      case hasObjectProperty(update, 'chat_member'):
         handler = this.handleChatMember(update.chat_member as any)
         break
-      case ObjectUtils.has(update, 'chosen_inline_result'):
+      case hasObjectProperty(update, 'chosen_inline_result'):
         handler = this.handleChosenInlineResult(update.chosen_inline_result as any)
         break
-      case ObjectUtils.has(update, 'edited_channel_post'):
+      case hasObjectProperty(update, 'edited_channel_post'):
         handler = this.handleEditedChannelPost(update.edited_channel_post as any)
         break
-      case ObjectUtils.has(update, 'edited_message'):
+      case hasObjectProperty(update, 'edited_message'):
         handler = this.handleEditedMessage(update.edited_message as any)
         break
-      case ObjectUtils.has(update, 'inline_query'):
+      case hasObjectProperty(update, 'inline_query'):
         handler = this.handleInlineQuery(update.inline_query as any)
         break
-      case ObjectUtils.get(update, 'message.text', '').includes('/start') &&
-        ObjectUtils.get(update, 'message.text', '').replace('/start', '').trim().length > 0:
+      case getObjectProperty(update, 'message.text', '').includes('/start') &&
+        getObjectProperty(update, 'message.text', '').replace('/start', '').trim().length > 0:
         handler = this.handleStart(update.message as any)
         break
-      case ObjectUtils.has(update, 'message') && ObjectUtils.has(update, 'message.reply_to_message.text'):
+      case hasObjectProperty(update, 'message') && hasObjectProperty(update, 'message.reply_to_message.text'):
         handler = this.handleReplyToMessage(update.message as any)
         break
-      case ObjectUtils.has(update, 'message.text'):
+      case hasObjectProperty(update, 'message.text'):
         handler = this.handleMessage(update.message as any)
         break
-      case ObjectUtils.has(update, 'message.document') && ObjectUtils.has(update, 'message.caption'):
+      case hasObjectProperty(update, 'message.document') && hasObjectProperty(update, 'message.caption'):
         handler = this.handleDocument(update.message as any)
         break
-      case ObjectUtils.has(update, 'my_chat_member'):
+      case hasObjectProperty(update, 'my_chat_member'):
         handler = this.handleMyChatMember(update.my_chat_member as any)
         break
-      case ObjectUtils.has(update, 'poll'):
+      case hasObjectProperty(update, 'poll'):
         handler = this.handlePoll(update.poll as any)
         break
-      case ObjectUtils.has(update, 'poll_answer'):
+      case hasObjectProperty(update, 'poll_answer'):
         handler = this.handlePollAnswer(update.poll_answer as any)
         break
-      case ObjectUtils.has(update, 'pre_checkout_query'):
+      case hasObjectProperty(update, 'pre_checkout_query'):
         handler = this.handlePreCheckoutQuery(update.pre_checkout_query as any)
         break
-      case ObjectUtils.has(update, 'shipping_query'):
+      case hasObjectProperty(update, 'shipping_query'):
         handler = this.handleShippingQuery(update.shipping_query as any)
         break
       default:
@@ -218,7 +218,7 @@ export class Telegram {
     let handler: Handler, body: CallbackQueryBody
 
     body = CallbackQueryUtils.decodeBody(query.data)
-    ObjectUtils.set(query, 'body', body)
+    setObjectProperty(query, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.CALLBACK_QUERY, body.t)
     if (!handler.id) return handler
@@ -380,7 +380,7 @@ export class Telegram {
     let body: MessageBody, handler: Handler
 
     body = ReplyToMessageUtils.decodeBody(reply.reply_to_message?.entities || [])
-    ObjectUtils.set(reply, 'body', body)
+    setObjectProperty(reply, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.REPLY_TO_MESSAGE, body.type)
     if (!handler.id) return handler
@@ -410,7 +410,7 @@ export class Telegram {
     let handler: Handler, body: MessageBody
 
     body = StartUtils.decodeBody(start.text)
-    ObjectUtils.set(start, 'body', body)
+    setObjectProperty(start, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.START, body.type)
     if (!handler.id) return handler

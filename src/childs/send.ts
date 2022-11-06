@@ -1,4 +1,4 @@
-import { FetchError, ObjectUtils, StringUtils } from '@queelag/core'
+import { FetchError, getObjectProperty, getStartCaseString } from '@queelag/core'
 import {
   InlineKeyboardButton,
   LabeledPrice,
@@ -21,7 +21,7 @@ import {
   SendVideo,
   SendVideoNote,
   SendVoice
-} from '@queelag/telegram-types'
+} from '@queelag/telegram-bot-types'
 import { InputMediaAlternative, SendMediaGroupAlternative } from '../definitions/interfaces'
 import { InputFile } from '../definitions/types'
 import { Child } from '../modules/child'
@@ -52,7 +52,7 @@ export class Send extends Child {
       : this.message(chatID, text, {
           reply_markup: {
             inline_keyboard: buttons
-              .concat(await ObjectUtils.get(Configuration.default.buttons, InlineKeyboardUtils.getButtonsType(buttons), async (chatID: number) => [])(chatID))
+              .concat(await getObjectProperty(Configuration.default.buttons, InlineKeyboardUtils.getButtonsType(buttons), async (chatID: number) => [])(chatID))
               .map((v: InlineKeyboardButton) => [v])
           },
           ...parameters
@@ -192,7 +192,7 @@ export class Send extends Child {
   }
 
   private file<T, U extends object>(chatID: number, data: InputFile, type: string, parameters?: Partial<U>): Promise<T | FetchError> {
-    return this.telegram.api.post<T, U>('send' + StringUtils.startCase(type), {
+    return this.telegram.api.post<T, U>('send' + getStartCaseString(type), {
       chat_id: chatID,
       [type]: data,
       ...(parameters as U)

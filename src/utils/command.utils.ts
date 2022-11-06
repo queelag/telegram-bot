@@ -1,4 +1,4 @@
-import { ObjectUtils } from '@queelag/core'
+import { getObjectProperty, hasObjectProperty } from '@queelag/core'
 import { Context } from 'vm'
 import { REGEXP_COMMAND, REGEXP_COMMAND_WITH_USERNAME } from '../definitions/constants'
 import { UpdateType } from '../definitions/enums'
@@ -8,11 +8,11 @@ export class CommandUtils {
     let string: string
 
     switch (true) {
-      case ObjectUtils.has(context, 'caption'):
-        string = ObjectUtils.get(context, 'caption', '')
+      case hasObjectProperty(context, 'caption'):
+        string = getObjectProperty(context, 'caption', '')
         break
-      case ObjectUtils.has(context, 'text'):
-        string = ObjectUtils.get(context, 'caption', '')
+      case hasObjectProperty(context, 'text'):
+        string = getObjectProperty(context, 'caption', '')
         break
       default:
         string = ''

@@ -1,4 +1,4 @@
-import { API as CoreAPI, APIConfig, FetchError, FetchResponse, ObjectUtils, Polyfill, RequestMethod } from '@queelag/core'
+import { API as CoreAPI, APIConfig, FetchError, FetchResponse, Polyfill, RequestMethod, serializeFormData } from '@queelag/core'
 import { APIResponseData } from '../definitions/interfaces'
 
 export class API extends CoreAPI {
@@ -19,9 +19,9 @@ export class API extends CoreAPI {
         await Polyfill.file()
         await Polyfill.formData()
 
-        return ObjectUtils.toFormData(typeof body === 'object' ? body : {})
+        return serializeFormData(typeof body === 'object' ? (body as object) : {})
       default:
-        return ObjectUtils.toFormData({})
+        return serializeFormData({})
     }
   }
 }

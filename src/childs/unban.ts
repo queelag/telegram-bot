@@ -1,5 +1,5 @@
 import { FetchError } from '@queelag/core'
-import { UnbanChatMember } from '@queelag/telegram-types'
+import { UnbanChatMember } from '@queelag/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Unban extends Child {
