@@ -1,4 +1,4 @@
-import { FetchError, getObjectProperty, getStartCaseString } from '@queelag/core'
+import { FetchError, getObjectProperty, getPascalCaseString } from '@queelag/core'
 import {
   InlineKeyboardButton,
   LabeledPrice,
@@ -192,7 +192,7 @@ export class Send extends Child {
   }
 
   private file<T, U extends object>(chatID: number, data: InputFile, type: string, parameters?: Partial<U>): Promise<T | FetchError> {
-    return this.telegram.api.post<T, U>('send' + getStartCaseString(type), {
+    return this.telegram.api.post<T, U>('send' + getPascalCaseString(type), {
       chat_id: chatID,
       [type]: data,
       ...(parameters as U)
