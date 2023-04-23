@@ -1,4 +1,4 @@
-import { FetchError } from '@queelag/core'
+import { FetchError } from '@aracna/core'
 import {
   BotCommand,
   ChatPermissions,
@@ -13,8 +13,8 @@ import {
   SetMyCommands,
   SetPassportDataErrors,
   SetStickerPositionInSet,
-  SetStickerSetThumb
-} from '@queelag/telegram-bot-types'
+  SetStickerSetThumbnail
+} from '@aracna/telegram-bot-types'
 import { InputFile } from '../definitions/types'
 import { Child } from '../modules/child'
 
@@ -63,7 +63,7 @@ export class Set extends Child {
     return this.telegram.api.post<boolean, SetStickerPositionInSet>('setStickerPositionInSet', { position: position, sticker: sticker })
   }
 
-  async stickerSetThumb(name: string, userID: number, parameters?: Partial<SetStickerSetThumb>): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetStickerSetThumb>('setStickerSetThumb', { name: name, user_id: userID, ...parameters })
+  async stickerSetThumb(name: string, userID: number, parameters?: Partial<SetStickerSetThumbnail>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetStickerSetThumbnail>('setStickerSetThumb', { name: name, user_id: userID, ...parameters })
   }
 }

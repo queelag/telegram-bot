@@ -1,5 +1,5 @@
-import { FetchError, FetchResponse } from '@queelag/core'
-import { File, PhotoSize, UserProfilePhotos } from '@queelag/telegram-bot-types'
+import { FetchError, FetchResponse } from '@aracna/core'
+import { File, PhotoSize, UserProfilePhotos } from '@aracna/telegram-bot-types'
 import { API } from '../modules/api'
 import { Child } from '../modules/child'
 

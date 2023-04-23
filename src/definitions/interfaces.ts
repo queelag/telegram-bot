@@ -1,4 +1,4 @@
-import { FetchResponse } from '@queelag/core'
+import { FetchResponse } from '@aracna/core'
 import {
   CallbackQuery as NativeCallbackQuery,
   ChatJoinRequest,
@@ -16,7 +16,7 @@ import {
   PreCheckoutQuery,
   SendMediaGroup,
   ShippingQuery
-} from '@queelag/telegram-bot-types'
+} from '@aracna/telegram-bot-types'
 import { UpdateType } from './enums'
 import { HandlerMiddleware, InputFile } from './types'
 

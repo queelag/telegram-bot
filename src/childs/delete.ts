@@ -1,5 +1,5 @@
-import { FetchError } from '@queelag/core'
-import { DeleteChatPhoto, DeleteChatStickerSet, DeleteMessage, DeleteStickerFromSet } from '@queelag/telegram-bot-types'
+import { FetchError } from '@aracna/core'
+import { DeleteChatPhoto, DeleteChatStickerSet, DeleteMessage, DeleteStickerFromSet } from '@aracna/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Delete extends Child {

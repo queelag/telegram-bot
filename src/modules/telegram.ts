@@ -1,4 +1,4 @@
-import { FetchError, getObjectProperty, hasObjectProperty, ID, mergeObjects, parseNumber, setObjectProperty } from '@queelag/core'
+import { FetchError, getObjectProperty, hasObjectProperty, ID, mergeObjects, parseNumber, setObjectProperty } from '@aracna/core'
 import {
   BotCommand,
   CallbackQuery,
@@ -13,7 +13,7 @@ import {
   ShippingQuery,
   Update,
   User
-} from '@queelag/telegram-bot-types'
+} from '@aracna/telegram-bot-types'
 import { Add } from '../childs/add'
 import { Answer } from '../childs/answer'
 import { Ban } from '../childs/ban'

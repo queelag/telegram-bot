@@ -1,5 +1,5 @@
-import { FetchError } from '@queelag/core'
-import { BanChatMember } from '@queelag/telegram-bot-types'
+import { FetchError } from '@aracna/core'
+import { BanChatMember } from '@aracna/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Ban extends Child {

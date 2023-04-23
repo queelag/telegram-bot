@@ -1,4 +1,4 @@
-import { getNumberPercentage } from '@queelag/core'
+import { getNumberPercentage } from '@aracna/core'
 
 export class HTMLUtils {
   static tags: string[] = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'span', 'tg-spoiler', 'a', 'code', 'pre', '/', '"']

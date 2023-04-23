@@ -1,5 +1,5 @@
-import { getObjectProperty, hasObjectProperty } from '@queelag/core'
-import { Chat, User } from '@queelag/telegram-bot-types'
+import { getObjectProperty, hasObjectProperty } from '@aracna/core'
+import { Chat, User } from '@aracna/telegram-bot-types'
 import { UpdateType } from '../definitions/enums'
 import { Context } from '../definitions/interfaces'
 

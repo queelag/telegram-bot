@@ -1,4 +1,4 @@
-import { FetchError, getObjectProperty, getPascalCaseString } from '@queelag/core'
+import { FetchError, getObjectProperty, getPascalCaseString } from '@aracna/core'
 import {
   InlineKeyboardButton,
   LabeledPrice,
@@ -21,7 +21,7 @@ import {
   SendVideo,
   SendVideoNote,
   SendVoice
-} from '@queelag/telegram-bot-types'
+} from '@aracna/telegram-bot-types'
 import { InputMediaAlternative, SendMediaGroupAlternative } from '../definitions/interfaces'
 import { InputFile } from '../definitions/types'
 import { Child } from '../modules/child'

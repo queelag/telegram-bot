@@ -1,4 +1,4 @@
-import { FetchError } from '@queelag/core'
+import { FetchError } from '@aracna/core'
 import {
   EditMessageCaption,
   EditMessageLiveLocation,
@@ -7,7 +7,7 @@ import {
   EditMessageText,
   InputMedia,
   Message
-} from '@queelag/telegram-bot-types'
+} from '@aracna/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Edit extends Child {

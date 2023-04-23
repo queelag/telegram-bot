@@ -1,4 +1,4 @@
-import { getObjectProperty, hasObjectProperty } from '@queelag/core'
+import { getObjectProperty, hasObjectProperty } from '@aracna/core'
 import { Context } from 'vm'
 import { REGEXP_COMMAND, REGEXP_COMMAND_WITH_USERNAME } from '../definitions/constants'
 import { UpdateType } from '../definitions/enums'

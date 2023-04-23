@@ -1,5 +1,5 @@
-import { FetchError } from '@queelag/core'
-import { GetUpdates, Update } from '@queelag/telegram-bot-types'
+import { FetchError } from '@aracna/core'
+import { GetUpdates, Update } from '@aracna/telegram-bot-types'
 import { UpdateType } from '../definitions/enums'
 import { Child } from '../modules/child'
 

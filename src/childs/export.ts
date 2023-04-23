@@ -1,5 +1,5 @@
-import { FetchError } from '@queelag/core'
-import { ExportChatInviteLink } from '@queelag/telegram-bot-types'
+import { FetchError } from '@aracna/core'
+import { ExportChatInviteLink } from '@aracna/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Export extends Child {

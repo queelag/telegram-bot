@@ -1,4 +1,4 @@
-import { API as CoreAPI, APIConfig, FetchError, FetchResponse, Polyfill, RequestMethod, serializeFormData } from '@queelag/core'
+import { API as CoreAPI, APIConfig, FetchError, FetchResponse, Polyfill, RequestMethod, serializeFormData } from '@aracna/core'
 import { APIResponseData } from '../definitions/interfaces'
 
 export class API extends CoreAPI {

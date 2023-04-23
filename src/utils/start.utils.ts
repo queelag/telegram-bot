@@ -1,4 +1,4 @@
-import { tc } from '@queelag/core'
+import { tc } from '@aracna/core'
 import { MessageBody } from '../definitions/interfaces'
 import { Dummy } from '../modules/dummy'
 

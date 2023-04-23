@@ -1,4 +1,4 @@
-import { FetchError } from '@queelag/core'
+import { FetchError } from '@aracna/core'
 import { Child } from '../modules/child'
 
 export class Leave extends Child {

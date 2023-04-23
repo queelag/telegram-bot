@@ -1,5 +1,5 @@
-import { FetchError } from '@queelag/core'
-import { InlineKeyboardButton, Message, SendMessage } from '@queelag/telegram-bot-types'
+import { FetchError } from '@aracna/core'
+import { InlineKeyboardButton, Message, SendMessage } from '@aracna/telegram-bot-types'
 import { CallbackQueryBody } from '../../definitions/interfaces'
 import { Child } from '../../modules/child'
 import { CallbackQueryUtils } from '../../utils/callback.query.utils'
