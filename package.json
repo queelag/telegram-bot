@@ -1,15 +1,15 @@
 {
   "author": "Dario Sechi",
   "devDependencies": {
-    "@aracna/core": "^1.1.12",
-    "@aracna/telegram-bot-types": "^1.2.0",
-    "@microsoft/api-extractor": "^7.33.5",
-    "@vitest/coverage-c8": "^0.24.5",
-    "@vitest/ui": "^0.24.5",
-    "dotenv": "^16.0.3",
-    "fastify": "^4.9.2",
-    "typescript": "^4.8.4",
-    "vitest": "^0.24.5"
+    "@aracna/core": "^1.1.41",
+    "@aracna/telegram-bot-types": "^1.2.4",
+    "@microsoft/api-extractor": "^7.36.4",
+    "@vitest/coverage-c8": "^0.33.0",
+    "@vitest/ui": "^0.34.2",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.21.0",
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.2"
   },
   "license": "MIT",
   "main": "index.js",
