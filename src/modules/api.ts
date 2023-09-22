@@ -1,4 +1,4 @@
-import { APIConfig, API as CoreAPI, FetchError, FetchResponse, Polyfill, RequestMethod, serializeFormData } from '@aracna/core'
+import { APIConfig, API as CoreAPI, FetchError, FetchResponse, RequestMethod, serializeFormData, tcp, useNodeFetch } from '@aracna/core'
 import { APIResponseData } from '../definitions/interfaces'
 
 export class API extends CoreAPI {
@@ -15,10 +15,7 @@ export class API extends CoreAPI {
     switch (method) {
       case 'GET':
       case 'POST':
-        await Polyfill.blob()
-        await Polyfill.file()
-        await Polyfill.formData()
-
+        await useNodeFetch(await tcp(() => import('node-fetch')))
         return serializeFormData(typeof body === 'object' ? (body as object) : {})
       default:
         return serializeFormData({})
