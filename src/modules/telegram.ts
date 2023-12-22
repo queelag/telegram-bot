@@ -1,4 +1,4 @@
-import { FetchError, getObjectProperty, hasObjectProperty, ID, mergeObjects, parseNumber, setObjectProperty } from '@aracna/core'
+import { FetchError, generateRandomString, getObjectProperty, hasObjectProperty, mergeObjects, parseNumber, setObjectProperty } from '@aracna/core'
 import {
   BotCommand,
   CallbackQuery,
@@ -136,7 +136,7 @@ export class Telegram {
 
     handler = Dummy.handler
     handler.description = description
-    handler.id = ID.generate({ blacklist: this.handlerIDs })
+    handler.id = generateRandomString({ blacklist: this.handlerIDs })
     handler.key = key
     handler.middleware = middleware
     handler.type = type
