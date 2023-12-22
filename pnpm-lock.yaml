@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^1.1.73
     version: 1.1.73
   '@aracna/telegram-bot-types':
-    specifier: ^1.2.8
-    version: 1.2.8
+    specifier: ^1.2.9
+    version: 1.2.9
   '@microsoft/api-extractor':
     specifier: ^7.39.0
     version: 7.39.0(@types/node@20.10.5)
@@ -57,8 +57,8 @@ packages:
       rfc4648: 1.5.3
     dev: true
 
-  /@aracna/telegram-bot-types@1.2.8:
-    resolution: {integrity: sha512-ITDjlKRs7Y5cz89auw/NLI+QXua1yWP2xcuTo9Kbf3OyxC5k9bGF1WkxtloVNEW/tQ66OtA08yws43cnzG18Gg==}
+  /@aracna/telegram-bot-types@1.2.9:
+    resolution: {integrity: sha512-I/iDKMyWhtVdyeT5m+c0MIroS0eGNpinyKRoYQhvyyDwb78aNG6t355UxmDCHd0kSyWlJ/tdKCEj4mLLqSRPJQ==}
     dev: true
 
   /@babel/helper-string-parser@7.23.4:
@@ -2016,3 +2016,5 @@ packages:
     optionalDependencies:
       commander: 9.5.0
     dev: true
+
+publishDirectory: dist

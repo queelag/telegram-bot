@@ -2,7 +2,7 @@
   "author": "Dario Sechi",
   "devDependencies": {
     "@aracna/core": "^1.1.73",
-    "@aracna/telegram-bot-types": "^1.2.8",
+    "@aracna/telegram-bot-types": "^1.2.9",
     "@microsoft/api-extractor": "^7.39.0",
     "@types/node": "^20.10.5",
     "@vitest/coverage-v8": "^1.1.0",
@@ -19,11 +19,13 @@
     "@aracna/core": ">= 1.1.12",
     "@aracna/telegram-bot-types": ">= 1.2.0"
   },
+  "publishConfig": {
+    "directory": "dist"
+  },
   "scripts": {
-    "test": "yarn vitest run",
-    "build": "rm -rf dist && yarn tsc && yarn api-extractor run --local",
-    "tarball": "yarn version && cp LICENSE package.json README.md dist/. && cd dist && yarn pack",
-    "deploy": "yarn test && yarn build && yarn tarball && yarn publish dist/*.tgz && git push"
+    "build": "rm -rf dist && pnpm tsc && pnpm api-extractor run --local",
+    "prepublish": "pnpm test && pnpm build && pnpm version patch && cp LICENSE package.json README.md dist",
+    "test": "vitest run"
   },
   "types": "index.d.ts",
   "version": "1.9.8"
