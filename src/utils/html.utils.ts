@@ -10,11 +10,11 @@ export class HTMLUtils {
       .replace(/&/gm, '&amp;')
   }
 
-  static progress(value: number, minimum: number = 0, maximum: number = 100, size: number = 20): string {
+  static progress(value: number, min: number = 0, max: number = 100, size: number = 20): string {
     let percentage: number, steps: string[]
 
-    percentage = getNumberPercentage(value, minimum, maximum)
-    steps = new Array(size).fill(0).map((v, k: number) => ((k * maximum) / size < percentage ? '=' : ' '))
+    percentage = getNumberPercentage(value, { min, max })
+    steps = new Array(size).fill(0).map((v, k: number) => ((k * max) / size < percentage ? '=' : ' '))
 
     return `<code>[${steps.join('')}]</code>`
   }
