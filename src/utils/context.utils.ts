@@ -40,11 +40,10 @@ export class ContextUtils {
   }
 
   static getUser<T extends UpdateType>(context: Context[T]): User {
-    switch (true) {
-      case hasObjectProperty(context, 'from'):
-        return getObjectProperty(context, 'from', { first_name: '', id: 0, is_bot: false, username: '' })
-      default:
-        return { first_name: '', id: 0, is_bot: false, username: '' }
+    if (hasObjectProperty(context, 'from')) {
+      return getObjectProperty(context, 'from', { first_name: '', id: 0, is_bot: false, username: '' })
     }
+
+    return { first_name: '', id: 0, is_bot: false, username: '' }
   }
 }

@@ -143,8 +143,15 @@ export class Telegram {
     handler.options = mergeObjects(handler.options, options ?? {})
 
     potential = this.findMatchingHandler(handler.type, handler.key)
-    potential.id ? (potential.middleware = middleware) : this.handlers.push(handler)
 
+    if (potential.id) {
+      potential.middleware = middleware
+      ModuleLogger.debug('Telegram', 'register', `The handler has been updated.`, handler)
+
+      return
+    }
+
+    this.handlers.push(handler)
     ModuleLogger.debug('Telegram', 'register', `The handler has been registered.`, handler)
   }
 
