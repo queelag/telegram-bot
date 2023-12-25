@@ -8,7 +8,7 @@ export class ReplyToMessageUtils {
     let entity: MessageEntity | undefined, encoded: string, body: MessageBody | Error
 
     entity = entities[entities.length - 1]
-    if (!entity || !entity.url) return Dummy.messageBody
+    if (!entity?.url) return Dummy.messageBody
 
     encoded = entity.url.replace('https://t.me/?a=', '')
 

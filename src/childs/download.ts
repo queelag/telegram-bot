@@ -12,7 +12,7 @@ export class Download extends Child {
     file = await this.telegram.get.file(id)
     if (file instanceof Error) return file
 
-    buffer = await this.api.get(file.file_path || '')
+    buffer = await this.api.get(file.file_path ?? '')
     if (buffer instanceof Error) return buffer
 
     return buffer.data

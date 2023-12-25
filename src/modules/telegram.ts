@@ -126,8 +126,8 @@ export class Telegram {
 
       this.id = v.id
       this.name.first = v.first_name
-      this.name.last = v.last_name || ''
-      this.username = v.username || ''
+      this.name.last = v.last_name ?? ''
+      this.username = v.username ?? ''
     })
   }
 
@@ -140,7 +140,7 @@ export class Telegram {
     handler.key = key
     handler.middleware = middleware
     handler.type = type
-    handler.options = mergeObjects(handler.options, options || {})
+    handler.options = mergeObjects(handler.options, options ?? {})
 
     potential = this.findMatchingHandler(handler.type, handler.key)
     potential.id ? (potential.middleware = middleware) : this.handlers.push(handler)
@@ -379,7 +379,7 @@ export class Telegram {
   handleReplyToMessage(reply: Message): Handler {
     let body: MessageBody, handler: Handler
 
-    body = ReplyToMessageUtils.decodeBody(reply.reply_to_message?.entities || [])
+    body = ReplyToMessageUtils.decodeBody(reply.reply_to_message?.entities ?? [])
     setObjectProperty(reply, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.REPLY_TO_MESSAGE, body.type)
@@ -418,20 +418,20 @@ export class Telegram {
     handler.middleware(start)
 
     if (handler.id.length > 0 && handler.options.deleteOnMessageStart) {
-      this.delete.message(body.chatID ? start.from?.id || 0 : start.chat.id, start.message_id)
+      this.delete.message(body.chatID ? start.from?.id ?? 0 : start.chat.id, start.message_id)
     }
 
     return handler
   }
 
   private findMatchingHandler<T extends UpdateType, U extends HandlerOptions>(type: UpdateType, key: string = ''): Handler<T, U> {
-    return this.handlers.find((v: Handler) => v.key === key && v.type === type) || Dummy.handler
+    return this.handlers.find((v: Handler) => v.key === key && v.type === type) ?? Dummy.handler
   }
 
   get commands(): BotCommand[] {
     return this.handlers
       .filter((v: Handler) => v.key && v.type === UpdateType.MESSAGE)
-      .map((v: Handler) => ({ command: v.key || '', description: v.description || '' }))
+      .map((v: Handler) => ({ command: v.key ?? '', description: v.description ?? '' }))
   }
 
   private get handlerIDs(): string[] {

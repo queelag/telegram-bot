@@ -7,7 +7,7 @@ export class Polling extends Child {
   active: boolean = false
   offset: number = 0
 
-  start(ms: number = 1000, parameters: Partial<GetUpdates>): void {
+  start(ms: number = 1000, parameters?: Partial<GetUpdates>): void {
     this.active = true
     this.get(ms, parameters)
   }
@@ -16,7 +16,7 @@ export class Polling extends Child {
     this.active = false
   }
 
-  private async get(ms: number, parameters: Partial<GetUpdates>): Promise<Update[] | FetchError> {
+  private async get(ms: number, parameters?: Partial<GetUpdates>): Promise<Update[] | FetchError> {
     let body: GetUpdates, updates: Update[] | FetchError
 
     body = {

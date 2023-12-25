@@ -32,11 +32,11 @@ export class ContextUtils {
   }
 
   static getUserLastName<T extends UpdateType>(context: Context[T]): string {
-    return this.getUser(context).last_name || ''
+    return this.getUser(context).last_name ?? ''
   }
 
   static getUserUsername<T extends UpdateType>(context: Context[T]): string {
-    return this.getUser(context).username || ''
+    return this.getUser(context).username ?? ''
   }
 
   static getUser<T extends UpdateType>(context: Context[T]): User {
