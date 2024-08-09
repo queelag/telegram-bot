@@ -5,7 +5,7 @@ import { Child } from '../modules/child'
 export class Create extends Child {
   async stickerSet(
     userID: number,
-    format: string,
+    type: string,
     name: string,
     title: string,
     stickers: InputSticker[],
@@ -13,7 +13,7 @@ export class Create extends Child {
   ): Promise<boolean | FetchError> {
     return this.telegram.api.post<boolean, CreateNewStickerSet>('createNewStickerSet', {
       name: name,
-      sticker_format: format,
+      sticker_type: type,
       stickers: stickers,
       title: title,
       user_id: userID,

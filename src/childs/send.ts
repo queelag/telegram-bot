@@ -1,6 +1,7 @@
 import { FetchError, getObjectProperty, getPascalCaseString } from '@aracna/core'
 import {
   InlineKeyboardButton,
+  InputPollOption,
   LabeledPrice,
   Message,
   SendAnimation,
@@ -136,7 +137,7 @@ export class Send extends Child {
     return this.file<Message, SendPhoto>(chatID, file, 'photo', parameters)
   }
 
-  async poll(chatID: number, question: string, options: string[], parameters?: Partial<SendPoll>): Promise<Message | FetchError> {
+  async poll(chatID: number, question: string, options: InputPollOption[], parameters?: Partial<SendPoll>): Promise<Message | FetchError> {
     return this.telegram.api.post<Message, SendPoll>('sendPoll', { chat_id: chatID, options: options, question: question, ...parameters })
   }
 

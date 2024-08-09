@@ -63,7 +63,7 @@ export class Set extends Child {
     return this.telegram.api.post<boolean, SetStickerPositionInSet>('setStickerPositionInSet', { position: position, sticker: sticker })
   }
 
-  async stickerSetThumb(name: string, userID: number, parameters?: Partial<SetStickerSetThumbnail>): Promise<boolean | FetchError> {
-    return this.telegram.api.post<boolean, SetStickerSetThumbnail>('setStickerSetThumb', { name: name, user_id: userID, ...parameters })
+  async stickerSetThumb(name: string, userID: number, format: string, parameters?: Partial<SetStickerSetThumbnail>): Promise<boolean | FetchError> {
+    return this.telegram.api.post<boolean, SetStickerSetThumbnail>('setStickerSetThumb', { format: format, name: name, user_id: userID, ...parameters })
   }
 }
