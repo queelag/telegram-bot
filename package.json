@@ -19,6 +19,7 @@
   "license": "MIT",
   "main": "index.js",
   "name": "@aracna/telegram-bot",
+  "packageManager": "pnpm@9.7.0",
   "peerDependencies": {
     "@aracna/core": ">= 1.1.12",
     "@aracna/telegram-bot-types": ">= 1.2.0"
