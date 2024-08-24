@@ -1,179 +1,58 @@
-import { type FetchError, generateRandomString, getObjectProperty, hasObjectProperty, mergeObjects, parseNumber, setObjectProperty } from '@aracna/core'
+import { generateRandomString, getObjectProperty, hasObjectProperty, mergeObjects, parseNumber, setObjectProperty } from '@aracna/core'
 import type {
   BotCommand,
+  BusinessConnection,
+  BusinessMessagesDeleted,
   CallbackQuery,
+  ChatBoostRemoved,
+  ChatBoostUpdated,
   ChatJoinRequest,
   ChatMemberUpdated,
   ChosenInlineResult,
   InlineQuery,
   Message,
+  MessageReactionCountUpdated,
+  MessageReactionUpdated,
   Poll,
   PollAnswer,
   PreCheckoutQuery,
   ShippingQuery,
-  Update,
-  User
+  Update
 } from '@aracna/telegram-bot-types'
-import { Add } from '../childs/add'
-import { Answer } from '../childs/answer'
-import { Approve } from '../childs/approve'
-import { Ban } from '../childs/ban'
-import { Close } from '../childs/close'
-import { Copy } from '../childs/copy'
-import { Create } from '../childs/create'
-import { Decline } from '../childs/decline'
-import { Delete } from '../childs/delete'
-import { Download } from '../childs/download'
-import { Edit } from '../childs/edit'
-import { Export } from '../childs/export'
-import { Forward } from '../childs/forward'
-import { Get } from '../childs/get'
-import { Hide } from '../childs/hide'
-import { Leave } from '../childs/leave'
-import { Log } from '../childs/log'
-import { Pin } from '../childs/pin'
-import { Polling } from '../childs/polling'
-import { Promote } from '../childs/promote'
-import { Refund } from '../childs/refund'
-import { Reopen } from '../childs/reopen'
-import { Replace } from '../childs/replace'
-import { Restrict } from '../childs/restrict'
-import { Revoke } from '../childs/revoke'
-import { Send } from '../childs/send'
-import { Set } from '../childs/set'
-import { Stop } from '../childs/stop'
-import { Unban } from '../childs/unban'
-import { Unhide } from '../childs/unhide'
-import { Unpin } from '../childs/unpin'
-import { Upload } from '../childs/upload'
-import { Webhook } from '../childs/webhook'
+import { DEFAULT_HANDLER_OPTIONS } from '../definitions/constants'
 import { UpdateType } from '../definitions/enums'
-import type { CallbackQueryBody, Handler, HandlerOptions, MessageBody, TelegramName } from '../definitions/interfaces'
+import type { CallbackQueryBody, Handler, HandlerOptions, MessageBody } from '../definitions/interfaces'
 import type { HandlerMiddleware } from '../definitions/types'
 import { ModuleLogger } from '../loggers/module.logger'
-import { CallbackQueryUtils } from '../utils/callback.query.utils'
-import { CommandUtils } from '../utils/command.utils'
-import { ReplyToMessageUtils } from '../utils/reply.to.message.utils'
-import { StartUtils } from '../utils/start.utils'
-import { API } from './api'
-import { Builder } from './builder'
-import { Dummy } from './dummy'
+import { decodeCallbackQueryBody } from '../utils/callback-query-utils'
+import { getCommand } from '../utils/command-utils'
+import { decodeReplyToMessageBody } from '../utils/reply-to-message-utils'
+import { decodeStartMessageBody } from '../utils/start-message-utils'
 
 export class Telegram {
-  /** INTERNAL */
-  api: API
   handlers: Handler[]
   hostname: string
-  id: bigint
-  name: TelegramName
   port: number
   token: string
-  username: string
-
-  /** BUILDERS */
-  builder: Builder
-
-  /** CHILDS */
-  add: Add
-  answer: Answer
-  approve: Approve
-  ban: Ban
-  close: Close
-  copy: Copy
-  create: Create
-  decline: Decline
-  delete: Delete
-  download: Download
-  edit: Edit
-  export: Export
-  forward: Forward
-  get: Get
-  hide: Hide
-  leave: Leave
-  log: Log
-  pin: Pin
-  polling: Polling
-  promote: Promote
-  refund: Refund
-  reopen: Reopen
-  replace: Replace
-  restrict: Restrict
-  revoke: Revoke
-  send: Send
-  set: Set
-  stop: Stop
-  unban: Unban
-  unhide: Unhide
-  unpin: Unpin
-  upload: Upload
-  webhook: Webhook
 
   constructor(token: string, hostname: string = '', port: number = parseNumber(process.env.PORT)) {
-    this.api = new API('https://api.telegram.org/bot' + token + '/')
     this.handlers = []
     this.hostname = hostname
-    this.name = { first: '', last: '' }
-    this.id = 0n
     this.port = port
     this.token = token
-    this.username = ''
-
-    this.builder = new Builder()
-
-    this.add = new Add(this)
-    this.answer = new Answer(this)
-    this.approve = new Approve(this)
-    this.ban = new Ban(this)
-    this.close = new Close(this)
-    this.copy = new Copy(this)
-    this.create = new Create(this)
-    this.decline = new Decline(this)
-    this.delete = new Delete(this)
-    this.download = new Download(this)
-    this.edit = new Edit(this)
-    this.export = new Export(this)
-    this.forward = new Forward(this)
-    this.get = new Get(this)
-    this.hide = new Hide(this)
-    this.leave = new Leave(this)
-    this.log = new Log(this)
-    this.pin = new Pin(this)
-    this.polling = new Polling(this)
-    this.promote = new Promote(this)
-    this.refund = new Refund(this)
-    this.reopen = new Reopen(this)
-    this.replace = new Replace(this)
-    this.restrict = new Restrict(this)
-    this.revoke = new Revoke(this)
-    this.send = new Send(this)
-    this.set = new Set(this)
-    this.stop = new Stop(this)
-    this.unban = new Unban(this)
-    this.unhide = new Unhide(this)
-    this.unpin = new Unpin(this)
-    this.upload = new Upload(this)
-    this.webhook = new Webhook(this)
-
-    this.get.me().then((v: User | FetchError) => {
-      if (v instanceof Error) return
-
-      this.id = v.id
-      this.name.first = v.first_name
-      this.name.last = v.last_name ?? ''
-      this.username = v.username ?? ''
-    })
   }
 
   on<T extends UpdateType, U extends HandlerOptions>(type: T, middleware: HandlerMiddleware<T>, key?: string, description?: string, options?: U): void {
     let handler: Handler<T, U>, potential: Handler<T, U>
 
-    handler = Dummy.handler
-    handler.description = description
-    handler.id = generateRandomString({ blacklist: this.handlerIDs })
-    handler.key = key
-    handler.middleware = middleware
-    handler.type = type
-    handler.options = mergeObjects(handler.options, options ?? {})
+    handler = {
+      description: description,
+      id: generateRandomString({ blacklist: this.handlerIDs }),
+      key: key,
+      middleware: middleware,
+      type: type,
+      options: mergeObjects(DEFAULT_HANDLER_OPTIONS, options ?? {})
+    }
 
     potential = this.findMatchingHandler(handler.type, handler.key)
 
@@ -192,11 +71,20 @@ export class Telegram {
     let handler: Handler
 
     switch (true) {
+      case hasObjectProperty(update, 'business_connection'):
+        handler = this.handleBusinessConnection(update.business_connection as any)
+        break
+      case hasObjectProperty(update, 'business_message'):
+        handler = this.handleBusinessMessage(update.business_message as any)
+        break
       case hasObjectProperty(update, 'callback_query.data'):
         handler = this.handleCallbackQuery(update.callback_query as any)
         break
       case hasObjectProperty(update, 'channel_post'):
         handler = this.handleChannelPost(update.channel_post as any)
+        break
+      case hasObjectProperty(update, 'chat_boost'):
+        handler = this.handleChatBoost(update.chat_boost as any)
         break
       case hasObjectProperty(update, 'chat_join_request'):
         handler = this.handleChatJoinRequest(update.chat_join_request as any)
@@ -207,6 +95,12 @@ export class Telegram {
       case hasObjectProperty(update, 'chosen_inline_result'):
         handler = this.handleChosenInlineResult(update.chosen_inline_result as any)
         break
+      case hasObjectProperty(update, 'deleted_business_messages'):
+        handler = this.handleDeletedBusinessMessages(update.deleted_business_messages as any)
+        break
+      case hasObjectProperty(update, 'edited_business_message'):
+        handler = this.handleEditedBusinessMessage(update.edited_business_message as any)
+        break
       case hasObjectProperty(update, 'edited_channel_post'):
         handler = this.handleEditedChannelPost(update.edited_channel_post as any)
         break
@@ -215,6 +109,12 @@ export class Telegram {
         break
       case hasObjectProperty(update, 'inline_query'):
         handler = this.handleInlineQuery(update.inline_query as any)
+        break
+      case hasObjectProperty(update, 'message_reaction'):
+        handler = this.handleMessageReaction(update.message_reaction as any)
+        break
+      case hasObjectProperty(update, 'message_reaction_count'):
+        handler = this.handleMessageReactionCount(update.message_reaction_count as any)
         break
       case getObjectProperty(update, 'message.text', '').includes('/start') &&
         getObjectProperty(update, 'message.text', '').replace('/start', '').trim().length > 0:
@@ -241,6 +141,9 @@ export class Telegram {
       case hasObjectProperty(update, 'pre_checkout_query'):
         handler = this.handlePreCheckoutQuery(update.pre_checkout_query as any)
         break
+      case hasObjectProperty(update, 'removed_chat_boost'):
+        handler = this.handleRemovedChatBoost(update.removed_chat_boost as any)
+        break
       case hasObjectProperty(update, 'shipping_query'):
         handler = this.handleShippingQuery(update.shipping_query as any)
         break
@@ -254,10 +157,32 @@ export class Telegram {
       : ModuleLogger.warn('Telegram', 'handle', `Failed to find the matching handler.`, update)
   }
 
+  handleBusinessConnection(connection: BusinessConnection): Handler {
+    let handler: Handler
+
+    handler = this.findMatchingHandler(UpdateType.BUSINESS_CONNECTION)
+    if (!handler.id) return handler
+
+    handler.middleware(connection)
+
+    return handler
+  }
+
+  handleBusinessMessage(message: Message): Handler {
+    let handler: Handler
+
+    handler = this.findMatchingHandler(UpdateType.BUSINESS_MESSAGE)
+    if (!handler.id) return handler
+
+    handler.middleware(message)
+
+    return handler
+  }
+
   handleCallbackQuery(query: CallbackQuery): Handler {
     let handler: Handler, body: CallbackQueryBody
 
-    body = CallbackQueryUtils.decodeBody(query.data)
+    body = decodeCallbackQueryBody(query.data)
     setObjectProperty(query, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.CALLBACK_QUERY, body.t)
@@ -279,7 +204,17 @@ export class Telegram {
     if (!handler.id) return handler
 
     handler.middleware(post)
-    ModuleLogger.debug('Telegram', 'handleChannelPost', `A ${handler.type} update has been handled.`, post, handler)
+
+    return handler
+  }
+
+  handleChatBoost(boost: ChatBoostUpdated): Handler {
+    let handler: Handler
+
+    handler = this.findMatchingHandler(UpdateType.CHAT_BOOST)
+    if (!handler.id) return handler
+
+    handler.middleware(boost)
 
     return handler
   }
@@ -317,10 +252,21 @@ export class Telegram {
     return handler
   }
 
+  handleDeletedBusinessMessages(deleted: BusinessMessagesDeleted): Handler {
+    let handler: Handler
+
+    handler = this.findMatchingHandler(UpdateType.DELETED_BUSINESS_MESSAGES)
+    if (!handler.id) return handler
+
+    handler.middleware(deleted)
+
+    return handler
+  }
+
   handleDocument(document: Message): Handler {
     let handler: Handler
 
-    handler = this.findMatchingHandler(UpdateType.DOCUMENT, CommandUtils.get(document.caption))
+    handler = this.findMatchingHandler(UpdateType.DOCUMENT, getCommand(document.caption))
     if (!handler.id) return handler
 
     handler.middleware(document)
@@ -335,6 +281,17 @@ export class Telegram {
     if (!handler.id) return handler
 
     handler.middleware(post)
+
+    return handler
+  }
+
+  handleEditedBusinessMessage(message: Message): Handler {
+    let handler: Handler
+
+    handler = this.findMatchingHandler(UpdateType.EDITED_BUSINESS_MESSAGE)
+    if (!handler.id) return handler
+
+    handler.middleware(message)
 
     return handler
   }
@@ -364,10 +321,32 @@ export class Telegram {
   handleMessage(message: Message): Handler {
     let handler: Handler
 
-    handler = this.findMatchingHandler(UpdateType.MESSAGE, CommandUtils.get(message.text))
+    handler = this.findMatchingHandler(UpdateType.MESSAGE, getCommand(message.text))
     if (!handler.id) return handler
 
     handler.middleware(message)
+
+    return handler
+  }
+
+  handleMessageReaction(reaction: MessageReactionUpdated): Handler {
+    let handler: Handler
+
+    handler = this.findMatchingHandler(UpdateType.MESSAGE_REACTION)
+    if (!handler.id) return handler
+
+    handler.middleware(reaction)
+
+    return handler
+  }
+
+  handleMessageReactionCount(count: MessageReactionCountUpdated): Handler {
+    let handler: Handler
+
+    handler = this.findMatchingHandler(UpdateType.MESSAGE_REACTION_COUNT)
+    if (!handler.id) return handler
+
+    handler.middleware(count)
 
     return handler
   }
@@ -416,10 +395,21 @@ export class Telegram {
     return handler
   }
 
+  handleRemovedChatBoost(removed: ChatBoostRemoved): Handler {
+    let handler: Handler
+
+    handler = this.findMatchingHandler(UpdateType.REMOVED_CHAT_BOOST)
+    if (!handler.id) return handler
+
+    handler.middleware(removed)
+
+    return handler
+  }
+
   handleReplyToMessage(reply: Message): Handler {
     let body: MessageBody, handler: Handler
 
-    body = ReplyToMessageUtils.decodeBody(reply.reply_to_message?.entities ?? [])
+    body = decodeReplyToMessageBody(reply.reply_to_message?.entities ?? [])
     setObjectProperty(reply, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.REPLY_TO_MESSAGE, body.type)
@@ -449,7 +439,7 @@ export class Telegram {
   handleStart(start: Message): Handler {
     let handler: Handler, body: MessageBody
 
-    body = StartUtils.decodeBody(start.text)
+    body = decodeStartMessageBody(start.text)
     setObjectProperty(start, 'body', body)
 
     handler = this.findMatchingHandler(UpdateType.START, body.type)
