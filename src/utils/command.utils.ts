@@ -1,7 +1,7 @@
 import { getObjectProperty, hasObjectProperty } from '@aracna/core'
-import { Context } from 'vm'
+import type { Context } from 'vm'
 import { REGEXP_COMMAND, REGEXP_COMMAND_WITH_USERNAME } from '../definitions/constants'
-import { UpdateType } from '../definitions/enums'
+import type { UpdateType } from '../definitions/enums'
 
 export class CommandUtils {
   static getByContext<T extends UpdateType>(context: Context[T]): string {

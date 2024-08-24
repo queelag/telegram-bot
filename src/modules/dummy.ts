@@ -1,5 +1,5 @@
 import { UpdateType } from '../definitions/enums'
-import { CallbackQueryBody, ConfigurationAPI, ConfigurationDefault, ConfigurationHandler, Handler, MessageBody } from '../definitions/interfaces'
+import type { CallbackQueryBody, ConfigurationAPI, ConfigurationDefault, ConfigurationHandler, Handler, MessageBody } from '../definitions/interfaces'
 
 export class Dummy {
   static get callbackQueryBody(): CallbackQueryBody {

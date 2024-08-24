@@ -12,8 +12,8 @@ importers:
         specifier: ^1.1.82
         version: 1.1.82
       '@aracna/telegram-bot-types':
-        specifier: ^1.2.11
-        version: 1.2.11
+        specifier: ^1.2.13
+        version: 1.2.13
       '@microsoft/api-extractor':
         specifier: ^7.47.5
         version: 7.47.5(@types/node@22.2.0)
@@ -50,8 +50,8 @@ packages:
     resolution: {integrity: sha512-PHCBnC+xg1qrRpMc5l0gkqMKP6uSxpYZ2qDeQPpKVKKXGviJHyCGFnWGHcMXF23cHv3OzUyFo81qNuPkzwFS/Q==}
     engines: {node: '>=16', pnpm: '>=8'}
 
-  '@aracna/telegram-bot-types@1.2.11':
-    resolution: {integrity: sha512-XJ1EprFcYtdP86iHbiP6ZkjX9xZ1Gnd0lspIYhO0CNYgsIEj1gASvZ4Mn8zg+jmxAP3UC29gDLMDX+JAqxlOrw==}
+  '@aracna/telegram-bot-types@1.2.13':
+    resolution: {integrity: sha512-rCCnsjZh1jV1Vct7gPTXtM1jn3GGdDWXvIh1fdmGN9u2yJICekJHJjUPZRYOIR7ZenFSHE1/ufLy/T9r7XUMTw==}
     engines: {node: '>=16', pnpm: '>=8'}
 
   '@babel/helper-string-parser@7.24.8':
@@ -1237,7 +1237,7 @@ snapshots:
       node-fetch: 3.3.2
       rfc4648: 1.5.3
 
-  '@aracna/telegram-bot-types@1.2.11': {}
+  '@aracna/telegram-bot-types@1.2.13': {}
 
   '@babel/helper-string-parser@7.24.8': {}
 

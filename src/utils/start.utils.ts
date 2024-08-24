@@ -1,5 +1,5 @@
 import { tc } from '@aracna/core'
-import { MessageBody } from '../definitions/interfaces'
+import type { MessageBody } from '../definitions/interfaces'
 import { Dummy } from '../modules/dummy'
 
 export class StartUtils {
@@ -16,7 +16,7 @@ export class StartUtils {
     return body
   }
 
-  static encodeBody<T>(data: T, type: string, chatID?: number): string {
+  static encodeBody<T>(data: T, type: string, chatID?: bigint): string {
     let body: MessageBody
 
     body = Dummy.messageBody
@@ -27,11 +27,11 @@ export class StartUtils {
     return Buffer.from(JSON.stringify(body)).toString('base64')
   }
 
-  static encodeBodyToHREF<T>(username: string, data: T, type: string, chatID?: number): string {
+  static encodeBodyToHREF<T>(username: string, data: T, type: string, chatID?: bigint): string {
     return `https://t.me/${username}?start=${this.encodeBody(data, type, chatID)}`
   }
 
-  static encodeBodyToAnchorTag<T>(username: string, data: T, type: string, children: string, chatID?: number): string {
+  static encodeBodyToAnchorTag<T>(username: string, data: T, type: string, children: string, chatID?: bigint): string {
     return `<a href="${this.encodeBodyToHREF(username, data, type, chatID)}">${children}</a>`
   }
 }

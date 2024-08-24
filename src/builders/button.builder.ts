@@ -1,8 +1,8 @@
-import { InlineKeyboardButton, LoginUrl } from '@aracna/telegram-bot-types'
+import type { InlineKeyboardButton, LoginUrl } from '@aracna/telegram-bot-types'
 import { CallbackQueryUtils } from '../utils/callback.query.utils'
 
 export class ButtonBuilder {
-  callback<T>(text: string, data: T, type: string, chatID?: number): InlineKeyboardButton {
+  callback<T>(text: string, data: T, type: string, chatID?: bigint): InlineKeyboardButton {
     return { text: text, callback_data: CallbackQueryUtils.encodeBody(data, type, chatID) }
   }
 

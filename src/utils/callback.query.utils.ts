@@ -1,5 +1,5 @@
 import { tc } from '@aracna/core'
-import { CallbackQueryBody } from '../definitions/interfaces'
+import type { CallbackQueryBody } from '../definitions/interfaces'
 import { Dummy } from '../modules/dummy'
 
 export class CallbackQueryUtils {
@@ -16,7 +16,7 @@ export class CallbackQueryUtils {
     return body
   }
 
-  static encodeBody<T>(data: T, type: string, chatID?: number): string {
+  static encodeBody<T>(data: T, type: string, chatID?: bigint): string {
     let body: CallbackQueryBody
 
     body = Dummy.callbackQueryBody

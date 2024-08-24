@@ -1,4 +1,4 @@
-import { InlineKeyboardButton } from '@aracna/telegram-bot-types'
+import type { InlineKeyboardButton } from '@aracna/telegram-bot-types'
 
 export class InlineKeyboardUtils {
   static getButtonsType(buttons: InlineKeyboardButton[]): string {

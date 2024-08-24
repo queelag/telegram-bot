@@ -1,5 +1,5 @@
-import { FetchError } from '@aracna/core'
-import { GetUpdates, Update } from '@aracna/telegram-bot-types'
+import type { FetchError } from '@aracna/core'
+import type { GetUpdates, Update } from '@aracna/telegram-bot-types'
 import { UpdateType } from '../definitions/enums'
 import { Child } from '../modules/child'
 
@@ -25,7 +25,7 @@ export class Polling extends Child {
       ...parameters
     }
 
-    updates = await this.telegram.api.post('getUpdates', body)
+    updates = await this.telegram.get.updates(parameters)
     if (updates instanceof Error) return updates
 
     updates.forEach((v: Update) => this.telegram.handle(v))

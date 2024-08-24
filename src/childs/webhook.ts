@@ -1,11 +1,19 @@
-import { FetchError } from '@aracna/core'
-import { SetWebhook } from '@aracna/telegram-bot-types'
+import type { FetchError } from '@aracna/core'
+import type { DeleteWebhook, SetWebhook, WebhookInfo } from '@aracna/telegram-bot-types'
 import { UpdateType } from '../definitions/enums'
 import { Child } from '../modules/child'
 
 export class Webhook extends Child {
-  async delete(): Promise<boolean | FetchError> {
-    return this.telegram.api.post('deleteWebhook')
+  async close(): Promise<boolean | FetchError> {
+    return this.telegram.api.post('close')
+  }
+
+  async delete(parameters?: Partial<DeleteWebhook>): Promise<boolean | FetchError> {
+    return this.telegram.api.post('deleteWebhook', parameters)
+  }
+
+  async getInfo(): Promise<WebhookInfo | FetchError> {
+    return this.telegram.api.post('getWebhookInfo')
   }
 
   async set(route: string = '', parameters?: Partial<SetWebhook>): Promise<boolean | FetchError> {

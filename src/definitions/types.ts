@@ -1,5 +1,5 @@
-import { UpdateType } from './enums'
-import { Context } from './interfaces'
+import type { UpdateType } from './enums'
+import type { Context } from './interfaces'
 
 export type HandlerMiddleware<T extends UpdateType> = (context: Context[T]) => any
 

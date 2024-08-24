@@ -1,6 +1,6 @@
 export { LoggerName as TelegramLoggerName, UpdateType } from './definitions/enums'
-export { CallbackQuery, CallbackQueryBody, Context, Handler, HandlerOptions, MessageBody, ReplyToMessage, Start } from './definitions/interfaces'
-export { HandlerMiddleware, InputFile } from './definitions/types'
+export type { CallbackQuery, CallbackQueryBody, Context, Handler, HandlerOptions, MessageBody, ReplyToMessage, Start } from './definitions/interfaces'
+export type { HandlerMiddleware, InputFile } from './definitions/types'
 export { Configuration as TelegramConfiguration } from './modules/configuration'
 export { Telegram } from './modules/telegram'
 export { CallbackQueryUtils } from './utils/callback.query.utils'

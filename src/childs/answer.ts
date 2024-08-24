@@ -1,5 +1,13 @@
-import { FetchError } from '@aracna/core'
-import { AnswerCallbackQuery, AnswerInlineQuery, AnswerPreCheckoutQuery, AnswerShippingQuery, InlineQueryResult } from '@aracna/telegram-bot-types'
+import type { FetchError } from '@aracna/core'
+import type {
+  AnswerCallbackQuery,
+  AnswerInlineQuery,
+  AnswerPreCheckoutQuery,
+  AnswerShippingQuery,
+  AnswerWebAppQuery,
+  InlineQueryResult,
+  SentWebAppMessage
+} from '@aracna/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Answer extends Child {
@@ -17,5 +25,9 @@ export class Answer extends Child {
 
   async shippingQuery(id: string, ok: boolean, parameters?: Partial<AnswerShippingQuery>): Promise<boolean | FetchError> {
     return this.telegram.api.post<boolean, AnswerShippingQuery>('answerShippingQuery', { ok: ok, shipping_query_id: id, ...parameters })
+  }
+
+  async webAppQuery(id: string, result: InlineQueryResult, parameters?: Partial<AnswerWebAppQuery>): Promise<SentWebAppMessage | FetchError> {
+    return this.telegram.api.post<SentWebAppMessage, AnswerWebAppQuery>('answerWebAppQuery', { result: result, web_app_query_id: id, ...parameters })
   }
 }

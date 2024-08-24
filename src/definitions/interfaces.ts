@@ -1,6 +1,5 @@
-import { FetchResponse } from '@aracna/core'
-import {
-  CallbackQuery as NativeCallbackQuery,
+import type { FetchResponse } from '@aracna/core'
+import type {
   ChatJoinRequest,
   ChatMemberUpdated,
   ChosenInlineResult,
@@ -11,14 +10,17 @@ import {
   InputMediaPhoto,
   InputMediaVideo,
   Message,
+  CallbackQuery as NativeCallbackQuery,
   Poll,
   PollAnswer,
   PreCheckoutQuery,
   SendMediaGroup,
+  SendMessage,
+  SendPaidMedia,
   ShippingQuery
 } from '@aracna/telegram-bot-types'
-import { UpdateType } from './enums'
-import { HandlerMiddleware, InputFile } from './types'
+import type { UpdateType } from './enums'
+import type { HandlerMiddleware, InputFile } from './types'
 
 export interface APIResponse<T> extends FetchResponse<APIResponseData<T>> {}
 
@@ -32,7 +34,7 @@ export interface CallbackQuery<T = any> extends NativeCallbackQuery {
 }
 
 export interface CallbackQueryBody<T = any> {
-  c?: number
+  c?: bigint
   d: T
   t: string
 }
@@ -47,21 +49,21 @@ export interface ConfigurationAPI {
 
 export interface ConfigurationDefault {
   buttons: {
-    text: (chatID: number) => Promise<InlineKeyboardButton[]>
-    url: (chatID: number) => Promise<InlineKeyboardButton[]>
-    login: (chatID: number) => Promise<InlineKeyboardButton[]>
-    callback: (chatID: number) => Promise<InlineKeyboardButton[]>
-    query: (chatID: number) => Promise<InlineKeyboardButton[]>
-    queryCurrentChat: (chatID: number) => Promise<InlineKeyboardButton[]>
-    game: (chatID: number) => Promise<InlineKeyboardButton[]>
-    pay: (chatID: number) => Promise<InlineKeyboardButton[]>
+    text: (chatID: bigint) => Promise<InlineKeyboardButton[]>
+    url: (chatID: bigint) => Promise<InlineKeyboardButton[]>
+    login: (chatID: bigint) => Promise<InlineKeyboardButton[]>
+    callback: (chatID: bigint) => Promise<InlineKeyboardButton[]>
+    query: (chatID: bigint) => Promise<InlineKeyboardButton[]>
+    queryCurrentChat: (chatID: bigint) => Promise<InlineKeyboardButton[]>
+    game: (chatID: bigint) => Promise<InlineKeyboardButton[]>
+    pay: (chatID: bigint) => Promise<InlineKeyboardButton[]>
   }
 }
 
 export interface ConfigurationHandler {
   send: {
     buttons: {
-      empty: (chatID: number) => Error
+      empty: (chatID: bigint) => Error
     }
   }
 }
@@ -105,8 +107,12 @@ export interface InputMediaAlternative extends Omit<InputMediaAudio | InputMedia
   media: InputFile
 }
 
+export interface InputPaidMediaAlternative extends Omit<InputMediaPhoto | InputMediaVideo, 'media'> {
+  media: InputFile
+}
+
 export interface MessageBody<T = any> {
-  chatID?: number
+  chatID?: bigint
   data: T
   type: string
 }
@@ -117,6 +123,17 @@ export interface ReplyToMessage<T = any> extends Message {
 
 export interface SendMediaGroupAlternative extends Omit<SendMediaGroup, 'media'> {
   media: InputMediaAlternative[]
+}
+
+export interface SendPaidMediaAlternative extends Omit<SendPaidMedia, 'media'> {
+  media: InputPaidMediaAlternative[]
+}
+
+export interface SendRepliable<T = any> extends SendMessage {
+  data: T
+  from_chat_id?: bigint
+  text: string
+  type: string
 }
 
 export interface Start<T = any> extends Message {

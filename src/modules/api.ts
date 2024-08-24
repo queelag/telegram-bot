@@ -1,5 +1,14 @@
-import { FetchError, FetchResponse, RequestMethod, RestAPI, RestApiConfig, importNodeFetch, serializeFormData, useNodeFetch } from '@aracna/core'
-import { APIResponseData } from '../definitions/interfaces'
+import {
+  type FetchError,
+  type FetchResponse,
+  type RequestMethod,
+  RestAPI,
+  type RestApiConfig,
+  importNodeFetch,
+  serializeFormData,
+  useNodeFetch
+} from '@aracna/core'
+import type { APIResponseData } from '../definitions/interfaces'
 
 export class API extends RestAPI {
   async post<V, W, X = undefined>(path: string, body?: W, config?: RestApiConfig<void>): Promise<V | FetchError<X>> {

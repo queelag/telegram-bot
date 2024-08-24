@@ -1,6 +1,6 @@
 import { tc } from '@aracna/core'
-import { MessageEntity } from '@aracna/telegram-bot-types'
-import { MessageBody } from '../definitions/interfaces'
+import type { MessageEntity } from '@aracna/telegram-bot-types'
+import type { MessageBody } from '../definitions/interfaces'
 import { Dummy } from '../modules/dummy'
 
 export class ReplyToMessageUtils {
@@ -18,7 +18,7 @@ export class ReplyToMessageUtils {
     return body
   }
 
-  static encodeBody<T>(data: T, type: string, chatID?: number): string {
+  static encodeBody<T>(data: T, type: string, chatID?: bigint): string {
     let body: MessageBody
 
     body = Dummy.messageBody

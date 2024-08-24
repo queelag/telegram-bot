@@ -1,5 +1,5 @@
-import { FetchError } from '@aracna/core'
-import { Message, Poll, StopMessageLiveLocation, StopPoll } from '@aracna/telegram-bot-types'
+import type { FetchError } from '@aracna/core'
+import type { Message, Poll, StopMessageLiveLocation, StopPoll } from '@aracna/telegram-bot-types'
 import { Child } from '../modules/child'
 
 export class Stop extends Child {
@@ -7,7 +7,7 @@ export class Stop extends Child {
     return this.telegram.api.post<Message | boolean, StopMessageLiveLocation>('stopMessageLiveLocation', parameters)
   }
 
-  async poll(chatID: number, message: number, parameters?: Partial<StopPoll>): Promise<Poll | FetchError> {
-    return this.telegram.api.post<Poll, StopPoll>('stopPoll', { chat_id: chatID, message_id: message, ...parameters })
+  async poll(chatID: bigint, messageID: number, parameters?: Partial<StopPoll>): Promise<Poll | FetchError> {
+    return this.telegram.api.post<Poll, StopPoll>('stopPoll', { chat_id: chatID, message_id: messageID, ...parameters })
   }
 }

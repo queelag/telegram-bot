@@ -1,4 +1,4 @@
-import { ConfigurationAPI, ConfigurationDefault, ConfigurationHandler } from '../definitions/interfaces'
+import type { ConfigurationAPI, ConfigurationDefault, ConfigurationHandler } from '../definitions/interfaces'
 import { Dummy } from './dummy'
 
 class ConfigurationBuilder {

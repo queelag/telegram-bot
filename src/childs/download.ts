@@ -1,5 +1,5 @@
-import { FetchError, FetchResponse } from '@aracna/core'
-import { File, PhotoSize, UserProfilePhotos } from '@aracna/telegram-bot-types'
+import type { FetchError, FetchResponse } from '@aracna/core'
+import type { File, PhotoSize, UserProfilePhotos } from '@aracna/telegram-bot-types'
 import { API } from '../modules/api'
 import { Child } from '../modules/child'
 
@@ -18,7 +18,7 @@ export class Download extends Child {
     return buffer.data
   }
 
-  async userFirstProfilePhoto(id: number): Promise<Buffer | FetchError | Error> {
+  async userFirstProfilePhoto(id: bigint): Promise<Buffer | FetchError | Error> {
     let photos: UserProfilePhotos | FetchError, sizes: PhotoSize[][], buffer: Buffer | Error
 
     photos = await this.telegram.get.userProfilePhotos(id, { limit: 1 })

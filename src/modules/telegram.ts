@@ -1,5 +1,5 @@
-import { FetchError, generateRandomString, getObjectProperty, hasObjectProperty, mergeObjects, parseNumber, setObjectProperty } from '@aracna/core'
-import {
+import { type FetchError, generateRandomString, getObjectProperty, hasObjectProperty, mergeObjects, parseNumber, setObjectProperty } from '@aracna/core'
+import type {
   BotCommand,
   CallbackQuery,
   ChatJoinRequest,
@@ -16,29 +16,40 @@ import {
 } from '@aracna/telegram-bot-types'
 import { Add } from '../childs/add'
 import { Answer } from '../childs/answer'
+import { Approve } from '../childs/approve'
 import { Ban } from '../childs/ban'
+import { Close } from '../childs/close'
+import { Copy } from '../childs/copy'
 import { Create } from '../childs/create'
+import { Decline } from '../childs/decline'
 import { Delete } from '../childs/delete'
 import { Download } from '../childs/download'
 import { Edit } from '../childs/edit'
 import { Export } from '../childs/export'
 import { Forward } from '../childs/forward'
 import { Get } from '../childs/get'
+import { Hide } from '../childs/hide'
 import { Leave } from '../childs/leave'
+import { Log } from '../childs/log'
 import { Pin } from '../childs/pin'
 import { Polling } from '../childs/polling'
 import { Promote } from '../childs/promote'
+import { Refund } from '../childs/refund'
+import { Reopen } from '../childs/reopen'
+import { Replace } from '../childs/replace'
 import { Restrict } from '../childs/restrict'
+import { Revoke } from '../childs/revoke'
 import { Send } from '../childs/send'
 import { Set } from '../childs/set'
 import { Stop } from '../childs/stop'
 import { Unban } from '../childs/unban'
+import { Unhide } from '../childs/unhide'
 import { Unpin } from '../childs/unpin'
 import { Upload } from '../childs/upload'
 import { Webhook } from '../childs/webhook'
 import { UpdateType } from '../definitions/enums'
-import { CallbackQueryBody, Handler, HandlerOptions, MessageBody, TelegramName } from '../definitions/interfaces'
-import { HandlerMiddleware } from '../definitions/types'
+import type { CallbackQueryBody, Handler, HandlerOptions, MessageBody, TelegramName } from '../definitions/interfaces'
+import type { HandlerMiddleware } from '../definitions/types'
 import { ModuleLogger } from '../loggers/module.logger'
 import { CallbackQueryUtils } from '../utils/callback.query.utils'
 import { CommandUtils } from '../utils/command.utils'
@@ -53,7 +64,7 @@ export class Telegram {
   api: API
   handlers: Handler[]
   hostname: string
-  id: number
+  id: bigint
   name: TelegramName
   port: number
   token: string
@@ -65,23 +76,34 @@ export class Telegram {
   /** CHILDS */
   add: Add
   answer: Answer
+  approve: Approve
+  ban: Ban
+  close: Close
+  copy: Copy
   create: Create
+  decline: Decline
   delete: Delete
   download: Download
   edit: Edit
   export: Export
   forward: Forward
   get: Get
-  ban: Ban
+  hide: Hide
   leave: Leave
+  log: Log
   pin: Pin
   polling: Polling
   promote: Promote
+  refund: Refund
+  reopen: Reopen
+  replace: Replace
   restrict: Restrict
+  revoke: Revoke
   send: Send
   set: Set
   stop: Stop
   unban: Unban
+  unhide: Unhide
   unpin: Unpin
   upload: Upload
   webhook: Webhook
@@ -91,7 +113,7 @@ export class Telegram {
     this.handlers = []
     this.hostname = hostname
     this.name = { first: '', last: '' }
-    this.id = 0
+    this.id = 0n
     this.port = port
     this.token = token
     this.username = ''
@@ -100,23 +122,34 @@ export class Telegram {
 
     this.add = new Add(this)
     this.answer = new Answer(this)
+    this.approve = new Approve(this)
+    this.ban = new Ban(this)
+    this.close = new Close(this)
+    this.copy = new Copy(this)
     this.create = new Create(this)
+    this.decline = new Decline(this)
     this.delete = new Delete(this)
     this.download = new Download(this)
     this.edit = new Edit(this)
     this.export = new Export(this)
     this.forward = new Forward(this)
     this.get = new Get(this)
-    this.ban = new Ban(this)
+    this.hide = new Hide(this)
     this.leave = new Leave(this)
+    this.log = new Log(this)
     this.pin = new Pin(this)
     this.polling = new Polling(this)
     this.promote = new Promote(this)
+    this.refund = new Refund(this)
+    this.reopen = new Reopen(this)
+    this.replace = new Replace(this)
     this.restrict = new Restrict(this)
+    this.revoke = new Revoke(this)
     this.send = new Send(this)
     this.set = new Set(this)
     this.stop = new Stop(this)
     this.unban = new Unban(this)
+    this.unhide = new Unhide(this)
     this.unpin = new Unpin(this)
     this.upload = new Upload(this)
     this.webhook = new Webhook(this)
@@ -425,7 +458,7 @@ export class Telegram {
     handler.middleware(start)
 
     if (handler.id.length > 0 && handler.options.deleteOnMessageStart) {
-      this.delete.message(body.chatID ? start.from?.id ?? 0 : start.chat.id, start.message_id)
+      this.delete.message(body.chatID ? start.from?.id ?? 0n : start.chat.id, start.message_id)
     }
 
     return handler
