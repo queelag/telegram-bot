@@ -51,7 +51,3 @@ export async function setWebhook(token: string, body: SetWebhook): Promise<boole
     { token }
   )
 }
-
-// function url(route: string): string {
-//   return 'https://' + this.telegram.hostname + ':' + this.telegram.port + '/' + route + 'bot' + this.telegram.token
-// }

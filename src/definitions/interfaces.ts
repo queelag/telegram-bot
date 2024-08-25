@@ -35,34 +35,11 @@ export interface CallbackQueryBody<T = any> {
   t: string
 }
 
-// export interface ConfigurationAPI {
-//   post: {
-//     callback: {
-//       success: <T, U>(body: T, result: U | Error) => void
-//     }
-//   }
-// }
-
-// export interface ConfigurationDefault {
-//   buttons: {
-//     text: (chatID: bigint) => Promise<InlineKeyboardButton[]>
-//     url: (chatID: bigint) => Promise<InlineKeyboardButton[]>
-//     login: (chatID: bigint) => Promise<InlineKeyboardButton[]>
-//     callback: (chatID: bigint) => Promise<InlineKeyboardButton[]>
-//     query: (chatID: bigint) => Promise<InlineKeyboardButton[]>
-//     queryCurrentChat: (chatID: bigint) => Promise<InlineKeyboardButton[]>
-//     game: (chatID: bigint) => Promise<InlineKeyboardButton[]>
-//     pay: (chatID: bigint) => Promise<InlineKeyboardButton[]>
-//   }
-// }
-
-// export interface ConfigurationHandler {
-//   send: {
-//     buttons: {
-//       empty: (chatID: bigint) => Error
-//     }
-//   }
-// }
+export interface ClientConnectionOptions {
+  polling?: {
+    ms?: number
+  }
+}
 
 export interface Context {
   business_connection: BusinessConnection
@@ -133,7 +110,7 @@ export interface SendPaidMediaAlternative extends Omit<SendPaidMedia, 'media'> {
   media: InputPaidMediaAlternative[]
 }
 
-export interface SendRepliable<T = any> extends SendMessage {
+export interface SendRepliableMessage<T = any> extends SendMessage {
   data: T
   from_chat_id?: bigint
   text: string

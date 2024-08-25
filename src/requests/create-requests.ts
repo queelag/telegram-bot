@@ -25,6 +25,6 @@ export async function createInvoiceLink(token: string, body: CreateInvoiceLink):
   return TelegramAPI.post<string, CreateInvoiceLink>('createInvoiceLink', body, { token })
 }
 
-export async function createStickerSet(token: string, body: CreateNewStickerSet): Promise<boolean | FetchError> {
+export async function createNewStickerSet(token: string, body: CreateNewStickerSet): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, CreateNewStickerSet>('createNewStickerSet', body, { token })
 }

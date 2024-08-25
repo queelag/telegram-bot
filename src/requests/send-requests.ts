@@ -1,6 +1,5 @@
-import { type FetchError, getObjectProperty } from '@aracna/core'
+import { type FetchError } from '@aracna/core'
 import type {
-  InlineKeyboardButton,
   Message,
   SendAnimation,
   SendAudio,
@@ -28,10 +27,9 @@ import type {
   InputPaidMediaAlternative,
   SendMediaGroupAlternative,
   SendPaidMediaAlternative,
-  SendRepliable
+  SendRepliableMessage
 } from '../definitions/interfaces'
 import { sanitizeHTML } from '../utils/html-utils'
-import { getInlineKeyboardButtonsType } from '../utils/inline-keyboard-utils'
 import { encodeReplyToMessageBody } from '../utils/reply-to-message-utils'
 
 export async function sendAnimation(token: string, body: SendAnimation): Promise<Message | FetchError> {
@@ -44,19 +42,6 @@ export async function sendAudio(token: string, body: SendAudio): Promise<Message
 
 export async function sendDocument(token: string, body: SendDocument): Promise<Message | FetchError> {
   return TelegramAPI.post<Message, SendDocument>('sendDocument', body, { token })
-}
-
-export async function sendInlineKeyboardButtons(token: string, body: SendMessage, buttons: InlineKeyboardButton[]): Promise<Message | FetchError | Error> {
-  return buttons.length <= 0
-    ? Configuration.handler.send.buttons.empty(chatID)
-    : sendMessage(token, {
-        reply_markup: {
-          inline_keyboard: buttons
-            .concat(getObjectProperty(Configuration.default.buttons, getInlineKeyboardButtonsType(buttons), (chatID: bigint) => [])(chatID))
-            .map((v: InlineKeyboardButton) => [v])
-        },
-        ...body
-      })
 }
 
 export async function sendChatAction(token: string, body: SendChatAction): Promise<boolean | FetchError> {
@@ -73,10 +58,6 @@ export async function sendDice(token: string, body: SendDice): Promise<Message |
 
 export async function sendGame(token: string, body: SendGame): Promise<Message | FetchError> {
   return TelegramAPI.post<Message, SendGame>('sendGame', body, { token })
-}
-
-export async function sendHTML(token: string, body: SendMessage): Promise<Message | FetchError> {
-  return sendMessage(token, { parse_mode: 'HTML', ...body, text: sanitizeHTML(body.text) })
 }
 
 export async function sendInvoice(token: string, body: SendInvoice): Promise<Message | FetchError> {
@@ -105,6 +86,10 @@ export async function sendMessage(token: string, body: SendMessage): Promise<Mes
   return TelegramAPI.post<Message, SendMessage>('sendMessage', body, { token })
 }
 
+export async function sendMessageHTML(token: string, body: SendMessage): Promise<Message | FetchError> {
+  return sendMessage(token, { parse_mode: 'HTML', ...body, text: sanitizeHTML(body.text) })
+}
+
 export async function sendPaidMedia(token: string, body: SendPaidMedia): Promise<Message | FetchError> {
   return TelegramAPI.post<Message, SendPaidMediaAlternative>(
     'sendPaidMedia',
@@ -125,7 +110,7 @@ export async function sendPoll(token: string, body: SendPoll): Promise<Message |
   return TelegramAPI.post<Message, SendPoll>('sendPoll', body, { token })
 }
 
-export async function sendRepliable<T>(token: string, body: SendRepliable): Promise<Message | FetchError> {
+export async function sendRepliableMessage<T>(token: string, body: SendRepliableMessage<T>): Promise<Message | FetchError> {
   return sendMessage(token, {
     reply_markup: { force_reply: true, selective: true },
     ...body,

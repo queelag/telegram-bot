@@ -53,20 +53,8 @@ export async function setChatTitle(token: string, body: SetChatTitle): Promise<b
   return TelegramAPI.post<boolean, SetChatTitle>('setChatTitle', body, { token })
 }
 
-export async function setCommands(token: string, body: SetMyCommands): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, SetMyCommands>('setMyCommands', body, { token })
-}
-
 export async function setCustomEmojiStickerSetThumbnail(token: string, body: SetCustomEmojiStickerSetThumbnail): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, SetCustomEmojiStickerSetThumbnail>('setCustomEmojiStickerSetThumbnail', body, { token })
-}
-
-export async function setDefaultAdministratorRights(token: string, body: SetMyDefaultAdministratorRights): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, SetMyDefaultAdministratorRights>('setMyDefaultAdministratorRights', body, { token })
-}
-
-export async function setDescription(token: string, body: SetMyDescription): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, SetMyDescription>('setMyDescription', body, { token })
 }
 
 export async function setGameScore(token: string, body: SetGameScore): Promise<boolean | FetchError> {
@@ -77,16 +65,28 @@ export async function setMessageReaction(token: string, body: SetMessageReaction
   return TelegramAPI.post<boolean, SetMessageReaction>('setMessageReaction', body, { token })
 }
 
-export async function setName(token: string, body: SetMyName): Promise<boolean | FetchError> {
+export async function setMyCommands(token: string, body: SetMyCommands): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, SetMyCommands>('setMyCommands', body, { token })
+}
+
+export async function setMyDefaultAdministratorRights(token: string, body: SetMyDefaultAdministratorRights): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, SetMyDefaultAdministratorRights>('setMyDefaultAdministratorRights', body, { token })
+}
+
+export async function setMyDescription(token: string, body: SetMyDescription): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, SetMyDescription>('setMyDescription', body, { token })
+}
+
+export async function setMyName(token: string, body: SetMyName): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, SetMyName>('setMyName', body, { token })
+}
+
+export async function setMyShortDescription(token: string, body: SetMyShortDescription): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, SetMyShortDescription>('setMyShortDescription', body, { token })
 }
 
 export async function setPassportDataErrors(token: string, body: SetPassportDataErrors): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, SetPassportDataErrors>('setPassportDataErrors', body, { token })
-}
-
-export async function setShortDescription(token: string, body: SetMyShortDescription): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, SetMyShortDescription>('setMyShortDescription', body, { token })
 }
 
 export async function setStickerEmojiList(token: string, body: SetStickerEmojiList): Promise<boolean | FetchError> {

@@ -1,3 +1,3 @@
 export enum LoggerName {
-  MODULE = 'TELEGRAM_MODULE'
+  CLASS = 'TELEGRAM_CLASS'
 }
