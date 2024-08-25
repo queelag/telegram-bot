@@ -1,14 +1,4 @@
-import {
-  clearInterval,
-  FetchError,
-  generateRandomString,
-  getObjectProperty,
-  hasObjectProperty,
-  mergeObjects,
-  parseNumber,
-  setInterval,
-  setObjectProperty
-} from '@aracna/core'
+import { clearInterval, FetchError, generateRandomString, hasObjectProperty, mergeObjects, parseNumber, setInterval, setObjectProperty } from '@aracna/core'
 import type {
   BotCommand,
   BusinessConnection,
@@ -159,14 +149,15 @@ export class Client {
       case hasObjectProperty(update, 'message_reaction_count'):
         handler = this.handleMessageReactionCount(update.message_reaction_count as any)
         break
-      case getObjectProperty(update, 'message.text', '').includes('/start') &&
-        getObjectProperty(update, 'message.text', '').replace('/start', '').trim().length > 0:
-        handler = this.handleStart(update.message as any)
-        break
       case hasObjectProperty(update, 'message') && hasObjectProperty(update, 'message.reply_to_message.text'):
         handler = this.handleReplyToMessage(update.message as any)
         break
       case hasObjectProperty(update, 'message.text'):
+        if (update.message?.text?.includes('/start') && update.message?.text?.replace('/start', '').trim().length > 0) {
+          handler = this.handleStart(update.message as any)
+          break
+        }
+
         handler = this.handleMessage(update.message as any)
         break
       case hasObjectProperty(update, 'message.document') && hasObjectProperty(update, 'message.caption'):

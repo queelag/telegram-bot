@@ -31,7 +31,7 @@ export async function deleteMessages(token: string, body: DeleteMessages): Promi
   return TelegramAPI.post<boolean, DeleteMessages>('deleteMessages', body, { token })
 }
 
-export async function deleteMyCommands(token: string, body: DeleteMyCommands): Promise<boolean | FetchError> {
+export async function deleteMyCommands(token: string, body?: DeleteMyCommands): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, DeleteMyCommands>('deleteMyCommands', body, { token })
 }
 

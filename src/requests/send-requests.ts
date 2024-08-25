@@ -68,16 +68,14 @@ export async function sendLocation(token: string, body: SendLocation): Promise<M
   return TelegramAPI.post<Message, SendLocation>('sendLocation', body, { token })
 }
 
-export async function sendMediaGroup(token: string, body: SendMediaGroup): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, SendMediaGroupAlternative>(
+export async function sendMediaGroup(token: string, body: SendMediaGroupAlternative): Promise<Message | FetchError> {
+  return TelegramAPI.post<Message, SendMediaGroup>(
     'sendMediaGroup',
-    body.media.every((v: InputMediaAlternative) => v.media instanceof Buffer)
-      ? {
-          ...body,
-          media: body.media.map((v: InputMediaAlternative, k: number) => ({ ...v, media: `attach://media_${k}` })),
-          ...body.media.reduce((r: object, v: InputMediaAlternative, k: number) => ({ ...r, [`media_${k}`]: v.media }), {})
-        }
-      : body,
+    {
+      ...body,
+      media: body.media.map((media: InputMediaAlternative, index: number) => ({ ...media, media: `attach://media_${index}` })),
+      ...body.media.reduce((result: object, media: InputMediaAlternative, index: number) => ({ ...result, [`media_${index}`]: media.media }), {})
+    },
     { token }
   )
 }
@@ -90,8 +88,8 @@ export async function sendMessageHTML(token: string, body: SendMessage): Promise
   return sendMessage(token, { parse_mode: 'HTML', ...body, text: sanitizeHTML(body.text) })
 }
 
-export async function sendPaidMedia(token: string, body: SendPaidMedia): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, SendPaidMediaAlternative>(
+export async function sendPaidMedia(token: string, body: SendPaidMediaAlternative): Promise<Message | FetchError> {
+  return TelegramAPI.post<Message, SendPaidMedia>(
     'sendPaidMedia',
     {
       ...body,

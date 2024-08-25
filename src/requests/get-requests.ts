@@ -76,35 +76,35 @@ export async function getForumTopicIconStickers(token: string): Promise<Sticker[
   return TelegramAPI.post('getForumTopicIconStickers', undefined, { token })
 }
 
-export async function getGameHighScores(token: string, body: GetGameHighScores): Promise<GameHighScore | FetchError> {
-  return TelegramAPI.post<GameHighScore, GetGameHighScores>('getGameHighScores', body, { token })
+export async function getGameHighScores(token: string, body: GetGameHighScores): Promise<GameHighScore[] | FetchError> {
+  return TelegramAPI.post<GameHighScore[], GetGameHighScores>('getGameHighScores', body, { token })
 }
 
 export async function getMe(token: string): Promise<User | FetchError> {
   return TelegramAPI.post('getMe', undefined, { token })
 }
 
-export async function getMyCommands(token: string, body: GetMyCommands): Promise<BotCommand[] | FetchError> {
+export async function getMyCommands(token: string, body?: GetMyCommands): Promise<BotCommand[] | FetchError> {
   return TelegramAPI.post<BotCommand[], GetMyCommands>('getMyCommands', body, { token })
 }
 
-export async function getMyDefaultAdministratorRights(token: string, body: GetMyDefaultAdministratorRights): Promise<ChatAdministratorRights | FetchError> {
+export async function getMyDefaultAdministratorRights(token: string, body?: GetMyDefaultAdministratorRights): Promise<ChatAdministratorRights | FetchError> {
   return TelegramAPI.post<ChatAdministratorRights, GetMyDefaultAdministratorRights>('getMyDefaultAdministratorRights', body, { token })
 }
 
-export async function getMyDescription(token: string, body: GetMyDescription): Promise<BotDescription | FetchError> {
+export async function getMyDescription(token: string, body?: GetMyDescription): Promise<BotDescription | FetchError> {
   return TelegramAPI.post<BotDescription, GetMyDescription>('getMyDescription', body, { token })
 }
 
-export async function getMyName(token: string, body: GetMyName): Promise<BotName | FetchError> {
+export async function getMyName(token: string, body?: GetMyName): Promise<BotName | FetchError> {
   return TelegramAPI.post('getMyName', body, { token })
 }
 
-export async function getMyShortDescription(token: string, body: GetMyShortDescription): Promise<BotShortDescription | FetchError> {
+export async function getMyShortDescription(token: string, body?: GetMyShortDescription): Promise<BotShortDescription | FetchError> {
   return TelegramAPI.post('getMyShortDescription', body, { token })
 }
 
-export async function getStarTransactions(token: string, body: GetStarTransactions): Promise<StarTransactions | FetchError> {
+export async function getStarTransactions(token: string, body?: GetStarTransactions): Promise<StarTransactions | FetchError> {
   return TelegramAPI.post<StarTransactions, GetStarTransactions>('getStarTransactions', body, { token })
 }
 
@@ -112,7 +112,7 @@ export async function getStickerSet(token: string, body: GetStickerSet): Promise
   return TelegramAPI.post<StickerSet, GetStickerSet>('getStickerSet', body, { token })
 }
 
-export async function getUpdates(token: string, body: GetUpdates): Promise<Update[] | FetchError> {
+export async function getUpdates(token: string, body?: GetUpdates): Promise<Update[] | FetchError> {
   return TelegramAPI.post<Update[], GetUpdates>('getUpdates', body, { token })
 }
 

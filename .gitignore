@@ -2,6 +2,7 @@ node_modules
 database
 dist
 declarations
+play
 .env
 .DS_Store
 yarn-error.log

@@ -6,6 +6,7 @@ import type {
   ChatJoinRequest,
   ChatMemberUpdated,
   ChosenInlineResult,
+  EditMessageMedia,
   InlineQuery,
   InputMediaAudio,
   InputMediaDocument,
@@ -67,6 +68,10 @@ export interface Context {
   reply_to_message: ReplyToMessage
   shipping_query: ShippingQuery
   start: StartMessage
+}
+
+export interface EditMessageMediaAlternative extends Omit<EditMessageMedia, 'media'> {
+  media: InputMediaAlternative
 }
 
 export interface Handler<T extends UpdateType = any, U extends HandlerOptions = HandlerOptions> {

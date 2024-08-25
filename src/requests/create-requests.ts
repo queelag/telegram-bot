@@ -5,7 +5,9 @@ import type {
   CreateChatSubscriptionInviteLink,
   CreateForumTopic,
   CreateInvoiceLink,
-  CreateNewStickerSet
+  CreateNewStickerSet,
+  ForumTopic,
+  InputSticker
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
 
@@ -17,8 +19,8 @@ export async function createChatSubscriptionInviteLink(token: string, body: Crea
   return TelegramAPI.post<ChatInviteLink, CreateChatSubscriptionInviteLink>('createChatSubscriptionInviteLink', body, { token })
 }
 
-export async function createForumTopic(token: string, body: CreateForumTopic) {
-  return TelegramAPI.post<boolean, CreateForumTopic>('createForumTopic', body, { token })
+export async function createForumTopic(token: string, body: CreateForumTopic): Promise<ForumTopic | FetchError> {
+  return TelegramAPI.post<ForumTopic, CreateForumTopic>('createForumTopic', body, { token })
 }
 
 export async function createInvoiceLink(token: string, body: CreateInvoiceLink): Promise<string | FetchError> {
@@ -26,5 +28,16 @@ export async function createInvoiceLink(token: string, body: CreateInvoiceLink):
 }
 
 export async function createNewStickerSet(token: string, body: CreateNewStickerSet): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, CreateNewStickerSet>('createNewStickerSet', body, { token })
+  return TelegramAPI.post<boolean, CreateNewStickerSet>(
+    'createNewStickerSet',
+    {
+      ...body,
+      stickers: body.stickers.map((sticker: InputSticker, index: number) => ({
+        ...sticker,
+        sticker: sticker.sticker instanceof Blob ? `attach://sticker_${index}` : sticker.sticker
+      })),
+      ...body.stickers.reduce((result: object, sticker: InputSticker, index: number) => ({ ...result, [`sticker_${index}`]: sticker.sticker }), {})
+    },
+    { token }
+  )
 }

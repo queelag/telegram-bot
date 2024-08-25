@@ -42,7 +42,15 @@ export async function setChatPermissions(token: string, body: SetChatPermissions
 }
 
 export async function setChatPhoto(token: string, body: SetChatPhoto): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, SetChatPhoto>('setChatPhoto', body, { token })
+  return TelegramAPI.post<boolean, SetChatPhoto>(
+    'setChatPhoto',
+    {
+      ...body,
+      photo: body.photo instanceof Blob ? `attach://photo_blob` : body.photo,
+      ...(body.photo instanceof Blob ? { photo_blob: body.photo } : {})
+    },
+    { token }
+  )
 }
 
 export async function setChatStickerSet(token: string, body: SetChatStickerSet): Promise<boolean | FetchError> {

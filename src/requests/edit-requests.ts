@@ -13,6 +13,7 @@ import type {
   Message
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
+import { EditMessageMediaAlternative } from '../definitions/interfaces'
 
 export async function editChatInviteLink(token: string, body: EditChatInviteLink): Promise<ChatInviteLink | FetchError> {
   return TelegramAPI.post<ChatInviteLink, EditChatInviteLink>('editChatInviteLink', body, { token })
@@ -38,8 +39,19 @@ export async function editMessageLiveLocation(token: string, body: EditMessageLi
   return TelegramAPI.post<Message, EditMessageLiveLocation>('editMessageLiveLocation', body, { token })
 }
 
-export async function editMessageMedia(token: string, body: EditMessageMedia): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, EditMessageMedia>('editMessageMedia', body, { token })
+export async function editMessageMedia(token: string, body: EditMessageMediaAlternative): Promise<Message | FetchError> {
+  return TelegramAPI.post<Message, EditMessageMedia>(
+    'editMessageMedia',
+    {
+      ...body,
+      media: {
+        ...body.media,
+        media: body.media.media instanceof Blob ? `attach://media_blob` : body.media.media
+      },
+      ...(body.media.media instanceof Blob ? { media_blob: body.media.media } : {})
+    },
+    { token }
+  )
 }
 
 export async function editMessageReplyMarkup(token: string, body: EditMessageReplyMarkup): Promise<Message | FetchError> {
