@@ -11,7 +11,7 @@ describe('Get Requests', () => {
     chat = await getChat(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID })
     if (chat instanceof Error) throw chat
 
-    expect(BigInt(chat.id)).toBe(PRIVATE_CHAT_ID)
+    expect(chat.id).toBe(PRIVATE_CHAT_ID)
   })
 
   it('gets me', async () => {

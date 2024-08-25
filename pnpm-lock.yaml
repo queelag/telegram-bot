@@ -9,11 +9,11 @@ importers:
   .:
     devDependencies:
       '@aracna/core':
-        specifier: ^1.1.82
-        version: 1.1.82
+        specifier: ^1.1.83
+        version: 1.1.83
       '@aracna/telegram-bot-types':
-        specifier: ^1.2.13
-        version: 1.2.13
+        specifier: ^1.2.14
+        version: 1.2.14
       '@microsoft/api-extractor':
         specifier: ^7.47.5
         version: 7.47.5(@types/node@22.2.0)
@@ -46,12 +46,12 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@aracna/core@1.1.82':
-    resolution: {integrity: sha512-PHCBnC+xg1qrRpMc5l0gkqMKP6uSxpYZ2qDeQPpKVKKXGviJHyCGFnWGHcMXF23cHv3OzUyFo81qNuPkzwFS/Q==}
+  '@aracna/core@1.1.83':
+    resolution: {integrity: sha512-sNCWuJEkhIRohcRAe8WLL2x68fWLK0XHz2fwzAnc/8HOS/CSoXsvPHfmxAVQd3fP/OL/4RfQ4jtHn2nm6wp3cA==}
     engines: {node: '>=16', pnpm: '>=8'}
 
-  '@aracna/telegram-bot-types@1.2.13':
-    resolution: {integrity: sha512-rCCnsjZh1jV1Vct7gPTXtM1jn3GGdDWXvIh1fdmGN9u2yJICekJHJjUPZRYOIR7ZenFSHE1/ufLy/T9r7XUMTw==}
+  '@aracna/telegram-bot-types@1.2.14':
+    resolution: {integrity: sha512-Wg5UVWxnuCxNJMJBqHZ75kIxVNjqDPOstwDDR98SjAzL/HtPLafztEWTkhC5ZkVI1Wi/XpZE5nEr0nnNS4z+Kw==}
     engines: {node: '>=16', pnpm: '>=8'}
 
   '@babel/helper-string-parser@7.24.8':
@@ -1229,7 +1229,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@aracna/core@1.1.82':
+  '@aracna/core@1.1.83':
     dependencies:
       '@types/cookie': 0.6.0
       cookie: 0.6.0
@@ -1237,7 +1237,7 @@ snapshots:
       node-fetch: 3.3.2
       rfc4648: 1.5.3
 
-  '@aracna/telegram-bot-types@1.2.13': {}
+  '@aracna/telegram-bot-types@1.2.14': {}
 
   '@babel/helper-string-parser@7.24.8': {}
 

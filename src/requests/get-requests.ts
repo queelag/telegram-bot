@@ -56,8 +56,8 @@ export async function getChatMember(token: string, body: GetChatMember): Promise
   return TelegramAPI.post<ChatMember, GetChatMember>('getChatMember', body, { token })
 }
 
-export async function getChatMemberCount(token: string, body: GetChatMemberCount): Promise<bigint | FetchError> {
-  return TelegramAPI.post<bigint, GetChatMemberCount>('getChatMemberCount', body, { token })
+export async function getChatMemberCount(token: string, body: GetChatMemberCount): Promise<number | FetchError> {
+  return TelegramAPI.post<number, GetChatMemberCount>('getChatMemberCount', body, { token })
 }
 
 export async function getChatMenuButton(token: string, body: GetChatMenuButton): Promise<MenuButton | FetchError> {

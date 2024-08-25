@@ -3,7 +3,7 @@ import type { Chat, User } from '@aracna/telegram-bot-types'
 import type { Context } from '../definitions/interfaces'
 import type { UpdateType } from '../definitions/types'
 
-export function getContextChatID<T extends UpdateType>(context: Context[T]): bigint {
+export function getContextChatID<T extends UpdateType>(context: Context[T]): bigint | number {
   return getContextChat(context).id
 }
 
@@ -22,7 +22,7 @@ export function getContextChat<T extends UpdateType>(context: Context[T]): Chat 
   }
 }
 
-export function getContextUserID<T extends UpdateType>(context: Context[T]): bigint {
+export function getContextUserID<T extends UpdateType>(context: Context[T]): bigint | number {
   return getContextUser(context).id
 }
 

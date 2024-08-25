@@ -15,7 +15,7 @@ export async function downloadFile(token: string, fileID: string): Promise<Buffe
   return buffer.data
 }
 
-export async function downloadUserFirstProfilePhoto(token: string, userID: bigint): Promise<Buffer | FetchError | Error> {
+export async function downloadUserFirstProfilePhoto(token: string, userID: bigint | number): Promise<Buffer | FetchError | Error> {
   let photos: UserProfilePhotos | FetchError, sizes: PhotoSize[][], buffer: Buffer | Error
 
   photos = await getUserProfilePhotos(token, { limit: 1, user_id: userID })
