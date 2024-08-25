@@ -144,8 +144,8 @@ export {
   setStickerSetTitle as setTelegramStickerSetTitle
 } from './requests/set-requests'
 export { stopMessageLiveLocation as stopTelegramMessageLiveLocation, stopPoll as stopTelegramPoll } from './requests/stop-requests'
-export { unbanChatMember as unbanTelegramChatMember } from './requests/unban-requests'
-export { unhideGneralForumTopic as unhideTelegramGeneralForumTopic } from './requests/unhide-requests'
+export { unbanChatMember as unbanTelegramChatMember, unbanChatSenderChat as unbanTelegramChatSenderChat } from './requests/unban-requests'
+export { unhideGeneralForumTopic as unhideTelegramGeneralForumTopic } from './requests/unhide-requests'
 export {
   unpinAllChatMessages as unpinAllTelegramChatMessages,
   unpinAllForumTopicMessages as unpinAllTelegramForumTopicMessages,

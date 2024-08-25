@@ -44,10 +44,8 @@ describe('Edit Requests', () => {
     expect(edit.invite_link).toBe(link.invite_link)
   })
 
-  it.skip('edits a forum topic', async () => {
+  it('edits a forum topic', async () => {
     let topic: ForumTopic | FetchError, edit: boolean | FetchError
-
-    // doesnt work even after making the group support topics
 
     topic = await createForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
     if (topic instanceof Error) throw topic

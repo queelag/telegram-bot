@@ -6,6 +6,6 @@ export async function unbanChatMember(token: string, body: UnbanChatMember): Pro
   return TelegramAPI.post<boolean, UnbanChatMember>('unbanChatMember', body, { token })
 }
 
-export async function chatSenderChat(token: string, body: UnbanChatSenderChat): Promise<boolean | FetchError> {
+export async function unbanChatSenderChat(token: string, body: UnbanChatSenderChat): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, UnbanChatSenderChat>('unbanChatSenderChat', body, { token })
 }

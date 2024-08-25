@@ -9,6 +9,12 @@ export default defineConfig({
     },
     include: ['tests/**/*.test.ts'],
     maxConcurrency: 1,
+    poolOptions: {
+      threads: {
+        maxThreads: 1,
+        minThreads: 0
+      }
+    },
     setupFiles: ['vitest/setup.ts'],
     testTimeout: 10000
   }

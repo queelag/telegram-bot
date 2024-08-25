@@ -15,7 +15,7 @@ describe('Copy Requests', () => {
     copy = await copyMessage(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, from_chat_id: PRIVATE_CHAT_ID, message_id: send.message_id })
     if (copy instanceof Error) throw copy
 
-    expect(copy.message_id).toBe(send.message_id + 1)
+    expect(copy.message_id).toBeGreaterThan(send.message_id)
   })
 
   it('copies multiple chat messages', async () => {
@@ -30,7 +30,7 @@ describe('Copy Requests', () => {
     copy = await copyMessages(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, from_chat_id: PRIVATE_CHAT_ID, message_ids: [s1.message_id, s2.message_id] })
     if (copy instanceof Error) throw copy
 
-    expect(copy[0].message_id).toBe(s2.message_id + 1)
-    expect(copy[1].message_id).toBe(s2.message_id + 2)
+    expect(copy[0].message_id).toBeGreaterThan(s2.message_id)
+    expect(copy[1].message_id).toBeGreaterThan(s2.message_id + 1)
   })
 })

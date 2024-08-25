@@ -43,10 +43,8 @@ describe('Delete Requests', () => {
     expect(del).toBeTruthy()
   })
 
-  it.skip('deletes a forum topic', async () => {
+  it('deletes a forum topic', async () => {
     let topic: ForumTopic | FetchError, del: boolean | FetchError
-
-    // doesnt work even after making the group support topics
 
     topic = await createForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
     if (topic instanceof Error) throw topic

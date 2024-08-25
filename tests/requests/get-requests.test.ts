@@ -1,4 +1,4 @@
-import { FetchError } from '@aracna/core'
+import { FetchError, generateRandomString } from '@aracna/core'
 import {
   BotCommand,
   BotDescription,
@@ -8,18 +8,20 @@ import {
   Chat,
   ChatAdministratorRights,
   ChatMember,
-  File,
   GameHighScore,
   MenuButton,
   StarTransactions,
   Sticker,
   StickerSet,
+  File as TelegramFile,
   Update,
   User,
   UserChatBoosts,
   UserProfilePhotos
 } from '@aracna/telegram-bot-types'
 import { describe, expect, it } from 'vitest'
+import { createNewStickerSet } from '../../src/requests/create-requests'
+import { deleteStickerSet } from '../../src/requests/delete-requests'
 import {
   getBusinessConnection,
   getChat,
@@ -43,7 +45,7 @@ import {
   getUserChatBoosts,
   getUserProfilePhotos
 } from '../../src/requests/get-requests'
-import { BOT_ID, BOT_NAME, BOT_TOKEN, GROUP_CHAT_ID, PRIVATE_CHAT_ID, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { BOT_ID, BOT_NAME, BOT_TOKEN, GROUP_CHAT_ID, PRIVATE_CHAT_ID, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Get Requests', () => {
   it.skip('gets a business connection', async () => {
@@ -110,7 +112,7 @@ describe('Get Requests', () => {
   })
 
   it.skip('gets a file', async () => {
-    let file: File | FetchError
+    let file: TelegramFile | FetchError
 
     file = await getFile(BOT_TOKEN, { file_id: '' })
     if (file instanceof Error) throw file
@@ -215,15 +217,31 @@ describe('Get Requests', () => {
     expect(transactions.transactions).toHaveLength(0)
   })
 
-  it.skip('gets a sticker set', async () => {
-    let set: StickerSet | FetchError
+  it('gets a sticker set', async () => {
+    let name: string, create: boolean | FetchError, set: StickerSet | FetchError
 
-    // needs a sticker set
+    name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    set = await getStickerSet(BOT_TOKEN, { name: 'test' })
+    create = await createNewStickerSet(BOT_TOKEN, {
+      name,
+      stickers: [
+        {
+          emoji_list: ['⭐'],
+          format: 'static',
+          sticker: new File([SQUARE_512_WEBP], 'sticker.png')
+        }
+      ],
+      title: generateRandomString(),
+      user_id: PRIVATE_CHAT_ID
+    })
+    if (create instanceof Error) throw create
+
+    set = await getStickerSet(BOT_TOKEN, { name })
     if (set instanceof Error) throw set
 
-    console.log(set)
+    expect(set.name).toBe(name)
+
+    await deleteStickerSet(BOT_TOKEN, { name })
   })
 
   it('gets the updates', async () => {

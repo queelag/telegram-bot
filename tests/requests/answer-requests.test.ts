@@ -1,23 +1,23 @@
 import { describe, it } from 'vitest'
 
 describe('Answer Requests', () => {
-  it('answers a callback query', async () => {
+  it.skip('answers a callback query', async () => {
     // how?
   })
 
-  it('answers an inline query', async () => {
+  it.skip('answers an inline query', async () => {
     // how?
   })
 
-  it('answers a pre-checkout query', async () => {
+  it.skip('answers a pre-checkout query', async () => {
     // how?
   })
 
-  it('answers a shipping query', async () => {
+  it.skip('answers a shipping query', async () => {
     // how?
   })
 
-  it('answers a web app query', async () => {
+  it.skip('answers a web app query', async () => {
     // how?
   })
 })

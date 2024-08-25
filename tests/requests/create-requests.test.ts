@@ -34,10 +34,8 @@ describe('Create Requests', () => {
     expect(link.invite_link).toBeTypeOf('string')
   })
 
-  it.skip('creates a forum topic', async () => {
+  it('creates a forum topic', async () => {
     let topic: ForumTopic | FetchError
-
-    // doesnt work even after making the group support topics
 
     topic = await createForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
     if (topic instanceof Error) throw topic
