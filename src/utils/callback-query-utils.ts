@@ -1,4 +1,4 @@
-import { tc } from '@aracna/core'
+import { decodeBase64, decodeText, encodeBase64, encodeText, parseBigIntJSON, stringifyBigIntJSON, tc } from '@aracna/core'
 import { DEFAULT_CALLBACK_QUERY_BODY } from '../definitions/constants'
 import type { CallbackQueryBody } from '../definitions/interfaces'
 
@@ -9,13 +9,13 @@ export function decodeCallbackQueryBody<T>(data?: string): CallbackQueryBody<T> 
     return DEFAULT_CALLBACK_QUERY_BODY()
   }
 
-  body = tc(() => JSON.parse(Buffer.from(data, 'base64').toString()))
+  body = tc(() => parseBigIntJSON(decodeText(decodeBase64(data))))
   if (body instanceof Error) return DEFAULT_CALLBACK_QUERY_BODY()
 
   return body
 }
 
-export function encodeCallbackQueryBody<T>(data: T, type: string, chatID?: bigint): string {
+export function encodeCallbackQueryBody<T>(data: T, type: string, chatID?: bigint | number): string {
   let body: CallbackQueryBody
 
   body = {
@@ -24,5 +24,5 @@ export function encodeCallbackQueryBody<T>(data: T, type: string, chatID?: bigin
     t: type
   }
 
-  return Buffer.from(JSON.stringify(body)).toString('base64')
+  return encodeBase64(encodeText(stringifyBigIntJSON(body)))
 }

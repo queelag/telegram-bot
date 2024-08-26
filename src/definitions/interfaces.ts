@@ -31,7 +31,7 @@ export interface CallbackQuery<T = any> extends NativeCallbackQuery {
 }
 
 export interface CallbackQueryBody<T = any> {
-  c?: bigint
+  c?: bigint | number
   d: T
   t: string
 }
@@ -98,9 +98,9 @@ export interface InputPaidMediaAlternative extends Omit<InputMediaPhoto | InputM
 }
 
 export interface MessageBody<T = any> {
-  chatID?: bigint
-  data: T
-  type: string
+  c?: bigint | number
+  d: T
+  t: string
 }
 
 export interface ReplyToMessage<T = any> extends Message {

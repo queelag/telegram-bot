@@ -2,6 +2,7 @@ export * from './apis/telegram-api'
 export * from './apis/telegram-file-api'
 export { Client as TelegramClient } from './classes/client'
 export {
+  DEFAULT_ALLOWED_UPDATES as DEFAULT_TELEGRAM_ALLOWED_UPDATES,
   DEFAULT_CALLBACK_QUERY_BODY as DEFAULT_TELEGRAM_CALLBACK_QUERY_BODY,
   DEFAULT_HANDLER_OPTIONS as DEFAULT_TELEGRAM_HANDLER_OPTIONS,
   DEFAULT_MESSAGE_BODY as DEFAULT_TELEGRAM_MESSAGE_BODY,
@@ -163,7 +164,7 @@ export {
   decodeCallbackQueryBody as decodeTelegramCallbackQueryBody,
   encodeCallbackQueryBody as encodeTelegramCallbackQueryBody
 } from './utils/callback-query-utils'
-export { getCommand as getTelegramCommand, getCommandByContext as getTelegramCommandByContext } from './utils/command-utils'
+export { getCommand as getTelegramCommand, getCommandByContext as getTelegramCommandByContext, omitCommand as omitTelegramCommand } from './utils/command-utils'
 export {
   getContextChat as getTelegramContextChat,
   getContextChatID as getTelegramContextChatID,

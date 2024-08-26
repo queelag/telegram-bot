@@ -20,7 +20,7 @@ import type {
   ShippingQuery,
   Update
 } from '@aracna/telegram-bot-types'
-import { DEFAULT_HANDLER_OPTIONS } from '../definitions/constants'
+import { DEFAULT_ALLOWED_UPDATES, DEFAULT_HANDLER_OPTIONS } from '../definitions/constants'
 import type { CallbackQueryBody, ClientConnectionOptions, Handler, HandlerOptions, MessageBody } from '../definitions/interfaces'
 import type { ClientConnectionMode, HandlerMiddleware, UpdateType } from '../definitions/types'
 import { ClassLogger } from '../loggers/class-logger'
@@ -160,9 +160,6 @@ export class Client {
 
         handler = this.handleMessage(update.message as any)
         break
-      case hasObjectProperty(update, 'message.document') && hasObjectProperty(update, 'message.caption'):
-        handler = this.handleDocument(update.message as any)
-        break
       case hasObjectProperty(update, 'my_chat_member'):
         handler = this.handleMyChatMember(update.my_chat_member as any)
         break
@@ -294,17 +291,6 @@ export class Client {
     if (!handler) return
 
     handler.middleware(deleted)
-
-    return handler
-  }
-
-  protected handleDocument(document: Message): Handler | undefined {
-    let handler: Handler | undefined
-
-    handler = this.findMatchingHandler('document', getCommand(document.caption))
-    if (!handler) return
-
-    handler.middleware(document)
 
     return handler
   }
@@ -493,33 +479,7 @@ export class Client {
     let body: GetUpdates, updates: Update[] | FetchError
 
     body = {
-      allowed_updates: [
-        'business_connection',
-        'business_message',
-        'callback_query',
-        'channel_post',
-        'chat_boost',
-        'chat_join_request',
-        'chat_member',
-        'chosen_inline_result',
-        'deleted_business_messages',
-        'document',
-        'edited_business_message',
-        'edited_channel_post',
-        'edited_message',
-        'inline_query',
-        'message',
-        'message_reaction',
-        'message_reaction_count',
-        'my_chat_member',
-        'poll',
-        'poll_answer',
-        'pre_checkout_query',
-        'removed_chat_boost',
-        'reply_to_message',
-        'shipping_query',
-        'start'
-      ],
+      allowed_updates: DEFAULT_ALLOWED_UPDATES,
       offset: this.offset
     }
 

@@ -16,7 +16,6 @@ export type UpdateType =
   | 'chat_member'
   | 'chosen_inline_result'
   | 'deleted_business_messages'
-  | 'document'
   | 'edited_business_message'
   | 'edited_channel_post'
   | 'edited_message'

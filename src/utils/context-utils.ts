@@ -3,45 +3,42 @@ import type { Chat, User } from '@aracna/telegram-bot-types'
 import type { Context } from '../definitions/interfaces'
 import type { UpdateType } from '../definitions/types'
 
-export function getContextChatID<T extends UpdateType>(context: Context[T]): bigint | number {
-  return getContextChat(context).id
-}
+export function getContextChat<T extends UpdateType>(context: Context[T]): Chat | undefined {
+  if (hasObjectProperty(context, 'chat')) {
+    return getObjectProperty(context, 'chat')
+  }
 
-export function getContextChatType<T extends UpdateType>(context: Context[T]): string {
-  return getContextChat(context).type
-}
-
-export function getContextChat<T extends UpdateType>(context: Context[T]): Chat {
-  switch (true) {
-    case hasObjectProperty(context, 'chat'):
-      return getObjectProperty(context, 'chat', { id: 0n, type: '' })
-    case hasObjectProperty(context, 'message.chat'):
-      return getObjectProperty(context, 'chat', { id: 0n, type: '' })
-    default:
-      return { id: 0n, type: '' }
+  if (hasObjectProperty(context, 'message.chat')) {
+    return getObjectProperty(context, 'message.chat')
   }
 }
 
-export function getContextUserID<T extends UpdateType>(context: Context[T]): bigint | number {
-  return getContextUser(context).id
+export function getContextChatID<T extends UpdateType>(context: Context[T]): bigint | number | undefined {
+  return getContextChat(context)?.id
 }
 
-export function getContextUserFirstName<T extends UpdateType>(context: Context[T]): string {
-  return getContextUser(context).first_name
+export function getContextChatType<T extends UpdateType>(context: Context[T]): string | undefined {
+  return getContextChat(context)?.type
 }
 
-export function getContextUserLastName<T extends UpdateType>(context: Context[T]): string {
-  return getContextUser(context).last_name ?? ''
-}
-
-export function getContextUserUsername<T extends UpdateType>(context: Context[T]): string {
-  return getContextUser(context).username ?? ''
-}
-
-export function getContextUser<T extends UpdateType>(context: Context[T]): User {
+export function getContextUser<T extends UpdateType>(context: Context[T]): User | undefined {
   if (hasObjectProperty(context, 'from')) {
-    return getObjectProperty(context, 'from', { first_name: '', id: 0n, is_bot: false, username: '' })
+    return getObjectProperty(context, 'from')
   }
+}
 
-  return { first_name: '', id: 0n, is_bot: false, username: '' }
+export function getContextUserFirstName<T extends UpdateType>(context: Context[T]): string | undefined {
+  return getContextUser(context)?.first_name
+}
+
+export function getContextUserID<T extends UpdateType>(context: Context[T]): bigint | number | undefined {
+  return getContextUser(context)?.id
+}
+
+export function getContextUserLastName<T extends UpdateType>(context: Context[T]): string | undefined {
+  return getContextUser(context)?.last_name
+}
+
+export function getContextUserUsername<T extends UpdateType>(context: Context[T]): string | undefined {
+  return getContextUser(context)?.username
 }
