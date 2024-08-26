@@ -68,8 +68,8 @@ export async function sendLocation(token: string, body: SendLocation): Promise<M
   return TelegramAPI.post<Message, SendLocation>('sendLocation', body, { token })
 }
 
-export async function sendMediaGroup(token: string, body: SendMediaGroupAlternative): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, SendMediaGroup>(
+export async function sendMediaGroup(token: string, body: SendMediaGroupAlternative): Promise<Message[] | FetchError> {
+  return TelegramAPI.post<Message[], SendMediaGroup>(
     'sendMediaGroup',
     {
       ...body,
@@ -110,6 +110,7 @@ export async function sendPoll(token: string, body: SendPoll): Promise<Message |
 
 export async function sendRepliableMessage<T>(token: string, body: SendRepliableMessage<T>): Promise<Message | FetchError> {
   return sendMessage(token, {
+    parse_mode: 'HTML',
     reply_markup: { force_reply: true, selective: true },
     ...body,
     text: body.text + encodeReplyToMessageBody(body.data, body.type, body.from_chat_id)
