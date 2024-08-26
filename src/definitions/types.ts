@@ -2,7 +2,7 @@ import type { Context } from './interfaces'
 
 export type ClientConnectionMode = 'polling' | 'webhook'
 
-export type HandlerMiddleware<T extends UpdateType> = (context: Context[T]) => any
+export type ClientListenerMiddleware<T extends UpdateType> = (context: Context[T]) => any
 
 export type InputFile = File | string
 

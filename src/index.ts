@@ -4,7 +4,7 @@ export { Client as TelegramClient } from './classes/client'
 export {
   DEFAULT_ALLOWED_UPDATES as DEFAULT_TELEGRAM_ALLOWED_UPDATES,
   DEFAULT_CALLBACK_QUERY_BODY as DEFAULT_TELEGRAM_CALLBACK_QUERY_BODY,
-  DEFAULT_HANDLER_OPTIONS as DEFAULT_TELEGRAM_HANDLER_OPTIONS,
+  DEFAULT_CLIENT_LISTENER_OPTIONS as DEFAULT_TELEGRAM_CLIENT_LISTENER_OPTIONS,
   DEFAULT_MESSAGE_BODY as DEFAULT_TELEGRAM_MESSAGE_BODY,
   REGEXP_COMMAND as REGEXP_TELEGRAM_COMMAND,
   REGEXP_COMMAND_WITH_USERNAME as REGEXP_TELEGRAM_COMMAND_WITH_USERNAME
@@ -22,11 +22,11 @@ export type {
   SendRepliableMessage,
   StartMessage,
   Context as TelegramContext,
-  Handler as TelegramHandler,
-  HandlerOptions as TelegramHandlerOptions
+  ClientListener as TelegramHandler,
+  ClientListenerOptions as TelegramHandlerOptions
 } from './definitions/interfaces'
 export type * from './definitions/telegram-api-definitions'
-export type { HandlerMiddleware, InputFile, UpdateType } from './definitions/types'
+export type { ClientListenerMiddleware, InputFile, UpdateType } from './definitions/types'
 export { addStickerToSet as addTelegramStickerToSet } from './requests/add-requests'
 export {
   answerCallbackQuery as answerTelegramCallbackQuery,

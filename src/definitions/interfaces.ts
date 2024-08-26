@@ -6,7 +6,9 @@ import type {
   ChatJoinRequest,
   ChatMemberUpdated,
   ChosenInlineResult,
+  DeleteWebhook,
   EditMessageMedia,
+  GetUpdates,
   InlineQuery,
   InputMediaAudio,
   InputMediaDocument,
@@ -22,9 +24,10 @@ import type {
   SendMediaGroup,
   SendMessage,
   SendPaidMedia,
+  SetWebhook,
   ShippingQuery
 } from '@aracna/telegram-bot-types'
-import type { HandlerMiddleware, InputFile, UpdateType } from './types'
+import type { ClientListenerMiddleware, InputFile, UpdateType } from './types'
 
 export interface CallbackQuery<T = any> extends NativeCallbackQuery {
   body: CallbackQueryBody<T>
@@ -37,9 +40,37 @@ export interface CallbackQueryBody<T = any> {
 }
 
 export interface ClientConnectionOptions {
-  polling?: {
-    ms?: number
-  }
+  polling?: ClientConnectionOptionsPolling
+  webhook?: ClientConnectionOptionsWebhook
+}
+
+export interface ClientConnectionOptionsPolling extends GetUpdates {
+  ms?: number
+}
+
+export interface ClientConnectionOptionsWebhook extends SetWebhook {
+  delete?: DeleteWebhook
+}
+
+export interface ClientDisconnectOptions {
+  webhook?: DeleteWebhook
+}
+
+export interface ClientListener<T extends UpdateType = any, U extends ClientListenerOptions = ClientListenerOptions> {
+  command?: string
+  description?: string
+  id: string
+  middleware: ClientListenerMiddleware<T>
+  options: Omit<U, 'command' | 'description'>
+  type: UpdateType
+}
+
+export interface ClientListenerOptions {
+  command?: string
+  deleteOnCallbackQuery?: boolean
+  deleteOnReply?: boolean
+  deleteOnMessageStart?: boolean
+  description?: string
 }
 
 export interface Context {
@@ -72,21 +103,6 @@ export interface Context {
 
 export interface EditMessageMediaAlternative extends Omit<EditMessageMedia, 'media'> {
   media: InputMediaAlternative
-}
-
-export interface Handler<T extends UpdateType = any, U extends HandlerOptions = HandlerOptions> {
-  description?: string
-  id: string
-  key?: string
-  middleware: HandlerMiddleware<T>
-  options: U
-  type: UpdateType
-}
-
-export interface HandlerOptions {
-  deleteOnCallbackQuery?: boolean
-  deleteOnReply?: boolean
-  deleteOnMessageStart?: boolean
 }
 
 export interface InputMediaAlternative extends Omit<InputMediaAudio | InputMediaDocument | InputMediaPhoto | InputMediaVideo, 'media'> {

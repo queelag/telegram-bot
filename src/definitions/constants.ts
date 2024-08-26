@@ -1,4 +1,4 @@
-import { CallbackQueryBody, HandlerOptions, MessageBody } from './interfaces'
+import { CallbackQueryBody, ClientListenerOptions, MessageBody } from './interfaces'
 
 export const DEFAULT_ALLOWED_UPDATES: string[] = [
   'business_connection',
@@ -30,11 +30,13 @@ export const DEFAULT_CALLBACK_QUERY_BODY: () => CallbackQueryBody = () => ({
   t: ''
 })
 
-export const DEFAULT_HANDLER_OPTIONS: () => HandlerOptions = () => ({
+export const DEFAULT_CLIENT_LISTENER_OPTIONS: () => ClientListenerOptions = () => ({
   deleteOnCallbackQuery: true,
   deleteOnMessageStart: true,
   deleteOnReply: true
 })
+
+export const DEFAULT_CLIENT_POLLING_MS: number = 1000
 
 export const DEFAULT_MESSAGE_BODY: () => MessageBody = () => ({
   d: null,

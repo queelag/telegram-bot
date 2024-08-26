@@ -113,7 +113,12 @@ export async function getStickerSet(token: string, body: GetStickerSet): Promise
 }
 
 export async function getUpdates(token: string, body?: GetUpdates): Promise<Update[] | FetchError> {
-  return TelegramAPI.post<Update[], GetUpdates>('getUpdates', body, { token })
+  let updates: Update | Update[] | FetchError
+
+  updates = await TelegramAPI.post<Update | Update[], GetUpdates>('getUpdates', body, { token })
+  if (updates instanceof Error) return updates
+
+  return Array.isArray(updates) ? updates : [updates]
 }
 
 export async function getUserChatBoosts(token: string, body: GetUserChatBoosts): Promise<UserChatBoosts | FetchError> {

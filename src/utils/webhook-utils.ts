@@ -1,4 +1,4 @@
-export function getWebhookURL(host: string, token: string, port?: number, route?: string): string {
+export function getWebhookURL(token: string, host: string, port?: number, route?: string): string {
   if (port && route) {
     return 'https://' + host + ':' + port + '/' + route + 'bot' + token
   }
