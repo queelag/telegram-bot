@@ -68,5 +68,10 @@ export const TelegramAPI: API = new API('https://api.telegram.org', {
       castUnsafeIntToBigInt: true
     }
   },
+  encode: {
+    json: {
+      castBigIntToString: true
+    }
+  },
   token: undefined
 })
