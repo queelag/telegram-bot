@@ -2,8 +2,8 @@ import type { InlineKeyboardButton, LoginUrl, SwitchInlineQueryChosenChat, WebAp
 import { EncodeCallbackQueryBodyOptions } from '../definitions/interfaces'
 import { encodeCallbackQueryBody } from './callback-query-utils'
 
-export function getInlineKeyboardCallbackButton<T>(text: string, data: T, options?: EncodeCallbackQueryBodyOptions): InlineKeyboardButton {
-  return { text: text, callback_data: encodeCallbackQueryBody(data, options) }
+export function getInlineKeyboardCallbackButton<T>(text: string, options?: EncodeCallbackQueryBodyOptions): InlineKeyboardButton {
+  return { text: text, callback_data: encodeCallbackQueryBody(options) }
 }
 
 export function getInlineKeyboardGameButton(text: string, game: string): InlineKeyboardButton {

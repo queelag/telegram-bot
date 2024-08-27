@@ -113,7 +113,7 @@ export async function sendRepliableMessage<T>(token: string, body: SendRepliable
     parse_mode: 'HTML',
     reply_markup: { force_reply: true, selective: true },
     ...body,
-    text: body.text + encodeReplyToMessageBody(body.data, { chatID: body.from_chat_id, command: body.command })
+    text: body.text + encodeReplyToMessageBody({ chatID: body.from_chat_id, command: body.command, data: body.data })
   })
 }
 
