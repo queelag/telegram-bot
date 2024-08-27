@@ -177,7 +177,7 @@ export class Client {
       case hasObjectProperty(update, 'message_reaction_count'):
         listener = this.handleMessageReactionCount(update.message_reaction_count as any)
         break
-      case hasObjectProperty(update, 'message.reply_to_message'):
+      case hasObjectProperty(update, 'message.reply_to_message.text'):
         listener = this.handleReplyToMessage(update.message as any)
         break
       case hasObjectProperty(update, 'message'):
