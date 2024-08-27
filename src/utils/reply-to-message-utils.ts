@@ -1,30 +1,39 @@
-import { decodeBase64, decodeText, encodeBase64, encodeText, parseBigIntJSON, stringifyBigIntJSON, tc } from '@aracna/core'
+import { appendSearchParamsToURL, decodeBase64, decodeJSON, decodeText, encodeBase64, encodeJSON, encodeText, tc } from '@aracna/core'
 import type { MessageEntity } from '@aracna/telegram-bot-types'
-import { DEFAULT_MESSAGE_BODY } from '../definitions/constants'
-import type { MessageBody } from '../definitions/interfaces'
+import { DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS, DEFAULT_REPLY_TO_MESSAGE_BODY } from '../definitions/constants'
+import type { EncodeReplyToMessageBodyOptions, ReplyToMessageBody } from '../definitions/interfaces'
 
-export function decodeReplyToMessageBody<T>(entities: MessageEntity[]): MessageBody<T> {
-  let entity: MessageEntity | undefined, encoded: string, body: MessageBody | Error
+export function decodeReplyToMessageBody<T>(entities: MessageEntity[]): ReplyToMessageBody<T> {
+  let entity: MessageEntity | undefined, encoded: string | null, body: ReplyToMessageBody<T> | Error
 
   entity = entities[entities.length - 1]
-  if (!entity?.url) return DEFAULT_MESSAGE_BODY()
+  if (!entity?.url) return DEFAULT_REPLY_TO_MESSAGE_BODY()
 
-  encoded = entity.url.replace('https://t.me/?a=', '')
+  encoded = new URL(entity.url).searchParams.get('a')
+  if (!encoded) return DEFAULT_REPLY_TO_MESSAGE_BODY()
 
-  body = tc(() => parseBigIntJSON(decodeText(decodeBase64(encoded))))
-  if (body instanceof Error) return DEFAULT_MESSAGE_BODY()
+  body = tc(() => decodeJSON(decodeText(decodeBase64(encoded)), DEFAULT_DECODE_JSON_OPTIONS()))
+  if (body instanceof Error) return DEFAULT_REPLY_TO_MESSAGE_BODY()
 
   return body
 }
 
-export function encodeReplyToMessageBody<T>(data: T, type: string, chatID?: bigint | number): string {
-  let body: MessageBody
+export function encodeReplyToMessageBody<T>(data: T, options?: EncodeReplyToMessageBodyOptions): string {
+  let body: ReplyToMessageBody
 
   body = {
-    c: chatID,
+    c: options?.chatID,
     d: data,
-    t: type
+    m: options?.command
   }
 
-  return `\n<a href="https://t.me/?a=${encodeBase64(encodeText(stringifyBigIntJSON(body)))}">ㅤ</a>`
+  return encodeBase64(encodeText(encodeJSON(body, DEFAULT_ENCODE_JSON_OPTIONS(), '{}')))
+}
+
+export function encodeReplyToMessageBodyToAnchorTag<T>(data: T, options?: EncodeReplyToMessageBodyOptions): string {
+  return `\n<a href="${encodeReplyToMessageBodyToURL(data, options)}">ㅤ</a>`
+}
+
+export function encodeReplyToMessageBodyToURL<T>(data: T, options?: EncodeReplyToMessageBodyOptions): string {
+  return appendSearchParamsToURL('https://t.me', { a: encodeReplyToMessageBody(data, options) })
 }

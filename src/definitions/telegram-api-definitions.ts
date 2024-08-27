@@ -2,7 +2,7 @@ import type { FetchResponse, RestApiConfig } from '@aracna/core'
 
 export namespace TelegramApiDefinitions {
   export interface Config extends RestApiConfig {
-    token: string
+    token: string | undefined
   }
 
   export interface Response<T> extends FetchResponse<ResponseData<T>> {}

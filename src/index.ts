@@ -5,7 +5,9 @@ export {
   DEFAULT_ALLOWED_UPDATES as DEFAULT_TELEGRAM_ALLOWED_UPDATES,
   DEFAULT_CALLBACK_QUERY_BODY as DEFAULT_TELEGRAM_CALLBACK_QUERY_BODY,
   DEFAULT_CLIENT_LISTENER_OPTIONS as DEFAULT_TELEGRAM_CLIENT_LISTENER_OPTIONS,
-  DEFAULT_MESSAGE_BODY as DEFAULT_TELEGRAM_MESSAGE_BODY,
+  DEFAULT_CLIENT_POLLING_MS as DEFAULT_TELEGRAM_CLIENT_POLLING_MS,
+  DEFAULT_REPLY_TO_MESSAGE_BODY as DEFAULT_TELEGRAM_REPLY_TO_MESSAGE_BODY,
+  DEFAULT_START_MESSAGE_BODY as DEFAULT_TELEGRAM_START_MESSAGE_BODY,
   REGEXP_COMMAND as REGEXP_TELEGRAM_COMMAND,
   REGEXP_COMMAND_WITH_USERNAME as REGEXP_TELEGRAM_COMMAND_WITH_USERNAME
 } from './definitions/constants'
@@ -13,26 +15,40 @@ export { LoggerName as TelegramLoggerName } from './definitions/enums'
 export type {
   CallbackQuery,
   CallbackQueryBody,
+  Context,
+  EditMessageMediaAlternative,
+  EncodeCallbackQueryBodyOptions as EncodeTelegramCallbackQueryBodyOptions,
+  EncodeReplyToMessageBodyOptions as EncodeTelegramReplyToMessageBodyOptions,
+  EncodeStartBodyOptions as EncodeTelegramStartBodyOptions,
   InputMediaAlternative,
   InputPaidMediaAlternative,
-  MessageBody,
   ReplyToMessage,
-  SendMediaGroupAlternative,
-  SendPaidMediaAlternative,
+  ReplyToMessageBody,
   SendRepliableMessage,
-  StartMessage,
-  Context as TelegramContext,
-  ClientListener as TelegramHandler,
-  ClientListenerOptions as TelegramHandlerOptions
+  Start,
+  StartBody,
+  ClientConnectionOptions as TelegramClientConnectionOptions,
+  ClientConnectionOptionsPolling as TelegramClientConnectionOptionsPolling,
+  ClientConnectionOptionsWebhook as TelegramClientConnectionOptionsWebhook,
+  ClientDisconnectOptions as TelegramClientDisconnectOptions,
+  ClientListener as TelegramClientListener,
+  ClientListenerOptions as TelegramClientListenerOptions
 } from './definitions/interfaces'
 export type * from './definitions/telegram-api-definitions'
-export type { ClientListenerMiddleware, InputFile, UpdateType } from './definitions/types'
+export type {
+  InputFile,
+  ClientConnectionMode as TelegramClientConnectionMode,
+  ClientListenerMiddleware as TelegramClientListenerMiddleware,
+  UpdateType
+} from './definitions/types'
+export { ClassLogger as TelegramClassLogger } from './loggers/class-logger'
 export { addStickerToSet as addTelegramStickerToSet } from './requests/add-requests'
 export {
   answerCallbackQuery as answerTelegramCallbackQuery,
   answerInlineQuery as answerTelegramInlineQuery,
   answerPreCheckoutQuery as answerTelegramPreCheckoutQuery,
-  answerShippingQuery as answerTelegramShippingQuery
+  answerShippingQuery as answerTelegramShippingQuery,
+  answerWebAppQuery as answerTelegramWebAppQuery
 } from './requests/answer-requests'
 export { approveChatJoinRequest as approveTelegramChatJoinRequest } from './requests/approve-requests'
 export { banChatMember as banTelegramChatMember, banChatSenderChat as banTelegramChatSenderChat } from './requests/ban-requests'
@@ -49,9 +65,12 @@ export { declineChatJoinRequest as declineTelegramChatJoinRequest } from './requ
 export {
   deleteChatPhoto as deleteTelegramChatPhoto,
   deleteChatStickerSet as deleteTelegramChatStickerSet,
+  deleteMyCommands as deleteTelegramCommands,
   deleteForumTopic as deleteTelegramForumTopic,
   deleteMessage as deleteTelegramMessage,
-  deleteStickerFromSet as deleteTelegramStickerFromSet
+  deleteMessages as deleteTelegramMessages,
+  deleteStickerFromSet as deleteTelegramStickerFromSet,
+  deleteStickerSet as deleteTelegramStickerSet
 } from './requests/delete-requests'
 export { downloadFile as downloadTelegramFile, downloadUserFirstProfilePhoto as downloadTelegramUserFirstProfilePhoto } from './requests/download-requests'
 export {
@@ -112,8 +131,11 @@ export {
   sendLocation as sendTelegramLocation,
   sendMediaGroup as sendTelegramMediaGroup,
   sendMessage as sendTelegramMessage,
+  sendMessageHTML as sendTelegramMessageHTML,
+  sendPaidMedia as sendTelegramPaidMedia,
   sendPhoto as sendTelegramPhoto,
   sendPoll as sendTelegramPoll,
+  sendRepliableMessage as sendTelegramRepliableMessage,
   sendSticker as sendTelegramSticker,
   sendVenue as sendTelegramVenue,
   sendVideo as sendTelegramVideo,
@@ -190,12 +212,14 @@ export {
 } from './utils/inline-keyboard-utils'
 export {
   decodeReplyToMessageBody as decodeTelegramReplyToMessageBody,
-  encodeReplyToMessageBody as encodeTelegramReplyToMessageBody
+  encodeReplyToMessageBody as encodeTelegramReplyToMessageBody,
+  encodeReplyToMessageBodyToAnchorTag as encodeTelegramReplyToMessageBodyToAnchorTag,
+  encodeReplyToMessageBodyToURL as encodeTelegramReplyToMessageBodyToURL
 } from './utils/reply-to-message-utils'
 export {
-  decodeStartMessageBody as decodeTelegramStartMessageBody,
-  encodeStartMessageBody as encodeTelegramStartMessageBody,
-  encodeStartMessageBodyToAnchorTag as encodeTelegramStartMessageBodyToAnchorTag,
-  encodeStartMessageBodyToURL as encodeTelegramStartMessageBodyToURL
+  decodeStartBody as decodeTelegramStartBody,
+  encodeStartBody as encodeTelegramStartBody,
+  encodeStartBodyToAnchorTag as encodeTelegramStartBodyToAnchorTag,
+  encodeStartBodyToText as encodeTelegramStartBodyToText,
+  encodeStartBodyToURL as encodeTelegramStartBodyToURL
 } from './utils/start-message-utils'
-export { getWebhookURL as getTelegramWebhookURL } from './utils/webhook-utils'

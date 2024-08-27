@@ -18,10 +18,14 @@ export function getCommandByContext<T extends UpdateType>(context: Context[T]): 
   return getCommand(string)
 }
 
-export function getCommand(string?: string): string {
-  return (REGEXP_COMMAND.exec(string?.slice(0, 512) ?? '') ?? [''])[0].slice(1)
+export function getCommand(string: string | undefined): string | undefined {
+  if (typeof string !== 'string') {
+    return
+  }
+
+  return REGEXP_COMMAND.exec(string.slice(0, 512))?.[0].slice(1)
 }
 
-export function omitCommand(string: string): string {
-  return string.replace(REGEXP_COMMAND_WITH_USERNAME, '').trim()
+export function omitCommand(string: string | undefined): string | undefined {
+  return string?.replace(REGEXP_COMMAND_WITH_USERNAME, '').trim()
 }

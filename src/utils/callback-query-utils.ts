@@ -1,28 +1,28 @@
-import { decodeBase64, decodeText, encodeBase64, encodeText, parseBigIntJSON, stringifyBigIntJSON, tc } from '@aracna/core'
-import { DEFAULT_CALLBACK_QUERY_BODY } from '../definitions/constants'
-import type { CallbackQueryBody } from '../definitions/interfaces'
+import { decodeBase64, decodeJSON, decodeText, encodeBase64, encodeJSON, encodeText, tc } from '@aracna/core'
+import { DEFAULT_CALLBACK_QUERY_BODY, DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS } from '../definitions/constants'
+import type { CallbackQueryBody, EncodeCallbackQueryBodyOptions } from '../definitions/interfaces'
 
 export function decodeCallbackQueryBody<T>(data?: string): CallbackQueryBody<T> {
-  let body: CallbackQueryBody | Error
+  let body: CallbackQueryBody<T> | Error
 
   if (!data) {
     return DEFAULT_CALLBACK_QUERY_BODY()
   }
 
-  body = tc(() => parseBigIntJSON(decodeText(decodeBase64(data))))
+  body = tc(() => decodeJSON(decodeText(decodeBase64(data)), DEFAULT_DECODE_JSON_OPTIONS()))
   if (body instanceof Error) return DEFAULT_CALLBACK_QUERY_BODY()
 
   return body
 }
 
-export function encodeCallbackQueryBody<T>(data: T, type: string, chatID?: bigint | number): string {
-  let body: CallbackQueryBody
+export function encodeCallbackQueryBody<T>(data: T, options?: EncodeCallbackQueryBodyOptions): string {
+  let body: CallbackQueryBody<T>
 
   body = {
-    c: chatID,
+    c: options?.chatID,
     d: data,
-    t: type
+    m: options?.command
   }
 
-  return encodeBase64(encodeText(stringifyBigIntJSON(body)))
+  return encodeBase64(encodeText(encodeJSON(body, DEFAULT_ENCODE_JSON_OPTIONS(), '{}')))
 }

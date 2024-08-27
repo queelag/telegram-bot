@@ -1,89 +1,84 @@
 import { appendSearchParamsToURL, generateRandomString } from '@aracna/core'
 import { describe, expect, it } from 'vitest'
-import { MessageBody } from '../../src/definitions/interfaces'
-import {
-  decodeStartMessageBody,
-  encodeStartMessageBody,
-  encodeStartMessageBodyToAnchorTag,
-  encodeStartMessageBodyToURL
-} from '../../src/utils/start-message-utils'
+import { StartBody } from '../../src/definitions/interfaces'
+import { decodeStartBody, encodeStartBody, encodeStartBodyToAnchorTag, encodeStartBodyToURL } from '../../src/utils/start-message-utils'
 
 describe('Start Message Utils', () => {
   it('encodes and decodes without chat_id', () => {
-    let body: MessageBody, encoded: string, decoded: MessageBody
+    let body: StartBody, encoded: string, decoded: StartBody
 
     body = {
       d: generateRandomString(),
-      t: generateRandomString()
+      m: generateRandomString()
     }
 
-    encoded = encodeStartMessageBody(body.d, body.t)
-    decoded = decodeStartMessageBody(encoded)
+    encoded = encodeStartBody(body.d, { command: body.m })
+    decoded = decodeStartBody(encoded)
 
     expect(decoded).toStrictEqual(body)
   })
 
   it('encodes and decodes with 32 bit chat_id', () => {
-    let body: MessageBody, encoded: string, decoded: MessageBody
+    let body: StartBody, encoded: string, decoded: StartBody
 
     body = {
       c: 0,
       d: generateRandomString(),
-      t: generateRandomString()
+      m: generateRandomString()
     }
 
-    encoded = encodeStartMessageBody(body.d, body.t, body.c)
-    decoded = decodeStartMessageBody(encoded)
+    encoded = encodeStartBody(body.d, { chatID: body.c, command: body.m })
+    decoded = decodeStartBody(encoded)
 
     expect(decoded).toStrictEqual(body)
   })
 
   it('encodes and decodes with 64 bit chat_id', () => {
-    let body: MessageBody, encoded: string, decoded: MessageBody
+    let body: StartBody, encoded: string, decoded: StartBody
 
     body = {
       c: BigInt(Number.MAX_SAFE_INTEGER) + 1n,
       d: generateRandomString(),
-      t: generateRandomString()
+      m: generateRandomString()
     }
 
-    encoded = encodeStartMessageBody(body.d, body.t, body.c)
-    decoded = decodeStartMessageBody(encoded)
+    encoded = encodeStartBody(body.d, { chatID: body.c, command: body.m })
+    decoded = decodeStartBody(encoded)
 
     expect(decoded).toStrictEqual(body)
   })
 
   it('encodes body to URL', () => {
-    let username: string, body: MessageBody, url: URL
+    let username: string, body: StartBody, url: string
 
     username = generateRandomString()
 
     body = {
       c: 0,
       d: generateRandomString(),
-      t: generateRandomString()
+      m: generateRandomString()
     }
 
-    url = encodeStartMessageBodyToURL(username, body.d, body.t, body.c)
+    url = encodeStartBodyToURL(username, body.d, { chatID: body.c, command: body.m })
 
-    expect(url.href).toBe(appendSearchParamsToURL(`https://t.me/${username}`, { start: encodeStartMessageBody(body.d, body.t, body.c) }))
+    expect(url).toBe(appendSearchParamsToURL(`https://t.me/${username}`, { start: encodeStartBody(body.d, { chatID: body.c, command: body.m }) }))
   })
 
   it('encodes body to anchor tag', () => {
-    let username: string, body: MessageBody, children: string, tag: string
+    let username: string, body: StartBody, children: string, tag: string
 
     username = generateRandomString()
 
     body = {
       c: 0,
       d: generateRandomString(),
-      t: generateRandomString()
+      m: generateRandomString()
     }
 
     children = generateRandomString()
 
-    tag = encodeStartMessageBodyToAnchorTag(username, body.d, body.t, children, body.c)
+    tag = encodeStartBodyToAnchorTag(username, children, body.d, { chatID: body.c, command: body.m })
 
-    expect(tag).toBe(`<a href="${encodeStartMessageBodyToURL(username, body.d, body.t, body.c)}">${children}</a>`)
+    expect(tag).toBe(`<a href="${encodeStartBodyToURL(username, body.d, { chatID: body.c, command: body.m })}">${children}</a>`)
   })
 })

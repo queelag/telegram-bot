@@ -29,14 +29,14 @@ import type {
 } from '@aracna/telegram-bot-types'
 import type { ClientListenerMiddleware, InputFile, UpdateType } from './types'
 
-export interface CallbackQuery<T = any> extends NativeCallbackQuery {
+export interface CallbackQuery<T = unknown> extends NativeCallbackQuery {
   body: CallbackQueryBody<T>
 }
 
-export interface CallbackQueryBody<T = any> {
+export interface CallbackQueryBody<T = unknown> {
   c?: bigint | number
   d: T
-  t: string
+  m?: string
 }
 
 export interface ClientConnectionOptions {
@@ -98,11 +98,26 @@ export interface Context {
   removed_chat_boost: ChatBoostRemoved
   reply_to_message: ReplyToMessage
   shipping_query: ShippingQuery
-  start: StartMessage
+  start: Start
 }
 
 export interface EditMessageMediaAlternative extends Omit<EditMessageMedia, 'media'> {
   media: InputMediaAlternative
+}
+
+export interface EncodeCallbackQueryBodyOptions {
+  chatID?: bigint | number
+  command?: string
+}
+
+export interface EncodeReplyToMessageBodyOptions {
+  chatID?: bigint | number
+  command?: string
+}
+
+export interface EncodeStartBodyOptions {
+  chatID?: bigint | number
+  command?: string
 }
 
 export interface InputMediaAlternative extends Omit<InputMediaAudio | InputMediaDocument | InputMediaPhoto | InputMediaVideo, 'media'> {
@@ -113,14 +128,14 @@ export interface InputPaidMediaAlternative extends Omit<InputMediaPhoto | InputM
   media: InputFile
 }
 
-export interface MessageBody<T = any> {
-  c?: bigint | number
-  d: T
-  t: string
+export interface ReplyToMessage<T = unknown> extends Message {
+  body: ReplyToMessageBody<T>
 }
 
-export interface ReplyToMessage<T = any> extends Message {
-  body: MessageBody<T>
+export interface ReplyToMessageBody<T = unknown> {
+  c?: bigint | number
+  d: T
+  m?: string
 }
 
 export interface SendMediaGroupAlternative extends Omit<SendMediaGroup, 'media'> {
@@ -131,13 +146,18 @@ export interface SendPaidMediaAlternative extends Omit<SendPaidMedia, 'media'> {
   media: InputPaidMediaAlternative[]
 }
 
-export interface SendRepliableMessage<T = any> extends SendMessage {
+export interface SendRepliableMessage<T = unknown> extends SendMessage {
+  command?: string
   data: T
   from_chat_id?: bigint
-  text: string
-  type: string
 }
 
-export interface StartMessage<T = any> extends Message {
-  body: MessageBody<T>
+export interface Start<T = unknown> extends Message {
+  body: StartBody<T>
+}
+
+export interface StartBody<T = unknown> {
+  c?: bigint | number
+  d: T
+  m?: string
 }

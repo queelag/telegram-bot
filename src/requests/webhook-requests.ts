@@ -16,12 +16,5 @@ export async function getWebhookInfo(token: string): Promise<WebhookInfo | Fetch
 }
 
 export async function setWebhook(token: string, body: SetWebhook): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, SetWebhook>(
-    'setWebhook',
-    {
-      allowed_updates: DEFAULT_ALLOWED_UPDATES,
-      ...body
-    },
-    { token }
-  )
+  return TelegramAPI.post<boolean, SetWebhook>('setWebhook', { allowed_updates: DEFAULT_ALLOWED_UPDATES, ...body }, { token })
 }

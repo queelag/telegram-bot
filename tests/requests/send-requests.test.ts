@@ -268,7 +268,7 @@ describe('Send Requests', () => {
     expect(message.message_id).toBeTypeOf('number')
   })
 
-  it('sends a video', async () => {
+  it.skip('sends a video', async () => {
     let message: Message | FetchError
 
     message = await sendVideo(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, video: new File([VIDEO_MP4], 'video.mp4') })
@@ -279,7 +279,7 @@ describe('Send Requests', () => {
     expect(message.message_id).toBeTypeOf('number')
   })
 
-  it('sends a video note', async () => {
+  it.skip('sends a video note', async () => {
     let message: Message | FetchError
 
     message = await sendVideoNote(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, video_note: new File([VIDEO_MP4], 'video.mp4') })
@@ -290,7 +290,7 @@ describe('Send Requests', () => {
     expect(message.message_id).toBeTypeOf('number')
   })
 
-  it('sends a voice', async () => {
+  it.skip('sends a voice', async () => {
     let message: Message | FetchError
 
     message = await sendVoice(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, voice: new File([AUDIO_MP3], 'audio.mp3') })

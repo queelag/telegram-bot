@@ -30,8 +30,10 @@ class API extends RestAPI<TelegramApiDefinitions.Config> {
     }
 
     callback = (process: QueueProcess) => {
-      promise.resolve(process.value as V)
-      this.queue.off('process-fulfill', callback)
+      if (process.fn === fn) {
+        promise.resolve(process.value as V)
+        this.queue.off('process-fulfill', callback)
+      }
     }
 
     this.queue.on('process-fulfill', callback)
@@ -40,13 +42,31 @@ class API extends RestAPI<TelegramApiDefinitions.Config> {
     return promise.instance
   }
 
-  async transformBody<V>(method: RequestMethod, path: string, body: V, config: TelegramApiDefinitions.Config): Promise<FormData | undefined> {
-    switch (method) {
-      case 'GET':
-      case 'POST':
-        return isObject(body) ? serializeFormData(body) : undefined
+  async transformBody<V>(method: RequestMethod, path: string, body: V, config: TelegramApiDefinitions.Config): Promise<V | FormData | undefined> {
+    if (method !== 'POST') {
+      return
     }
+
+    if (!isObject(body)) {
+      return
+    }
+
+    for (let key in body) {
+      if (body[key] instanceof Blob) {
+        return serializeFormData(body)
+      }
+    }
+
+    return body
   }
 }
 
-export const TelegramAPI: API = new API('https://api.telegram.org')
+export const TelegramAPI: API = new API('https://api.telegram.org', {
+  decode: {
+    json: {
+      castBigIntStringToBigInt: true,
+      castUnsafeIntToBigInt: true
+    }
+  },
+  token: undefined
+})

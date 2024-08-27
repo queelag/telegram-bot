@@ -9,10 +9,10 @@ describe('Callback Query Utils', () => {
 
     body = {
       d: generateRandomString(),
-      t: generateRandomString()
+      m: generateRandomString()
     }
 
-    encoded = encodeCallbackQueryBody(body.d, body.t)
+    encoded = encodeCallbackQueryBody(body.d, { command: body.m })
     decoded = decodeCallbackQueryBody(encoded)
 
     expect(decoded).toStrictEqual(body)
@@ -24,10 +24,10 @@ describe('Callback Query Utils', () => {
     body = {
       c: 0,
       d: generateRandomString(),
-      t: generateRandomString()
+      m: generateRandomString()
     }
 
-    encoded = encodeCallbackQueryBody(body.d, body.t, body.c)
+    encoded = encodeCallbackQueryBody(body.d, { chatID: body.c, command: body.m })
     decoded = decodeCallbackQueryBody(encoded)
 
     expect(decoded).toStrictEqual(body)
@@ -39,10 +39,10 @@ describe('Callback Query Utils', () => {
     body = {
       c: BigInt(Number.MAX_SAFE_INTEGER) + 1n,
       d: generateRandomString(),
-      t: generateRandomString()
+      m: generateRandomString()
     }
 
-    encoded = encodeCallbackQueryBody(body.d, body.t, body.c)
+    encoded = encodeCallbackQueryBody(body.d, { chatID: body.c, command: body.m })
     decoded = decodeCallbackQueryBody(encoded)
 
     expect(decoded).toStrictEqual(body)

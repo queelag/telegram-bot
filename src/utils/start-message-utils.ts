@@ -1,36 +1,42 @@
-import { appendSearchParamsToURL, decodeBase64, decodeText, encodeBase64, encodeText, parseBigIntJSON, stringifyBigIntJSON, tc } from '@aracna/core'
-import { DEFAULT_MESSAGE_BODY } from '../definitions/constants'
-import type { MessageBody } from '../definitions/interfaces'
+import { appendSearchParamsToURL, decodeBase64, decodeJSON, decodeText, encodeBase64, encodeJSON, encodeText, tc } from '@aracna/core'
+import { DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS, DEFAULT_START_MESSAGE_BODY } from '../definitions/constants'
+import type { EncodeStartBodyOptions, StartBody } from '../definitions/interfaces'
 
-export function decodeStartMessageBody<T>(text?: string): MessageBody<T> {
-  let body: MessageBody | Error
+export function decodeStartBody<T>(text: string | undefined): StartBody<T> {
+  let encoded: string, body: StartBody<T> | Error
 
   if (!text) {
-    return DEFAULT_MESSAGE_BODY()
+    return DEFAULT_START_MESSAGE_BODY()
   }
 
-  body = tc(() => parseBigIntJSON(decodeText(decodeBase64(text)).replace('/start', '').trim()))
-  if (body instanceof Error) return DEFAULT_MESSAGE_BODY()
+  encoded = text.replace('/start', '').trim()
+
+  body = tc(() => decodeJSON(decodeText(decodeBase64(encoded)), DEFAULT_DECODE_JSON_OPTIONS()))
+  if (body instanceof Error) return DEFAULT_START_MESSAGE_BODY()
 
   return body
 }
 
-export function encodeStartMessageBody<T>(data: T, type: string, chatID?: bigint | number): string {
-  let body: MessageBody
+export function encodeStartBody<T>(data: T, options?: EncodeStartBodyOptions): string {
+  let body: StartBody<T>
 
   body = {
-    c: chatID,
+    c: options?.chatID,
     d: data,
-    t: type
+    m: options?.command
   }
 
-  return encodeBase64(encodeText(stringifyBigIntJSON(body)))
+  return encodeBase64(encodeText(encodeJSON(body, DEFAULT_ENCODE_JSON_OPTIONS(), '{}')))
 }
 
-export function encodeStartMessageBodyToURL<T>(username: string, data: T, type: string, chatID?: bigint | number): URL {
-  return appendSearchParamsToURL(new URL(username, 'https://t.me/'), { start: encodeStartMessageBody(data, type, chatID) })
+export function encodeStartBodyToAnchorTag<T>(username: string, children: string, data: T, options?: EncodeStartBodyOptions): string {
+  return `<a href="${encodeStartBodyToURL(username, data, options)}">${children}</a>`
 }
 
-export function encodeStartMessageBodyToAnchorTag<T>(username: string, data: T, type: string, children: string, chatID?: bigint | number): string {
-  return `<a href="${encodeStartMessageBodyToURL(username, data, type, chatID)}">${children}</a>`
+export function encodeStartBodyToText<T>(data: T, options?: EncodeStartBodyOptions): string {
+  return `/start ${encodeStartBody(data, options)}`
+}
+
+export function encodeStartBodyToURL<T>(username: string, data: T, options?: EncodeStartBodyOptions): string {
+  return appendSearchParamsToURL(`https://t.me/${username}`, { start: encodeStartBody(data, options) })
 }

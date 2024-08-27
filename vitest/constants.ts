@@ -9,6 +9,7 @@ export const BOT_ID: number = Number(process.env.VITE_BOT_ID)
 export const BOT_NAME: string = process.env.VITE_BOT_NAME ?? ''
 export const BOT_TOKEN: string = process.env.VITE_BOT_TOKEN ?? ''
 export const GROUP_CHAT_ID: number = Number(process.env.VITE_GROUP_CHAT_ID)
+export const NGROK_AUTH_TOKEN: string = process.env.VITE_NGROK_AUTH_TOKEN ?? ''
 export const PRIVATE_CHAT_ID: number = Number(process.env.VITE_PRIVATE_CHAT_ID)
 
 export const SQUARE_512_GIF: Buffer = await sharp({ create: { background: 'black', channels: 3, height: 512, width: 512 } })

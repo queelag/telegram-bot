@@ -85,7 +85,7 @@ describe('Delete Requests', () => {
   it('deletes my commands', async () => {
     let del: boolean | FetchError
 
-    del = await deleteMyCommands(BOT_TOKEN)
+    del = await deleteMyCommands(BOT_TOKEN, {})
     if (del instanceof Error) throw del
 
     expect(del).toBeTruthy()

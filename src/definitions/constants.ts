@@ -1,4 +1,5 @@
-import { CallbackQueryBody, ClientListenerOptions, MessageBody } from './interfaces'
+import { DecodeJsonOptions, EncodeJsonOptions } from '@aracna/core'
+import { CallbackQueryBody, ClientListenerOptions, ReplyToMessageBody, StartBody } from './interfaces'
 
 export const DEFAULT_ALLOWED_UPDATES: string[] = [
   'business_connection',
@@ -25,22 +26,33 @@ export const DEFAULT_ALLOWED_UPDATES: string[] = [
   'shipping_query'
 ]
 
-export const DEFAULT_CALLBACK_QUERY_BODY: () => CallbackQueryBody = () => ({
-  d: null,
-  t: ''
+export const DEFAULT_CALLBACK_QUERY_BODY: () => CallbackQueryBody<any> = () => ({
+  d: null
 })
 
 export const DEFAULT_CLIENT_LISTENER_OPTIONS: () => ClientListenerOptions = () => ({
-  deleteOnCallbackQuery: true,
-  deleteOnMessageStart: true,
-  deleteOnReply: true
+  deleteOnCallbackQuery: false,
+  deleteOnMessageStart: false,
+  deleteOnReply: false
 })
 
 export const DEFAULT_CLIENT_POLLING_MS: number = 1000
 
-export const DEFAULT_MESSAGE_BODY: () => MessageBody = () => ({
-  d: null,
-  t: ''
+export const DEFAULT_DECODE_JSON_OPTIONS: () => DecodeJsonOptions = () => ({
+  castBigIntStringToBigInt: true,
+  castUnsafeIntToBigInt: true
+})
+
+export const DEFAULT_ENCODE_JSON_OPTIONS: () => EncodeJsonOptions = () => ({
+  castBigIntToString: true
+})
+
+export const DEFAULT_REPLY_TO_MESSAGE_BODY: () => ReplyToMessageBody<any> = () => ({
+  d: null
+})
+
+export const DEFAULT_START_MESSAGE_BODY: () => StartBody<any> = () => ({
+  d: null
 })
 
 export const REGEXP_COMMAND: RegExp = /\/[a-z_]+/m

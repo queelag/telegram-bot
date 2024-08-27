@@ -1,8 +1,9 @@
 import type { InlineKeyboardButton, LoginUrl, SwitchInlineQueryChosenChat, WebAppInfo } from '@aracna/telegram-bot-types'
+import { EncodeCallbackQueryBodyOptions } from '../definitions/interfaces'
 import { encodeCallbackQueryBody } from './callback-query-utils'
 
-export function getInlineKeyboardCallbackButton<T>(text: string, data: T, type: string, chatID?: bigint | number): InlineKeyboardButton {
-  return { text: text, callback_data: encodeCallbackQueryBody(data, type, chatID) }
+export function getInlineKeyboardCallbackButton<T>(text: string, data: T, options?: EncodeCallbackQueryBodyOptions): InlineKeyboardButton {
+  return { text: text, callback_data: encodeCallbackQueryBody(data, options) }
 }
 
 export function getInlineKeyboardGameButton(text: string, game: string): InlineKeyboardButton {

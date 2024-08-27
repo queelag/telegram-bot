@@ -38,7 +38,8 @@ import type {
   ClientDisconnectOptions,
   ClientListener,
   ClientListenerOptions,
-  MessageBody
+  ReplyToMessageBody,
+  StartBody
 } from '../definitions/interfaces'
 import type { ClientConnectionMode, ClientListenerMiddleware, UpdateType } from '../definitions/types'
 import { ClassLogger } from '../loggers/class-logger'
@@ -48,7 +49,7 @@ import { deleteWebhook, setWebhook } from '../requests/webhook-requests'
 import { decodeCallbackQueryBody } from '../utils/callback-query-utils'
 import { getCommand } from '../utils/command-utils'
 import { decodeReplyToMessageBody } from '../utils/reply-to-message-utils'
-import { decodeStartMessageBody } from '../utils/start-message-utils'
+import { decodeStartBody } from '../utils/start-message-utils'
 
 export class Client {
   protected listeners: ClientListener[]
@@ -62,25 +63,32 @@ export class Client {
     this.token = token
   }
 
-  async connect(mode: ClientConnectionMode, options?: ClientConnectionOptions): Promise<void> {
+  async connect(mode: ClientConnectionMode, options?: ClientConnectionOptions): Promise<void | FetchError | Error> {
     switch (mode) {
       case 'polling':
         setInterval(() => this.poll(options?.polling), options?.polling?.ms ?? DEFAULT_CLIENT_POLLING_MS, this.id, { autorun: true })
         ClassLogger.info('Telegram', 'connect', `The client is now polling the updates.`)
 
         break
-      case 'webhook':
+      case 'webhook': {
+        let del: boolean | FetchError, set: boolean | FetchError
+
         if (!options?.webhook?.url) {
-          return ClassLogger.error('Telegram', 'connect', `The webhook URL is required.`, options?.webhook)
+          return new Error(`The webhook URL is required.`)
         }
 
-        await deleteWebhook(this.token, options.webhook.delete)
+        del = await deleteWebhook(this.token, options.webhook.delete)
+        if (del instanceof Error) return del
+
         ClassLogger.verbose('Telegram', 'connect', `The webhook has been deleted.`)
 
-        await setWebhook(this.token, options.webhook)
+        set = await setWebhook(this.token, options.webhook)
+        if (set instanceof Error) return set
+
         ClassLogger.info('Telegram', 'connect', `The webhook has been set.`)
 
         break
+      }
     }
   }
 
@@ -120,10 +128,8 @@ export class Client {
     ClassLogger.verbose('Telegram', 'register', `The listener has been registered.`, listener)
   }
 
-  protected handle(update: Update): void {
+  handle(update: Update): void {
     let listener: ClientListener | undefined
-
-    console.log(update)
 
     switch (true) {
       case hasObjectProperty(update, 'business_connection'):
@@ -175,7 +181,7 @@ export class Client {
         listener = this.handleReplyToMessage(update.message as any)
         break
       case hasObjectProperty(update, 'message.text'):
-        if (update.message?.text?.includes('/start') && update.message?.text?.replace('/start', '').trim().length > 0) {
+        if (update.message?.text?.startsWith('/start')) {
           listener = this.handleStart(update.message as any)
           break
         }
@@ -239,7 +245,7 @@ export class Client {
     body = decodeCallbackQueryBody(query.data)
     setObjectProperty(query, 'body', body)
 
-    listener = this.findListener('callback_query', body.t)
+    listener = this.findListener('callback_query', body.m)
     if (!listener) return
 
     listener.middleware(query)
@@ -365,7 +371,6 @@ export class Client {
     let listener: ClientListener | undefined
 
     listener = this.findListener('message', getCommand(message.text))
-    console.log(message, listener)
     if (!listener) return
 
     listener.middleware(message)
@@ -451,12 +456,12 @@ export class Client {
   }
 
   protected handleReplyToMessage(reply: Message): ClientListener | undefined {
-    let body: MessageBody, listener: ClientListener | undefined
+    let body: ReplyToMessageBody, listener: ClientListener | undefined
 
     body = decodeReplyToMessageBody(reply.reply_to_message?.entities ?? [])
     setObjectProperty(reply, 'body', body)
 
-    listener = this.findListener('reply_to_message', body.t)
+    listener = this.findListener('reply_to_message', body.m)
     if (!listener) return
 
     listener.middleware(reply)
@@ -480,12 +485,14 @@ export class Client {
   }
 
   protected handleStart(start: Message): ClientListener | undefined {
-    let listener: ClientListener | undefined, body: MessageBody
+    let listener: ClientListener | undefined, body: StartBody
 
-    body = decodeStartMessageBody(start.text)
+    body = decodeStartBody(start.text)
     setObjectProperty(start, 'body', body)
 
-    listener = this.findListener('start', body.t)
+    console.log(start, body)
+
+    listener = this.findListener('start', body.m)
     if (!listener) return
 
     listener.middleware(start)

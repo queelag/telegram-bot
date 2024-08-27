@@ -39,6 +39,7 @@ import type {
   UserProfilePhotos
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
+import { DEFAULT_ALLOWED_UPDATES } from '../definitions/constants'
 
 export async function getBusinessConnection(token: string, body: GetBusinessConnection): Promise<BusinessConnection | FetchError> {
   return TelegramAPI.post<BusinessConnection, GetBusinessConnection>('getBusinessConnection', body, { token })
@@ -115,7 +116,7 @@ export async function getStickerSet(token: string, body: GetStickerSet): Promise
 export async function getUpdates(token: string, body?: GetUpdates): Promise<Update[] | FetchError> {
   let updates: Update | Update[] | FetchError
 
-  updates = await TelegramAPI.post<Update | Update[], GetUpdates>('getUpdates', body, { token })
+  updates = await TelegramAPI.post<Update | Update[], GetUpdates>('getUpdates', { allowed_updates: DEFAULT_ALLOWED_UPDATES, ...body }, { token })
   if (updates instanceof Error) return updates
 
   return Array.isArray(updates) ? updates : [updates]
