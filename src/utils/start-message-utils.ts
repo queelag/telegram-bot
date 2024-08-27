@@ -10,6 +10,7 @@ export function decodeStartBody<T>(text: string | undefined): StartBody<T> {
   }
 
   encoded = text.replace('/start', '').trim()
+  if (encoded.length <= 0) return DEFAULT_START_MESSAGE_BODY()
 
   body = tc(() => decodeJSON(decodeText(decodeBase64(encoded)), DEFAULT_DECODE_JSON_OPTIONS()))
   if (body instanceof Error) return DEFAULT_START_MESSAGE_BODY()

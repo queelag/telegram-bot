@@ -26,6 +26,6 @@ export function getCommand(string: string | undefined): string | undefined {
   return REGEXP_COMMAND.exec(string.slice(0, 512))?.[0].slice(1)
 }
 
-export function omitCommand(string: string | undefined): string | undefined {
-  return string?.replace(REGEXP_COMMAND_WITH_USERNAME, '').trim()
+export function omitCommand(string: string | undefined): string {
+  return string?.replace(REGEXP_COMMAND_WITH_USERNAME, '').trim() ?? ''
 }

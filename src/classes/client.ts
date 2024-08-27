@@ -177,10 +177,10 @@ export class Client {
       case hasObjectProperty(update, 'message_reaction_count'):
         listener = this.handleMessageReactionCount(update.message_reaction_count as any)
         break
-      case hasObjectProperty(update, 'message') && hasObjectProperty(update, 'message.reply_to_message.text'):
+      case hasObjectProperty(update, 'message.reply_to_message'):
         listener = this.handleReplyToMessage(update.message as any)
         break
-      case hasObjectProperty(update, 'message.text'):
+      case hasObjectProperty(update, 'message'):
         if (update.message?.text?.startsWith('/start')) {
           listener = this.handleStart(update.message as any)
           break
@@ -489,8 +489,6 @@ export class Client {
 
     body = decodeStartBody(start.text)
     setObjectProperty(start, 'body', body)
-
-    console.log(start, body)
 
     listener = this.findListener('start', body.m)
     if (!listener) return
