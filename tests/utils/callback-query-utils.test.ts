@@ -12,7 +12,7 @@ describe('Callback Query Utils', () => {
       m: generateRandomString()
     }
 
-    encoded = encodeCallbackQueryBody(body.d, { command: body.m })
+    encoded = encodeCallbackQueryBody({ command: body.m, data: body.d })
     decoded = decodeCallbackQueryBody(encoded)
 
     expect(decoded).toStrictEqual(body)
@@ -27,7 +27,7 @@ describe('Callback Query Utils', () => {
       m: generateRandomString()
     }
 
-    encoded = encodeCallbackQueryBody(body.d, { chatID: body.c, command: body.m })
+    encoded = encodeCallbackQueryBody({ chatID: body.c, command: body.m, data: body.d })
     decoded = decodeCallbackQueryBody(encoded)
 
     expect(decoded).toStrictEqual(body)
@@ -42,7 +42,7 @@ describe('Callback Query Utils', () => {
       m: generateRandomString()
     }
 
-    encoded = encodeCallbackQueryBody(body.d, { chatID: body.c, command: body.m })
+    encoded = encodeCallbackQueryBody({ chatID: body.c, command: body.m, data: body.d })
     decoded = decodeCallbackQueryBody(encoded)
 
     expect(decoded).toStrictEqual(body)

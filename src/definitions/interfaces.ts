@@ -29,13 +29,13 @@ import type {
 } from '@aracna/telegram-bot-types'
 import type { ClientListenerMiddleware, InputFile, UpdateType } from './types'
 
-export interface CallbackQuery<T = unknown> extends NativeCallbackQuery {
+export interface CallbackQuery<T = any> extends NativeCallbackQuery {
   body: CallbackQueryBody<T>
 }
 
-export interface CallbackQueryBody<T = unknown> {
+export interface CallbackQueryBody<T = any> {
   c?: bigint | number
-  d: T
+  d?: T
   m?: string
 }
 
@@ -105,19 +105,22 @@ export interface EditMessageMediaAlternative extends Omit<EditMessageMedia, 'med
   media: InputMediaAlternative
 }
 
-export interface EncodeCallbackQueryBodyOptions {
+export interface EncodeCallbackQueryBodyOptions<T = any> {
   chatID?: bigint | number
   command?: string
+  data?: T
 }
 
-export interface EncodeReplyToMessageBodyOptions {
+export interface EncodeReplyToMessageBodyOptions<T = any> {
   chatID?: bigint | number
   command?: string
+  data?: T
 }
 
-export interface EncodeStartBodyOptions {
+export interface EncodeStartBodyOptions<T = any> {
   chatID?: bigint | number
   command?: string
+  data?: T
 }
 
 export interface InputMediaAlternative extends Omit<InputMediaAudio | InputMediaDocument | InputMediaPhoto | InputMediaVideo, 'media'> {
@@ -128,13 +131,13 @@ export interface InputPaidMediaAlternative extends Omit<InputMediaPhoto | InputM
   media: InputFile
 }
 
-export interface ReplyToMessage<T = unknown> extends Message {
+export interface ReplyToMessage<T = any> extends Message {
   body: ReplyToMessageBody<T>
 }
 
-export interface ReplyToMessageBody<T = unknown> {
+export interface ReplyToMessageBody<T = any> {
   c?: bigint | number
-  d: T
+  d?: T
   m?: string
 }
 
@@ -146,18 +149,18 @@ export interface SendPaidMediaAlternative extends Omit<SendPaidMedia, 'media'> {
   media: InputPaidMediaAlternative[]
 }
 
-export interface SendRepliableMessage<T = unknown> extends SendMessage {
+export interface SendRepliableMessage<T = any> extends SendMessage {
   command?: string
   data: T
   from_chat_id?: bigint
 }
 
-export interface Start<T = unknown> extends Message {
+export interface Start<T = any> extends Message {
   body: StartBody<T>
 }
 
-export interface StartBody<T = unknown> {
+export interface StartBody<T = any> {
   c?: bigint | number
-  d: T
+  d?: T
   m?: string
 }

@@ -12,7 +12,7 @@ describe('Start Message Utils', () => {
       m: generateRandomString()
     }
 
-    encoded = encodeStartBody(body.d, { command: body.m })
+    encoded = encodeStartBody({ command: body.m, data: body.d })
     decoded = decodeStartBody(encoded)
 
     expect(decoded).toStrictEqual(body)
@@ -27,7 +27,7 @@ describe('Start Message Utils', () => {
       m: generateRandomString()
     }
 
-    encoded = encodeStartBody(body.d, { chatID: body.c, command: body.m })
+    encoded = encodeStartBody({ chatID: body.c, command: body.m, data: body.d })
     decoded = decodeStartBody(encoded)
 
     expect(decoded).toStrictEqual(body)
@@ -42,7 +42,7 @@ describe('Start Message Utils', () => {
       m: generateRandomString()
     }
 
-    encoded = encodeStartBody(body.d, { chatID: body.c, command: body.m })
+    encoded = encodeStartBody({ chatID: body.c, command: body.m, data: body.d })
     decoded = decodeStartBody(encoded)
 
     expect(decoded).toStrictEqual(body)
@@ -59,9 +59,9 @@ describe('Start Message Utils', () => {
       m: generateRandomString()
     }
 
-    url = encodeStartBodyToURL(username, body.d, { chatID: body.c, command: body.m })
+    url = encodeStartBodyToURL(username, { chatID: body.c, command: body.m, data: body.d })
 
-    expect(url).toBe(appendSearchParamsToURL(`https://t.me/${username}`, { start: encodeStartBody(body.d, { chatID: body.c, command: body.m }) }))
+    expect(url).toBe(appendSearchParamsToURL(`https://t.me/${username}`, { start: encodeStartBody({ chatID: body.c, command: body.m, data: body.d }) }))
   })
 
   it('encodes body to anchor tag', () => {
@@ -77,8 +77,8 @@ describe('Start Message Utils', () => {
 
     children = generateRandomString()
 
-    tag = encodeStartBodyToAnchorTag(username, children, body.d, { chatID: body.c, command: body.m })
+    tag = encodeStartBodyToAnchorTag(username, children, { chatID: body.c, command: body.m, data: body.d })
 
-    expect(tag).toBe(`<a href="${encodeStartBodyToURL(username, body.d, { chatID: body.c, command: body.m })}">${children}</a>`)
+    expect(tag).toBe(`<a href="${encodeStartBodyToURL(username, { chatID: body.c, command: body.m, data: body.d })}">${children}</a>`)
   })
 })

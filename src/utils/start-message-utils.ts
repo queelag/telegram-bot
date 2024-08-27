@@ -18,26 +18,26 @@ export function decodeStartBody<T>(text: string | undefined): StartBody<T> {
   return body
 }
 
-export function encodeStartBody<T>(data: T, options?: EncodeStartBodyOptions): string {
+export function encodeStartBody<T>(options?: EncodeStartBodyOptions): string {
   let body: StartBody<T>
 
   body = {
     c: options?.chatID,
-    d: data,
+    d: options?.data,
     m: options?.command
   }
 
   return encodeBase64(encodeText(encodeJSON(body, DEFAULT_ENCODE_JSON_OPTIONS(), '{}')))
 }
 
-export function encodeStartBodyToAnchorTag<T>(username: string, children: string, data: T, options?: EncodeStartBodyOptions): string {
-  return `<a href="${encodeStartBodyToURL(username, data, options)}">${children}</a>`
+export function encodeStartBodyToAnchorTag<T>(username: string, children: string, options?: EncodeStartBodyOptions): string {
+  return `<a href="${encodeStartBodyToURL(username, options)}">${children}</a>`
 }
 
-export function encodeStartBodyToText<T>(data: T, options?: EncodeStartBodyOptions): string {
-  return `/start ${encodeStartBody(data, options)}`
+export function encodeStartBodyToText<T>(options?: EncodeStartBodyOptions): string {
+  return `/start ${encodeStartBody(options)}`
 }
 
-export function encodeStartBodyToURL<T>(username: string, data: T, options?: EncodeStartBodyOptions): string {
-  return appendSearchParamsToURL(`https://t.me/${username}`, { start: encodeStartBody(data, options) })
+export function encodeStartBodyToURL<T>(username: string, options?: EncodeStartBodyOptions): string {
+  return appendSearchParamsToURL(`https://t.me/${username}`, { start: encodeStartBody(options) })
 }

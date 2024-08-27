@@ -122,29 +122,23 @@ describe('Client', () => {
   })
 
   it('handles the "callback_query" update', async () => {
-    let promise: DeferredPromise<Context['callback_query']>, body: CallbackQueryBody
+    let promise: DeferredPromise<Context['callback_query']>
 
     promise = new DeferredPromise()
     client.on('callback_query', promise.resolve)
 
     await client.connect('webhook', { webhook: { allowed_updates: ['message'], url: listenerURL } })
 
-    body = {
-      d: generateRandomString()
-    }
-
     await sendUpdate({
       callback_query: {
         chat_instance: generateRandomString(),
-        data: encodeCallbackQueryBody(body.d),
+        data: encodeCallbackQueryBody(),
         from: { first_name: '', id: PRIVATE_CHAT_ID, is_bot: false },
         id: generateRandomString()
       }
     })
 
     await promise.instance
-
-    expect(promise.value?.body).toStrictEqual(body)
   })
 
   it('handles the "callback_query" update with command', async () => {
@@ -163,7 +157,7 @@ describe('Client', () => {
     await sendUpdate({
       callback_query: {
         chat_instance: generateRandomString(),
-        data: encodeCallbackQueryBody(body.d, { command: body.m }),
+        data: encodeCallbackQueryBody({ command: body.m, data: body.d }),
         from: { first_name: '', id: PRIVATE_CHAT_ID, is_bot: false },
         id: generateRandomString()
       }
@@ -592,7 +586,7 @@ describe('Client', () => {
               length: 0,
               offset: 0,
               type: 'url',
-              url: encodeReplyToMessageBodyToURL(body.d, { command: body.m })
+              url: encodeReplyToMessageBodyToURL({ command: body.m, data: body.d })
             }
           ],
           message_id: 0
@@ -624,16 +618,12 @@ describe('Client', () => {
   })
 
   it('handles the "start" update', async () => {
-    let promise: DeferredPromise<Context['start']>, body: StartBody
+    let promise: DeferredPromise<Context['start']>
 
     promise = new DeferredPromise()
     client.on('start', promise.resolve)
 
     await client.connect('webhook', { webhook: { allowed_updates: ['message'], url: listenerURL } })
-
-    body = {
-      d: generateRandomString()
-    }
 
     await sendUpdate({
       message: {
@@ -655,16 +645,14 @@ describe('Client', () => {
 
     await client.connect('webhook', { webhook: { allowed_updates: ['message'], url: listenerURL } })
 
-    body = {
-      d: generateRandomString()
-    }
+    body = {}
 
     await sendUpdate({
       message: {
         chat: { id: PRIVATE_CHAT_ID, type: 'private' },
         date: Date.now(),
         message_id: 0,
-        text: encodeStartBodyToText(body.d)
+        text: encodeStartBodyToText()
       }
     })
 
@@ -691,7 +679,7 @@ describe('Client', () => {
         chat: { id: PRIVATE_CHAT_ID, type: 'private' },
         date: Date.now(),
         message_id: 0,
-        text: encodeStartBodyToText(body.d, { command: body.m })
+        text: encodeStartBodyToText({ command: body.m, data: body.d })
       }
     })
 

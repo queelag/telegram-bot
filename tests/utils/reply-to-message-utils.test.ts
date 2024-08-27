@@ -12,7 +12,7 @@ describe('Reply To Message Utils', () => {
       m: generateRandomString()
     }
 
-    url = encodeReplyToMessageBodyToURL(body.d, { command: body.m })
+    url = encodeReplyToMessageBodyToURL({ command: body.m, data: body.d })
     decoded = decodeReplyToMessageBody([{ length: 0, offset: 0, type: '', url }])
 
     expect(decoded).toStrictEqual(body)
@@ -27,7 +27,7 @@ describe('Reply To Message Utils', () => {
       m: generateRandomString()
     }
 
-    url = encodeReplyToMessageBodyToURL(body.d, { chatID: body.c, command: body.m })
+    url = encodeReplyToMessageBodyToURL({ chatID: body.c, command: body.m, data: body.d })
     decoded = decodeReplyToMessageBody([{ length: 0, offset: 0, type: '', url }])
 
     expect(decoded).toStrictEqual(body)
@@ -42,7 +42,7 @@ describe('Reply To Message Utils', () => {
       m: generateRandomString()
     }
 
-    url = encodeReplyToMessageBodyToURL(body.d, { chatID: body.c, command: body.m })
+    url = encodeReplyToMessageBodyToURL({ chatID: body.c, command: body.m, data: body.d })
     decoded = decodeReplyToMessageBody([{ length: 0, offset: 0, type: '', url }])
 
     expect(decoded).toStrictEqual(body)

@@ -15,12 +15,12 @@ export function decodeCallbackQueryBody<T>(data?: string): CallbackQueryBody<T> 
   return body
 }
 
-export function encodeCallbackQueryBody<T>(data: T, options?: EncodeCallbackQueryBodyOptions): string {
+export function encodeCallbackQueryBody<T>(options?: EncodeCallbackQueryBodyOptions<T>): string {
   let body: CallbackQueryBody<T>
 
   body = {
     c: options?.chatID,
-    d: data,
+    d: options?.data,
     m: options?.command
   }
 

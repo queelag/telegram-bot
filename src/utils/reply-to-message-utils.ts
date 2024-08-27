@@ -18,22 +18,22 @@ export function decodeReplyToMessageBody<T>(entities: MessageEntity[]): ReplyToM
   return body
 }
 
-export function encodeReplyToMessageBody<T>(data: T, options?: EncodeReplyToMessageBodyOptions): string {
+export function encodeReplyToMessageBody<T>(options?: EncodeReplyToMessageBodyOptions): string {
   let body: ReplyToMessageBody
 
   body = {
     c: options?.chatID,
-    d: data,
+    d: options?.data,
     m: options?.command
   }
 
   return encodeBase64(encodeText(encodeJSON(body, DEFAULT_ENCODE_JSON_OPTIONS(), '{}')))
 }
 
-export function encodeReplyToMessageBodyToAnchorTag<T>(data: T, options?: EncodeReplyToMessageBodyOptions): string {
-  return `\n<a href="${encodeReplyToMessageBodyToURL(data, options)}">ㅤ</a>`
+export function encodeReplyToMessageBodyToAnchorTag<T>(options?: EncodeReplyToMessageBodyOptions): string {
+  return `\n<a href="${encodeReplyToMessageBodyToURL(options)}">ㅤ</a>`
 }
 
-export function encodeReplyToMessageBodyToURL<T>(data: T, options?: EncodeReplyToMessageBodyOptions): string {
-  return appendSearchParamsToURL('https://t.me', { a: encodeReplyToMessageBody(data, options) })
+export function encodeReplyToMessageBodyToURL<T>(options?: EncodeReplyToMessageBodyOptions): string {
+  return appendSearchParamsToURL('https://t.me', { a: encodeReplyToMessageBody(options) })
 }
