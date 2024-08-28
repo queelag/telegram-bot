@@ -5,7 +5,7 @@ import { createNewStickerSet } from '../../src/requests/create-requests'
 import { deleteStickerSet } from '../../src/requests/delete-requests'
 import { getStickerSet } from '../../src/requests/get-requests'
 import { replaceStickerInSet } from '../../src/requests/replace-requests'
-import { BOT_NAME, BOT_TOKEN, PRIVATE_CHAT_ID, SQUARE_512_WEBP } from '../../vitest/constants'
+import { BOT_NAME, PRIVATE_CHAT_ID, SQUARE_512_WEBP } from '../../vitest/constants'
 
 describe('Replace Requests', () => {
   it.skip('replaces a sticker in a set', async () => {
@@ -13,7 +13,7 @@ describe('Replace Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -27,16 +27,16 @@ describe('Replace Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    set = await getStickerSet(BOT_TOKEN, { name })
+    set = await getStickerSet({ name })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
     // the old sticker isn't from the set
 
-    replace = await replaceStickerInSet(BOT_TOKEN, {
+    replace = await replaceStickerInSet({
       name,
       old_sticker: set.stickers[0].file_id,
       sticker: {
@@ -48,12 +48,12 @@ describe('Replace Requests', () => {
     })
 
     if (replace instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw replace
     }
 
     expect(replace).toBeTruthy()
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
   })
 })

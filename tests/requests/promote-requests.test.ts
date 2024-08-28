@@ -1,7 +1,7 @@
 import { FetchError } from '@aracna/core'
 import { describe, expect, it } from 'vitest'
 import { promoteChatMember } from '../../src/requests/promote-requests'
-import { BOT_ID, BOT_TOKEN, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { BOT_ID, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Promote Requests', () => {
   it.skip('promotes a chat member', async () => {
@@ -9,7 +9,7 @@ describe('Promote Requests', () => {
 
     // need another member
 
-    promote = await promoteChatMember(BOT_TOKEN, {
+    promote = await promoteChatMember({
       can_change_info: true,
       can_delete_messages: true,
       can_delete_stories: true,

@@ -1,7 +1,7 @@
 import {
   DeferredPromise,
   EventEmitterListenerCallback,
-  type FetchError,
+  FetchError,
   isObject,
   Queue,
   QueueFunction,
@@ -10,20 +10,23 @@ import {
   RestAPI,
   serializeFormData
 } from '@aracna/core'
-import { TelegramApiDefinitions } from '../definitions/telegram-api-definitions'
+import { TelegramApiConfig, TelegramApiResponse } from '../definitions/interfaces'
 
-class API extends RestAPI<TelegramApiDefinitions.Config> {
+class API extends RestAPI<TelegramApiConfig> {
   queue: Queue = new Queue({ autostart: true })
 
-  async post<V, W, X = undefined>(path: string, body: W | undefined, config: TelegramApiDefinitions.Config): Promise<V | FetchError<X>> {
-    let fn: QueueFunction, callback: EventEmitterListenerCallback, promise: DeferredPromise<V | FetchError<X>>
+  async post<V, W, X = undefined>(path: string, body: W | undefined, config?: TelegramApiConfig): Promise<V | FetchError<X>> {
+    let token: string | undefined, promise: DeferredPromise<V | FetchError<X>>, fn: QueueFunction, callback: EventEmitterListenerCallback
+
+    token = config?.token ?? this.config?.token
+    if (!token) return FetchError.from(new Error(`The token is required.`))
 
     promise = new DeferredPromise()
 
     fn = async () => {
-      let response: TelegramApiDefinitions.Response<V> | FetchError<X>
+      let response: TelegramApiResponse<V> | FetchError<X>
 
-      response = await super.post('/bot' + config.token + '/' + path, body, config)
+      response = await super.post('/bot' + token + '/' + path, body, config)
       if (response instanceof Error) return response
 
       return response.data.result
@@ -42,7 +45,7 @@ class API extends RestAPI<TelegramApiDefinitions.Config> {
     return promise.instance
   }
 
-  async transformBody<V>(method: RequestMethod, path: string, body: V, config: TelegramApiDefinitions.Config): Promise<V | FormData | undefined> {
+  async transformBody<V>(method: RequestMethod, path: string, body: V, config: TelegramApiConfig): Promise<V | FormData | undefined> {
     if (method !== 'POST') {
       return
     }
@@ -59,6 +62,15 @@ class API extends RestAPI<TelegramApiDefinitions.Config> {
 
     return body
   }
+
+  getToken(): string | undefined {
+    return this.config.token
+  }
+
+  setToken(token?: string): this {
+    this.config.token = token
+    return this
+  }
 }
 
 export const TelegramAPI: API = new API('https://api.telegram.org', {
@@ -72,6 +84,5 @@ export const TelegramAPI: API = new API('https://api.telegram.org', {
     json: {
       castBigIntToString: true
     }
-  },
-  token: undefined
+  }
 })

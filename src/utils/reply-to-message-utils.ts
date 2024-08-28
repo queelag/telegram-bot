@@ -18,7 +18,7 @@ export function decodeReplyToMessageBody<T>(entities: MessageEntity[]): ReplyToM
   return body
 }
 
-export function encodeReplyToMessageBody<T>(options?: EncodeReplyToMessageBodyOptions): string {
+export function encodeReplyToMessageBody<T>(options?: EncodeReplyToMessageBodyOptions<T>): string {
   let body: ReplyToMessageBody
 
   body = {
@@ -30,10 +30,10 @@ export function encodeReplyToMessageBody<T>(options?: EncodeReplyToMessageBodyOp
   return encodeBase64(encodeText(encodeJSON(body, DEFAULT_ENCODE_JSON_OPTIONS(), '{}')))
 }
 
-export function encodeReplyToMessageBodyToAnchorTag<T>(options?: EncodeReplyToMessageBodyOptions): string {
-  return `\n<a href="${encodeReplyToMessageBodyToURL(options)}">ㅤ</a>`
+export function encodeReplyToMessageBodyToAnchorTag<T>(options?: EncodeReplyToMessageBodyOptions<T>): string {
+  return `<a href="${encodeReplyToMessageBodyToURL(options)}"> </a>`
 }
 
-export function encodeReplyToMessageBodyToURL<T>(options?: EncodeReplyToMessageBodyOptions): string {
+export function encodeReplyToMessageBodyToURL<T>(options?: EncodeReplyToMessageBodyOptions<T>): string {
   return appendSearchParamsToURL('https://t.me', { a: encodeReplyToMessageBody(options) })
 }

@@ -3,14 +3,14 @@ import { afterAll, describe, expect, it } from 'vitest'
 import { addStickerToSet } from '../../src/requests/add-requests'
 import { createNewStickerSet } from '../../src/requests/create-requests'
 import { deleteStickerSet } from '../../src/requests/delete-requests'
-import { BOT_NAME, BOT_TOKEN, PRIVATE_CHAT_ID, SQUARE_512_WEBP } from '../../vitest/constants'
+import { BOT_NAME, PRIVATE_CHAT_ID, SQUARE_512_WEBP } from '../../vitest/constants'
 
 describe('Add Requests', () => {
   let names: string[] = []
 
   afterAll(async () => {
     for (let name of names) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
     }
   })
 
@@ -20,7 +20,7 @@ describe('Add Requests', () => {
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
     names.push(name)
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -34,7 +34,7 @@ describe('Add Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    add = await addStickerToSet(BOT_TOKEN, {
+    add = await addStickerToSet({
       name,
       sticker: {
         emoji_list: ['🔥'],

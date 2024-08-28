@@ -1,3 +1,4 @@
+import type { FetchResponse, RestApiConfig } from '@aracna/core'
 import type {
   BusinessConnection,
   BusinessMessagesDeleted,
@@ -164,3 +165,16 @@ export interface StartBody<T = any> {
   d?: T
   m?: string
 }
+
+export interface TelegramApiConfig extends RestApiConfig {
+  token?: string
+}
+
+export interface TelegramApiResponse<T> extends FetchResponse<TelegramApiResponseData<T>> {}
+
+export interface TelegramApiResponseData<T> {
+  ok: boolean
+  result: T
+}
+
+export interface TelegramFileApiConfig extends TelegramApiConfig {}

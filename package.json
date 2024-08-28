@@ -1,7 +1,7 @@
 {
   "author": "Dario Sechi",
   "devDependencies": {
-    "@aracna/core": "^1.1.90",
+    "@aracna/core": "^1.1.91",
     "@aracna/telegram-bot-types": "^1.2.14",
     "@fastify/multipart": "^8.3.0",
     "@microsoft/api-extractor": "^7.47.5",

@@ -77,12 +77,12 @@ export class Client {
           return new Error(`The webhook URL is required.`)
         }
 
-        del = await deleteWebhook(this.token, options.webhook.delete)
+        del = await deleteWebhook(options.webhook.delete, { token: this.token })
         if (del instanceof Error) return del
 
         ClassLogger.verbose('Telegram', 'connect', `The webhook has been deleted.`)
 
-        set = await setWebhook(this.token, options.webhook)
+        set = await setWebhook(options.webhook, { token: this.token })
         if (set instanceof Error) return set
 
         ClassLogger.info('Telegram', 'connect', `The webhook has been set.`)
@@ -99,7 +99,7 @@ export class Client {
     clearInterval(this.id)
     ClassLogger.info('Telegram', 'disconnect', `The client has been disconnected.`)
 
-    await deleteWebhook(this.token, options?.webhook)
+    await deleteWebhook(options?.webhook, { token: this.token })
     ClassLogger.info('Telegram', 'disconnect', `The webhook has been deleted.`)
   }
 
@@ -251,7 +251,7 @@ export class Client {
     listener.middleware(query)
 
     if (listener.options.deleteOnCallbackQuery && query.message) {
-      deleteMessage(this.token, { chat_id: body.c ? query.from.id : query.message.chat.id, message_id: query.message.message_id })
+      deleteMessage({ chat_id: body.c ? query.from.id : query.message.chat.id, message_id: query.message.message_id }, { token: this.token })
     }
 
     return listener
@@ -467,7 +467,7 @@ export class Client {
     listener.middleware(reply)
 
     if (listener.id.length > 0 && listener.options.deleteOnReply && reply.from && reply.reply_to_message) {
-      deleteMessages(this.token, { chat_id: reply.from.id, message_ids: [reply.message_id, reply.reply_to_message.message_id] })
+      deleteMessages({ chat_id: reply.from.id, message_ids: [reply.message_id, reply.reply_to_message.message_id] }, { token: this.token })
     }
 
     return listener
@@ -496,7 +496,7 @@ export class Client {
     listener.middleware(start)
 
     if (listener.id.length > 0 && listener.options.deleteOnMessageStart) {
-      deleteMessage(this.token, { chat_id: body.c ? start.from?.id ?? 0n : start.chat.id, message_id: start.message_id })
+      deleteMessage({ chat_id: body.c ? start.from?.id ?? 0n : start.chat.id, message_id: start.message_id }, { token: this.token })
     }
 
     return listener
@@ -512,7 +512,7 @@ export class Client {
       timeout: options?.timeout
     }
 
-    updates = await getUpdates(this.token, body)
+    updates = await getUpdates(body, { token: this.token })
     if (updates instanceof Error) return
 
     for (let update of updates) {

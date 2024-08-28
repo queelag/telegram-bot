@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@aracna/core':
-        specifier: ^1.1.90
-        version: 1.1.90
+        specifier: ^1.1.91
+        version: 1.1.91
       '@aracna/telegram-bot-types':
         specifier: ^1.2.14
         version: 1.2.14
@@ -55,8 +55,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@aracna/core@1.1.90':
-    resolution: {integrity: sha512-RAaQhWngYrQCVi6/BmTkc2QpmhRiA47GgIv8BhRgmeTh5uFJfjMnpvO5d1q8oU9KX2T7AkbmdyXxyftSZsZOqA==}
+  '@aracna/core@1.1.91':
+    resolution: {integrity: sha512-zc3l7RchoBUemqExNbo+s3iMoYYwknBe2wNwmv0bZpgKBd3vYmaL+C7PvQ6b7IeTOL28jYmYoqdSUrgLKGj+ug==}
     engines: {node: '>=16', pnpm: '>=8'}
 
   '@aracna/telegram-bot-types@1.2.14':
@@ -1468,7 +1468,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@aracna/core@1.1.90':
+  '@aracna/core@1.1.91':
     dependencies:
       '@types/cookie': 0.6.0
       cookie: 0.6.0

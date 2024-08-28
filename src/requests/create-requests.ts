@@ -10,24 +10,28 @@ import type {
   InputSticker
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
+import type { TelegramApiConfig } from '../definitions/interfaces'
 
-export async function createChatInviteLink(token: string, body: CreateChatInviteLink): Promise<ChatInviteLink | FetchError> {
-  return TelegramAPI.post<ChatInviteLink, CreateChatInviteLink>('createChatInviteLink', body, { token })
+export async function createChatInviteLink(body: CreateChatInviteLink, config?: TelegramApiConfig): Promise<ChatInviteLink | FetchError> {
+  return TelegramAPI.post<ChatInviteLink, CreateChatInviteLink>('createChatInviteLink', body, config)
 }
 
-export async function createChatSubscriptionInviteLink(token: string, body: CreateChatSubscriptionInviteLink): Promise<ChatInviteLink | FetchError> {
-  return TelegramAPI.post<ChatInviteLink, CreateChatSubscriptionInviteLink>('createChatSubscriptionInviteLink', body, { token })
+export async function createChatSubscriptionInviteLink(
+  body: CreateChatSubscriptionInviteLink,
+  config?: TelegramApiConfig
+): Promise<ChatInviteLink | FetchError> {
+  return TelegramAPI.post<ChatInviteLink, CreateChatSubscriptionInviteLink>('createChatSubscriptionInviteLink', body, config)
 }
 
-export async function createForumTopic(token: string, body: CreateForumTopic): Promise<ForumTopic | FetchError> {
-  return TelegramAPI.post<ForumTopic, CreateForumTopic>('createForumTopic', body, { token })
+export async function createForumTopic(body: CreateForumTopic, config?: TelegramApiConfig): Promise<ForumTopic | FetchError> {
+  return TelegramAPI.post<ForumTopic, CreateForumTopic>('createForumTopic', body, config)
 }
 
-export async function createInvoiceLink(token: string, body: CreateInvoiceLink): Promise<string | FetchError> {
-  return TelegramAPI.post<string, CreateInvoiceLink>('createInvoiceLink', body, { token })
+export async function createInvoiceLink(body: CreateInvoiceLink, config?: TelegramApiConfig): Promise<string | FetchError> {
+  return TelegramAPI.post<string, CreateInvoiceLink>('createInvoiceLink', body, config)
 }
 
-export async function createNewStickerSet(token: string, body: CreateNewStickerSet): Promise<boolean | FetchError> {
+export async function createNewStickerSet(body: CreateNewStickerSet, config?: TelegramApiConfig): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, CreateNewStickerSet>(
     'createNewStickerSet',
     {
@@ -38,6 +42,6 @@ export async function createNewStickerSet(token: string, body: CreateNewStickerS
       })),
       ...body.stickers.reduce((result: object, sticker: InputSticker, index: number) => ({ ...result, [`sticker_${index}`]: sticker.sticker }), {})
     },
-    { token }
+    config
   )
 }

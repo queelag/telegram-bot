@@ -53,7 +53,7 @@ describe('Client', () => {
 
     await client.connect('polling', { polling: { allowed_updates: ['message'] } })
 
-    await sendMessage(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, text: generateRandomString() })
+    await sendMessage({ chat_id: PRIVATE_CHAT_ID, text: generateRandomString() })
 
     await promise.instance
   })

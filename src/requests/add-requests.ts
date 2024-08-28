@@ -1,8 +1,9 @@
 import type { FetchError } from '@aracna/core'
 import type { AddStickerToSet } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
+import { TelegramApiConfig } from '../definitions/interfaces'
 
-export async function addStickerToSet(token: string, body: AddStickerToSet): Promise<boolean | FetchError> {
+export async function addStickerToSet(body: AddStickerToSet, config?: TelegramApiConfig): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, AddStickerToSet>(
     'addStickerToSet',
     {
@@ -13,6 +14,6 @@ export async function addStickerToSet(token: string, body: AddStickerToSet): Pro
       },
       ...(body.sticker.sticker instanceof Blob && { sticker_blob: body.sticker.sticker })
     },
-    { token }
+    config
   )
 }

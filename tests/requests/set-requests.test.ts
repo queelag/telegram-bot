@@ -28,13 +28,13 @@ import {
   setStickerSetThumbnail,
   setStickerSetTitle
 } from '../../src/requests/set-requests'
-import { BOT_ID, BOT_NAME, BOT_TOKEN, PRIVATE_CHAT_ID, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { BOT_ID, BOT_NAME, PRIVATE_CHAT_ID, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Set Requests', () => {
   let messageIDs: number[] = []
 
   afterAll(async () => {
-    await deleteMessages(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, message_ids: messageIDs })
+    await deleteMessages({ chat_id: PRIVATE_CHAT_ID, message_ids: messageIDs })
   })
 
   it.skip('sets the chat administrator custom title', async () => {
@@ -42,7 +42,7 @@ describe('Set Requests', () => {
 
     // need another user
 
-    set = await setChatAdministratorCustomTitle(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, custom_title: generateRandomString(), user_id: BOT_ID })
+    set = await setChatAdministratorCustomTitle({ chat_id: SUPER_GROUP_CHAT_ID, custom_title: generateRandomString(), user_id: BOT_ID })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -51,7 +51,7 @@ describe('Set Requests', () => {
   it('sets the chat description', async () => {
     let set: boolean | FetchError
 
-    set = await setChatDescription(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, description: generateRandomString() })
+    set = await setChatDescription({ chat_id: SUPER_GROUP_CHAT_ID, description: generateRandomString() })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -60,7 +60,7 @@ describe('Set Requests', () => {
   it('sets the chat menu button', async () => {
     let set: boolean | FetchError
 
-    set = await setChatMenuButton(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, menu_button: { type: 'default' } })
+    set = await setChatMenuButton({ chat_id: PRIVATE_CHAT_ID, menu_button: { type: 'default' } })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -69,7 +69,7 @@ describe('Set Requests', () => {
   it('sets the chat permissions', async () => {
     let set: boolean | FetchError
 
-    set = await setChatPermissions(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, permissions: {} })
+    set = await setChatPermissions({ chat_id: SUPER_GROUP_CHAT_ID, permissions: {} })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -78,7 +78,7 @@ describe('Set Requests', () => {
   it('sets the chat photo', async () => {
     let set: boolean | FetchError
 
-    set = await setChatPhoto(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, photo: new File([SQUARE_512_WEBP], 'square.webp') })
+    set = await setChatPhoto({ chat_id: SUPER_GROUP_CHAT_ID, photo: new File([SQUARE_512_WEBP], 'square.webp') })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -91,7 +91,7 @@ describe('Set Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -105,15 +105,15 @@ describe('Set Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    set = await setChatStickerSet(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, sticker_set_name: name })
+    set = await setChatStickerSet({ chat_id: SUPER_GROUP_CHAT_ID, sticker_set_name: name })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
-    await deleteChatStickerSet(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID })
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteChatStickerSet({ chat_id: SUPER_GROUP_CHAT_ID })
+    await deleteStickerSet({ name })
 
     expect(set).toBe(true)
   })
@@ -121,7 +121,7 @@ describe('Set Requests', () => {
   it('sets the chat title', async () => {
     let set: boolean | FetchError
 
-    set = await setChatTitle(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, title: generateRandomString() })
+    set = await setChatTitle({ chat_id: SUPER_GROUP_CHAT_ID, title: generateRandomString() })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -134,7 +134,7 @@ describe('Set Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -148,14 +148,14 @@ describe('Set Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    set = await setCustomEmojiStickerSetThumbnail(BOT_TOKEN, { custom_emoji_id: '⭐', name })
+    set = await setCustomEmojiStickerSetThumbnail({ custom_emoji_id: '⭐', name })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
 
     expect(set).toBe(true)
   })
@@ -165,7 +165,7 @@ describe('Set Requests', () => {
 
     // needs a game
 
-    set = await setGameScore(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, score: 0, user_id: PRIVATE_CHAT_ID })
+    set = await setGameScore({ chat_id: PRIVATE_CHAT_ID, score: 0, user_id: PRIVATE_CHAT_ID })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -174,12 +174,12 @@ describe('Set Requests', () => {
   it('sets a message reaction', async () => {
     let message: Message | FetchError, set: boolean | FetchError
 
-    message = await sendMessage(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, text: generateRandomString() })
+    message = await sendMessage({ chat_id: PRIVATE_CHAT_ID, text: generateRandomString() })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
 
-    set = await setMessageReaction(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, message_id: message.message_id, reaction: [{ emoji: '❤️', type: 'emoji' }] })
+    set = await setMessageReaction({ chat_id: PRIVATE_CHAT_ID, message_id: message.message_id, reaction: [{ emoji: '❤️', type: 'emoji' }] })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -188,7 +188,7 @@ describe('Set Requests', () => {
   it('sets my commands', async () => {
     let set: boolean | FetchError
 
-    set = await setMyCommands(BOT_TOKEN, { commands: [] })
+    set = await setMyCommands({ commands: [] })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -197,7 +197,7 @@ describe('Set Requests', () => {
   it('sets my default administrator rights', async () => {
     let set: boolean | FetchError
 
-    set = await setMyDefaultAdministratorRights(BOT_TOKEN, {
+    set = await setMyDefaultAdministratorRights({
       rights: {
         can_change_info: true,
         can_delete_messages: true,
@@ -224,7 +224,7 @@ describe('Set Requests', () => {
   it('sets my description', async () => {
     let set: boolean | FetchError
 
-    set = await setMyDescription(BOT_TOKEN, { description: generateRandomString() })
+    set = await setMyDescription({ description: generateRandomString() })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -233,7 +233,7 @@ describe('Set Requests', () => {
   it('sets my name', async () => {
     let set: boolean | FetchError
 
-    set = await setMyName(BOT_TOKEN, { name: BOT_NAME })
+    set = await setMyName({ name: BOT_NAME })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -242,7 +242,7 @@ describe('Set Requests', () => {
   it('sets my short description', async () => {
     let set: boolean | FetchError
 
-    set = await setMyDescription(BOT_TOKEN, { description: generateRandomString() })
+    set = await setMyDescription({ description: generateRandomString() })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -251,7 +251,7 @@ describe('Set Requests', () => {
   it('sets the passport data errors', async () => {
     let set: boolean | FetchError
 
-    set = await setPassportDataErrors(BOT_TOKEN, { errors: [], user_id: PRIVATE_CHAT_ID })
+    set = await setPassportDataErrors({ errors: [], user_id: PRIVATE_CHAT_ID })
     if (set instanceof Error) throw set
 
     expect(set).toBe(true)
@@ -262,7 +262,7 @@ describe('Set Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -276,24 +276,24 @@ describe('Set Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    sticker = await getStickerSet(BOT_TOKEN, { name })
+    sticker = await getStickerSet({ name })
 
     if (sticker instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw sticker
     }
 
-    set = await setStickerEmojiList(BOT_TOKEN, {
+    set = await setStickerEmojiList({
       emoji_list: ['🔥'],
       sticker: sticker.stickers[0].file_id
     })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
 
     expect(set).toBe(true)
   })
@@ -303,7 +303,7 @@ describe('Set Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -317,24 +317,24 @@ describe('Set Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    sticker = await getStickerSet(BOT_TOKEN, { name })
+    sticker = await getStickerSet({ name })
 
     if (sticker instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw sticker
     }
 
-    set = await setStickerKeywords(BOT_TOKEN, {
+    set = await setStickerKeywords({
       keywords: [generateRandomString()],
       sticker: sticker.stickers[0].file_id
     })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
 
     expect(set).toBe(true)
   })
@@ -344,7 +344,7 @@ describe('Set Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -358,16 +358,16 @@ describe('Set Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    sticker = await getStickerSet(BOT_TOKEN, { name })
+    sticker = await getStickerSet({ name })
 
     if (sticker instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw sticker
     }
 
     // STICKER_MASK_COORDS_NOT_SUPPORTED
 
-    set = await setStickerMaskPosition(BOT_TOKEN, {
+    set = await setStickerMaskPosition({
       mask_position: {
         point: 'chin',
         scale: 1,
@@ -378,11 +378,11 @@ describe('Set Requests', () => {
     })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
 
     expect(set).toBe(true)
   })
@@ -392,7 +392,7 @@ describe('Set Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -406,24 +406,24 @@ describe('Set Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    sticker = await getStickerSet(BOT_TOKEN, { name })
+    sticker = await getStickerSet({ name })
 
     if (sticker instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw sticker
     }
 
-    set = await setStickerPositionInSet(BOT_TOKEN, {
+    set = await setStickerPositionInSet({
       position: 0,
       sticker: sticker.stickers[0].file_id
     })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
 
     expect(set).toBe(true)
   })
@@ -433,7 +433,7 @@ describe('Set Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -447,7 +447,7 @@ describe('Set Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    set = await setStickerSetThumbnail(BOT_TOKEN, {
+    set = await setStickerSetThumbnail({
       format: 'static',
       name,
       thumbnail: new File([SQUARE_512_WEBP], 'square.webp'),
@@ -455,11 +455,11 @@ describe('Set Requests', () => {
     })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
 
     expect(set).toBe(true)
   })
@@ -469,7 +469,7 @@ describe('Set Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -483,14 +483,14 @@ describe('Set Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    set = await setStickerSetTitle(BOT_TOKEN, { name, title: generateRandomString() })
+    set = await setStickerSetTitle({ name, title: generateRandomString() })
 
     if (set instanceof Error) {
-      await deleteStickerSet(BOT_TOKEN, { name })
+      await deleteStickerSet({ name })
       throw set
     }
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
 
     expect(set).toBe(true)
   })

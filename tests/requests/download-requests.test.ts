@@ -1,7 +1,7 @@
 import { FetchError } from '@aracna/core'
 import { describe, expect, it } from 'vitest'
 import { downloadFile, downloadUserFirstProfilePhoto } from '../../src/requests/download-requests'
-import { BOT_TOKEN, PRIVATE_CHAT_ID } from '../../vitest/constants'
+import { PRIVATE_CHAT_ID } from '../../vitest/constants'
 
 describe('Download Requests', () => {
   it.skip('downloads a file', async () => {
@@ -9,7 +9,7 @@ describe('Download Requests', () => {
 
     // needs a file_id
 
-    file = await downloadFile(BOT_TOKEN, '')
+    file = await downloadFile('')
     if (file instanceof Error) throw file
 
     expect(file).toBeInstanceOf(Buffer)
@@ -18,7 +18,7 @@ describe('Download Requests', () => {
   it('downloads the first user profile photo', async () => {
     let photo: Blob | FetchError | Error
 
-    photo = await downloadUserFirstProfilePhoto(BOT_TOKEN, PRIVATE_CHAT_ID)
+    photo = await downloadUserFirstProfilePhoto(PRIVATE_CHAT_ID)
     if (photo instanceof Error) throw photo
 
     expect(photo).toBeInstanceOf(Blob)

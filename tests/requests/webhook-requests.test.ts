@@ -2,7 +2,6 @@ import { FetchError } from '@aracna/core'
 import { WebhookInfo } from '@aracna/telegram-bot-types'
 import { describe, expect, it } from 'vitest'
 import { closeWebhook, deleteWebhook, getWebhookInfo, setWebhook } from '../../src/requests/webhook-requests'
-import { BOT_TOKEN } from '../../vitest/constants'
 
 describe('Webhook Requests', () => {
   it.skip('closes the webhook', async () => {
@@ -10,13 +9,13 @@ describe('Webhook Requests', () => {
 
     // requires some weird conditions
 
-    set = await setWebhook(BOT_TOKEN, { url: 'https://aracna.dariosechi.it' })
+    set = await setWebhook({ url: 'https://aracna.dariosechi.it' })
     if (set instanceof Error) throw set
 
-    del = await deleteWebhook(BOT_TOKEN)
+    del = await deleteWebhook()
     if (del instanceof Error) throw del
 
-    close = await closeWebhook(BOT_TOKEN)
+    close = await closeWebhook()
     if (close instanceof Error) throw close
 
     expect(close).toBeTruthy()
@@ -25,7 +24,7 @@ describe('Webhook Requests', () => {
   it('deletes the webhook', async () => {
     let del: boolean | FetchError
 
-    del = await deleteWebhook(BOT_TOKEN)
+    del = await deleteWebhook()
     if (del instanceof Error) throw del
 
     expect(del).toBeTruthy()
@@ -34,7 +33,7 @@ describe('Webhook Requests', () => {
   it('gets the webhook info', async () => {
     let info: WebhookInfo | FetchError
 
-    info = await getWebhookInfo(BOT_TOKEN)
+    info = await getWebhookInfo()
     if (info instanceof Error) throw info
 
     expect(info.url).toBeTypeOf('string')
@@ -43,10 +42,10 @@ describe('Webhook Requests', () => {
   it('sets the webhook', async () => {
     let set: boolean | FetchError
 
-    set = await setWebhook(BOT_TOKEN, { url: 'https://aracna.dariosechi.it' })
+    set = await setWebhook({ url: 'https://aracna.dariosechi.it' })
     if (set instanceof Error) throw set
 
-    await deleteWebhook(BOT_TOKEN)
+    await deleteWebhook()
 
     expect(set).toBeTruthy()
   })

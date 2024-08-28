@@ -5,35 +5,35 @@ import { closeForumTopic, closeGeneralForumTopic } from '../../src/requests/clos
 import { createForumTopic } from '../../src/requests/create-requests'
 import { deleteForumTopic } from '../../src/requests/delete-requests'
 import { reopenGeneralForumTopic } from '../../src/requests/reopen-requests'
-import { BOT_TOKEN, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Close Requests', () => {
   it('closes a forum topic', async () => {
     let topic: ForumTopic | FetchError, close: boolean | FetchError
 
-    topic = await createForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
+    topic = await createForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
     if (topic instanceof Error) throw topic
 
-    close = await closeForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+    close = await closeForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
 
     if (close instanceof Error) {
-      await deleteForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+      await deleteForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
       throw close
     }
 
     expect(close).toBeTruthy()
 
-    await deleteForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+    await deleteForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
   })
 
   it('closes a general forum topic', async () => {
     let close: boolean | FetchError
 
-    close = await closeGeneralForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID })
+    close = await closeGeneralForumTopic({ chat_id: SUPER_GROUP_CHAT_ID })
     if (close instanceof Error) throw close
 
     expect(close).toBeTruthy()
 
-    await reopenGeneralForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID })
+    await reopenGeneralForumTopic({ chat_id: SUPER_GROUP_CHAT_ID })
   })
 })

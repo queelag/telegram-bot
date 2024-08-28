@@ -30,14 +30,14 @@ export function encodeStartBody<T>(options?: EncodeStartBodyOptions): string {
   return encodeBase64(encodeText(encodeJSON(body, DEFAULT_ENCODE_JSON_OPTIONS(), '{}')))
 }
 
-export function encodeStartBodyToAnchorTag<T>(username: string, children: string, options?: EncodeStartBodyOptions): string {
+export function encodeStartBodyToAnchorTag<T>(username: string, children: string, options?: EncodeStartBodyOptions<T>): string {
   return `<a href="${encodeStartBodyToURL(username, options)}">${children}</a>`
 }
 
-export function encodeStartBodyToText<T>(options?: EncodeStartBodyOptions): string {
+export function encodeStartBodyToText<T>(options?: EncodeStartBodyOptions<T>): string {
   return `/start ${encodeStartBody(options)}`
 }
 
-export function encodeStartBodyToURL<T>(username: string, options?: EncodeStartBodyOptions): string {
+export function encodeStartBodyToURL<T>(username: string, options?: EncodeStartBodyOptions<T>): string {
   return appendSearchParamsToURL(`https://t.me/${username}`, { start: encodeStartBody(options) })
 }

@@ -34,7 +34,6 @@ export type {
   ClientListener as TelegramClientListener,
   ClientListenerOptions as TelegramClientListenerOptions
 } from './definitions/interfaces'
-export type * from './definitions/telegram-api-definitions'
 export type {
   InputFile,
   ClientConnectionMode as TelegramClientConnectionMode,

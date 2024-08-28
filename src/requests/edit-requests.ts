@@ -13,33 +13,34 @@ import type {
   Message
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
+import type { TelegramApiConfig } from '../definitions/interfaces'
 import { EditMessageMediaAlternative } from '../definitions/interfaces'
 
-export async function editChatInviteLink(token: string, body: EditChatInviteLink): Promise<ChatInviteLink | FetchError> {
-  return TelegramAPI.post<ChatInviteLink, EditChatInviteLink>('editChatInviteLink', body, { token })
+export async function editChatInviteLink(body: EditChatInviteLink, config?: TelegramApiConfig): Promise<ChatInviteLink | FetchError> {
+  return TelegramAPI.post<ChatInviteLink, EditChatInviteLink>('editChatInviteLink', body, config)
 }
 
-export async function editChatSubscriptionInviteLink(token: string, body: EditChatSubscriptionInviteLink): Promise<ChatInviteLink | FetchError> {
-  return TelegramAPI.post<ChatInviteLink, EditChatSubscriptionInviteLink>('editChatSubscriptionInviteLink', body, { token })
+export async function editChatSubscriptionInviteLink(body: EditChatSubscriptionInviteLink, config?: TelegramApiConfig): Promise<ChatInviteLink | FetchError> {
+  return TelegramAPI.post<ChatInviteLink, EditChatSubscriptionInviteLink>('editChatSubscriptionInviteLink', body, config)
 }
 
-export async function editForumTopic(token: string, body: EditForumTopic): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, EditForumTopic>('editForumTopic', body, { token })
+export async function editForumTopic(body: EditForumTopic, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, EditForumTopic>('editForumTopic', body, config)
 }
 
-export async function editGeneralForumTopic(token: string, body: EditGeneralForumTopic): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, EditGeneralForumTopic>('editGeneralForumTopic', body, { token })
+export async function editGeneralForumTopic(body: EditGeneralForumTopic, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, EditGeneralForumTopic>('editGeneralForumTopic', body, config)
 }
 
-export async function editMessageCaption(token: string, body: EditMessageCaption): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, EditMessageCaption>('editMessageCaption', body, { token })
+export async function editMessageCaption(body: EditMessageCaption, config?: TelegramApiConfig): Promise<Message | FetchError> {
+  return TelegramAPI.post<Message, EditMessageCaption>('editMessageCaption', body, config)
 }
 
-export async function editMessageLiveLocation(token: string, body: EditMessageLiveLocation): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, EditMessageLiveLocation>('editMessageLiveLocation', body, { token })
+export async function editMessageLiveLocation(body: EditMessageLiveLocation, config?: TelegramApiConfig): Promise<Message | FetchError> {
+  return TelegramAPI.post<Message, EditMessageLiveLocation>('editMessageLiveLocation', body, config)
 }
 
-export async function editMessageMedia(token: string, body: EditMessageMediaAlternative): Promise<Message | FetchError> {
+export async function editMessageMedia(body: EditMessageMediaAlternative, config?: TelegramApiConfig): Promise<Message | FetchError> {
   return TelegramAPI.post<Message, EditMessageMedia>(
     'editMessageMedia',
     {
@@ -50,14 +51,14 @@ export async function editMessageMedia(token: string, body: EditMessageMediaAlte
       },
       ...(body.media.media instanceof Blob ? { media_blob: body.media.media } : {})
     },
-    { token }
+    config
   )
 }
 
-export async function editMessageReplyMarkup(token: string, body: EditMessageReplyMarkup): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, EditMessageReplyMarkup>('editMessageReplyMarkup', body, { token })
+export async function editMessageReplyMarkup(body: EditMessageReplyMarkup, config?: TelegramApiConfig): Promise<Message | FetchError> {
+  return TelegramAPI.post<Message, EditMessageReplyMarkup>('editMessageReplyMarkup', body, config)
 }
 
-export async function editMessageText(token: string, body: EditMessageText): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, EditMessageText>('editMessageText', body, { token })
+export async function editMessageText(body: EditMessageText, config?: TelegramApiConfig): Promise<Message | FetchError> {
+  return TelegramAPI.post<Message, EditMessageText>('editMessageText', body, config)
 }

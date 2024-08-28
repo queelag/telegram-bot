@@ -45,13 +45,13 @@ import {
   getUserChatBoosts,
   getUserProfilePhotos
 } from '../../src/requests/get-requests'
-import { BOT_ID, BOT_NAME, BOT_TOKEN, GROUP_CHAT_ID, PRIVATE_CHAT_ID, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { BOT_ID, BOT_NAME, GROUP_CHAT_ID, PRIVATE_CHAT_ID, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Get Requests', () => {
   it.skip('gets a business connection', async () => {
     let connection: BusinessConnection | FetchError
 
-    connection = await getBusinessConnection(BOT_TOKEN, { business_connection_id: '' })
+    connection = await getBusinessConnection({ business_connection_id: '' })
     if (connection instanceof Error) throw connection
 
     console.log(connection)
@@ -60,7 +60,7 @@ describe('Get Requests', () => {
   it('gets a chat', async () => {
     let chat: Chat | FetchError
 
-    chat = await getChat(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID })
+    chat = await getChat({ chat_id: PRIVATE_CHAT_ID })
     if (chat instanceof Error) throw chat
 
     expect(chat.id).toBe(PRIVATE_CHAT_ID)
@@ -69,7 +69,7 @@ describe('Get Requests', () => {
   it('gets the chat administrators', async () => {
     let administrators: ChatMember[] | FetchError
 
-    administrators = await getChatAdministrators(BOT_TOKEN, { chat_id: GROUP_CHAT_ID })
+    administrators = await getChatAdministrators({ chat_id: GROUP_CHAT_ID })
     if (administrators instanceof Error) throw administrators
 
     expect(administrators[0].user.id).toBe(PRIVATE_CHAT_ID)
@@ -78,7 +78,7 @@ describe('Get Requests', () => {
   it('gets a chat member', async () => {
     let member: ChatMember | FetchError
 
-    member = await getChatMember(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, user_id: PRIVATE_CHAT_ID })
+    member = await getChatMember({ chat_id: PRIVATE_CHAT_ID, user_id: PRIVATE_CHAT_ID })
     if (member instanceof Error) throw member
 
     expect(member.user.id).toBe(PRIVATE_CHAT_ID)
@@ -87,7 +87,7 @@ describe('Get Requests', () => {
   it('gets the chat member count', async () => {
     let count: number | FetchError
 
-    count = await getChatMemberCount(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID })
+    count = await getChatMemberCount({ chat_id: PRIVATE_CHAT_ID })
     if (count instanceof Error) throw count
 
     expect(count).toBe(2)
@@ -96,7 +96,7 @@ describe('Get Requests', () => {
   it('gets the chat menu button', async () => {
     let button: MenuButton | FetchError
 
-    button = await getChatMenuButton(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID })
+    button = await getChatMenuButton({ chat_id: PRIVATE_CHAT_ID })
     if (button instanceof Error) throw button
 
     expect(button.type).toBe('default')
@@ -105,7 +105,7 @@ describe('Get Requests', () => {
   it('gets custom emoji stickers', async () => {
     let stickers: Sticker[] | FetchError
 
-    stickers = await getCustomEmojiStickers(BOT_TOKEN, { custom_emoji_ids: [] })
+    stickers = await getCustomEmojiStickers({ custom_emoji_ids: [] })
     if (stickers instanceof Error) throw stickers
 
     expect(stickers).toHaveLength(0)
@@ -114,7 +114,7 @@ describe('Get Requests', () => {
   it.skip('gets a file', async () => {
     let file: TelegramFile | FetchError
 
-    file = await getFile(BOT_TOKEN, { file_id: '' })
+    file = await getFile({ file_id: '' })
     if (file instanceof Error) throw file
 
     console.log(file)
@@ -123,7 +123,7 @@ describe('Get Requests', () => {
   it('gets the forum topic icon stickers', async () => {
     let stickers: Sticker[] | FetchError
 
-    stickers = await getForumTopicIconStickers(BOT_TOKEN)
+    stickers = await getForumTopicIconStickers()
     if (stickers instanceof Error) throw stickers
 
     expect(stickers.length).toBeGreaterThan(0)
@@ -134,7 +134,7 @@ describe('Get Requests', () => {
 
     // needs a message
 
-    scores = await getGameHighScores(BOT_TOKEN, { user_id: PRIVATE_CHAT_ID })
+    scores = await getGameHighScores({ user_id: PRIVATE_CHAT_ID })
     if (scores instanceof Error) throw scores
 
     console.log(scores)
@@ -143,7 +143,7 @@ describe('Get Requests', () => {
   it('gets me', async () => {
     let me: User | FetchError
 
-    me = await getMe(BOT_TOKEN)
+    me = await getMe()
     if (me instanceof Error) throw me
 
     expect(me.id).toBe(BOT_ID)
@@ -152,7 +152,7 @@ describe('Get Requests', () => {
   it('gets my commands', async () => {
     let commands: BotCommand[] | FetchError
 
-    commands = await getMyCommands(BOT_TOKEN)
+    commands = await getMyCommands()
     if (commands instanceof Error) throw commands
 
     expect(commands).toHaveLength(0)
@@ -161,7 +161,7 @@ describe('Get Requests', () => {
   it('gets my default administrator rights', async () => {
     let rights: ChatAdministratorRights | FetchError
 
-    rights = await getMyDefaultAdministratorRights(BOT_TOKEN)
+    rights = await getMyDefaultAdministratorRights()
     if (rights instanceof Error) throw rights
 
     expect(rights).toStrictEqual({
@@ -184,7 +184,7 @@ describe('Get Requests', () => {
   it('gets my description', async () => {
     let description: BotDescription | FetchError
 
-    description = await getMyDescription(BOT_TOKEN)
+    description = await getMyDescription()
     if (description instanceof Error) throw description
 
     expect(description.description).toBe('')
@@ -193,7 +193,7 @@ describe('Get Requests', () => {
   it('gets my name', async () => {
     let name: BotName | FetchError
 
-    name = await getMyName(BOT_TOKEN)
+    name = await getMyName()
     if (name instanceof Error) throw name
 
     expect(name.name).toBe(BOT_NAME)
@@ -202,7 +202,7 @@ describe('Get Requests', () => {
   it('gets my short description', async () => {
     let description: BotShortDescription | FetchError
 
-    description = await getMyShortDescription(BOT_TOKEN)
+    description = await getMyShortDescription()
     if (description instanceof Error) throw description
 
     expect(description.short_description).toBe('')
@@ -211,7 +211,7 @@ describe('Get Requests', () => {
   it('gets the star transactions', async () => {
     let transactions: StarTransactions | FetchError
 
-    transactions = await getStarTransactions(BOT_TOKEN)
+    transactions = await getStarTransactions()
     if (transactions instanceof Error) throw transactions
 
     expect(transactions.transactions).toHaveLength(0)
@@ -222,7 +222,7 @@ describe('Get Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -236,18 +236,18 @@ describe('Get Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    set = await getStickerSet(BOT_TOKEN, { name })
+    set = await getStickerSet({ name })
     if (set instanceof Error) throw set
 
     expect(set.name).toBe(name)
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
   })
 
   it('gets the updates', async () => {
     let updates: Update[] | FetchError
 
-    updates = await getUpdates(BOT_TOKEN, { allowed_updates: [], limit: 0 })
+    updates = await getUpdates({ allowed_updates: [], limit: 0 })
     if (updates instanceof Error) throw updates
 
     expect(updates).toBeInstanceOf(Array)
@@ -256,7 +256,7 @@ describe('Get Requests', () => {
   it('gets a user chat boosts', async () => {
     let boosts: UserChatBoosts | FetchError
 
-    boosts = await getUserChatBoosts(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, user_id: PRIVATE_CHAT_ID })
+    boosts = await getUserChatBoosts({ chat_id: SUPER_GROUP_CHAT_ID, user_id: PRIVATE_CHAT_ID })
     if (boosts instanceof Error) throw boosts
 
     expect(boosts.boosts).toHaveLength(0)
@@ -265,7 +265,7 @@ describe('Get Requests', () => {
   it('gets a user profile photos', async () => {
     let photos: UserProfilePhotos | FetchError
 
-    photos = await getUserProfilePhotos(BOT_TOKEN, { user_id: PRIVATE_CHAT_ID })
+    photos = await getUserProfilePhotos({ user_id: PRIVATE_CHAT_ID })
     if (photos instanceof Error) throw photos
 
     expect(photos.total_count).toBeGreaterThan(0)

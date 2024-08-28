@@ -15,7 +15,7 @@ export default defineConfig({
         minThreads: 0
       }
     },
-    setupFiles: ['vitest/mock-telegram-api.ts', 'vitest/mock-telegram-file-api.ts'],
+    setupFiles: ['vitest/mock-telegram-api.ts', 'vitest/mock-telegram-file-api.ts', 'vitest/setup.ts'],
     testTimeout: 1000
   }
 })

@@ -5,41 +5,41 @@ import { closeForumTopic, closeGeneralForumTopic } from '../../src/requests/clos
 import { createForumTopic } from '../../src/requests/create-requests'
 import { deleteForumTopic } from '../../src/requests/delete-requests'
 import { reopenForumTopic, reopenGeneralForumTopic } from '../../src/requests/reopen-requests'
-import { BOT_TOKEN, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Reopen Requests', () => {
   it('reopens a forum topic', async () => {
     let topic: ForumTopic | FetchError, close: boolean | FetchError, reopen: boolean | FetchError
 
-    topic = await createForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
+    topic = await createForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
     if (topic instanceof Error) throw topic
 
-    close = await closeForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+    close = await closeForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
 
     if (close instanceof Error) {
-      await deleteForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+      await deleteForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
       throw close
     }
 
-    reopen = await reopenForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+    reopen = await reopenForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
 
     if (reopen instanceof Error) {
-      await deleteForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+      await deleteForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
       throw reopen
     }
 
     expect(reopen).toBeTruthy()
 
-    await deleteForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+    await deleteForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
   })
 
   it('reopens a general forum topic', async () => {
     let close: boolean | FetchError, reopen: boolean | FetchError
 
-    close = await closeGeneralForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID })
+    close = await closeGeneralForumTopic({ chat_id: SUPER_GROUP_CHAT_ID })
     if (close instanceof Error) throw close
 
-    reopen = await reopenGeneralForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID })
+    reopen = await reopenGeneralForumTopic({ chat_id: SUPER_GROUP_CHAT_ID })
     if (reopen instanceof Error) throw reopen
 
     expect(reopen).toBeTruthy()

@@ -10,35 +10,36 @@ import type {
   DeleteStickerSet
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
+import type { TelegramApiConfig } from '../definitions/interfaces'
 
-export async function deleteChatPhoto(token: string, body: DeleteChatPhoto): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, DeleteChatPhoto>('deleteChatPhoto', body, { token })
+export async function deleteChatPhoto(body: DeleteChatPhoto, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, DeleteChatPhoto>('deleteChatPhoto', body, config)
 }
 
-export async function deleteChatStickerSet(token: string, body: DeleteChatStickerSet): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, DeleteChatStickerSet>('deleteChatStickerSet', body, { token })
+export async function deleteChatStickerSet(body: DeleteChatStickerSet, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, DeleteChatStickerSet>('deleteChatStickerSet', body, config)
 }
 
-export async function deleteForumTopic(token: string, body: DeleteForumTopic): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, DeleteForumTopic>('deleteForumTopic', body, { token })
+export async function deleteForumTopic(body: DeleteForumTopic, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, DeleteForumTopic>('deleteForumTopic', body, config)
 }
 
-export async function deleteMessage(token: string, body: DeleteMessage): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, DeleteMessage>('deleteMessage', body, { token })
+export async function deleteMessage(body: DeleteMessage, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, DeleteMessage>('deleteMessage', body, config)
 }
 
-export async function deleteMessages(token: string, body: DeleteMessages): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, DeleteMessages>('deleteMessages', body, { token })
+export async function deleteMessages(body: DeleteMessages, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, DeleteMessages>('deleteMessages', body, config)
 }
 
-export async function deleteMyCommands(token: string, body?: DeleteMyCommands): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, DeleteMyCommands>('deleteMyCommands', body, { token })
+export async function deleteMyCommands(body?: DeleteMyCommands, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, DeleteMyCommands>('deleteMyCommands', body, config)
 }
 
-export async function deleteStickerFromSet(token: string, body: DeleteStickerFromSet): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, DeleteStickerFromSet>('deleteStickerFromSet', body, { token })
+export async function deleteStickerFromSet(body: DeleteStickerFromSet, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, DeleteStickerFromSet>('deleteStickerFromSet', body, config)
 }
 
-export async function deleteStickerSet(token: string, body: DeleteStickerSet): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, DeleteStickerSet>('deleteStickerSet', body, { token })
+export async function deleteStickerSet(body: DeleteStickerSet, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, DeleteStickerSet>('deleteStickerSet', body, config)
 }

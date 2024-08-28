@@ -15,22 +15,22 @@ import {
 } from '../../src/requests/edit-requests'
 import { sendLocation, sendMessage, sendPhoto } from '../../src/requests/send-requests'
 import { getInlineKeyboardUrlButton } from '../../src/utils/inline-keyboard-utils'
-import { BOT_TOKEN, SQUARE_1024_WEBP, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { SQUARE_1024_WEBP, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Edit Requests', () => {
   let messageIDs: number[] = []
 
   afterAll(async () => {
-    await deleteMessages(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_ids: messageIDs })
+    await deleteMessages({ chat_id: SUPER_GROUP_CHAT_ID, message_ids: messageIDs })
   })
 
   it('edits the chat invite link', async () => {
     let link: ChatInviteLink | FetchError, edit: ChatInviteLink | FetchError
 
-    link = await createChatInviteLink(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID })
+    link = await createChatInviteLink({ chat_id: SUPER_GROUP_CHAT_ID })
     if (link instanceof Error) throw link
 
-    edit = await editChatInviteLink(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, invite_link: link.invite_link })
+    edit = await editChatInviteLink({ chat_id: SUPER_GROUP_CHAT_ID, invite_link: link.invite_link })
     if (edit instanceof Error) throw edit
 
     expect(edit.invite_link).toBe(link.invite_link)
@@ -41,10 +41,10 @@ describe('Edit Requests', () => {
 
     // needs an exclusive channel
 
-    link = await createChatSubscriptionInviteLink(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, subscription_period: 2592000, subscription_price: 1 })
+    link = await createChatSubscriptionInviteLink({ chat_id: SUPER_GROUP_CHAT_ID, subscription_period: 2592000, subscription_price: 1 })
     if (link instanceof Error) throw link
 
-    edit = await editChatSubscriptionInviteLink(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, invite_link: link.invite_link })
+    edit = await editChatSubscriptionInviteLink({ chat_id: SUPER_GROUP_CHAT_ID, invite_link: link.invite_link })
     if (edit instanceof Error) throw edit
 
     expect(edit.invite_link).toBe(link.invite_link)
@@ -53,10 +53,10 @@ describe('Edit Requests', () => {
   it('edits a forum topic', async () => {
     let topic: ForumTopic | FetchError, edit: boolean | FetchError
 
-    topic = await createForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
+    topic = await createForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
     if (topic instanceof Error) throw topic
 
-    edit = await editForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+    edit = await editForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
     if (edit instanceof Error) throw edit
 
     expect(edit).toBeTruthy()
@@ -65,12 +65,12 @@ describe('Edit Requests', () => {
   it('edits a message caption', async () => {
     let message: Message | FetchError, edit: Message | FetchError
 
-    message = await sendPhoto(BOT_TOKEN, { caption: generateRandomString(), chat_id: SUPER_GROUP_CHAT_ID, photo: new File([SQUARE_512_WEBP], 'square.webp') })
+    message = await sendPhoto({ caption: generateRandomString(), chat_id: SUPER_GROUP_CHAT_ID, photo: new File([SQUARE_512_WEBP], 'square.webp') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
 
-    edit = await editMessageCaption(BOT_TOKEN, { caption: generateRandomString(), chat_id: SUPER_GROUP_CHAT_ID, message_id: message.message_id })
+    edit = await editMessageCaption({ caption: generateRandomString(), chat_id: SUPER_GROUP_CHAT_ID, message_id: message.message_id })
     if (edit instanceof Error) throw edit
 
     expect(edit.caption).not.toBe(message.caption)
@@ -79,12 +79,12 @@ describe('Edit Requests', () => {
   it('edits a message live location', async () => {
     let message: Message | FetchError, edit: Message | FetchError
 
-    message = await sendLocation(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, latitude: 0, live_period: 60, longitude: 0 })
+    message = await sendLocation({ chat_id: SUPER_GROUP_CHAT_ID, latitude: 0, live_period: 60, longitude: 0 })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
 
-    edit = await editMessageLiveLocation(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, latitude: 1, longitude: 1, message_id: message.message_id })
+    edit = await editMessageLiveLocation({ chat_id: SUPER_GROUP_CHAT_ID, latitude: 1, longitude: 1, message_id: message.message_id })
     if (edit instanceof Error) throw edit
 
     expect(edit.location?.latitude).not.toBe(message.location?.latitude)
@@ -94,12 +94,12 @@ describe('Edit Requests', () => {
   it('edits a message media', async () => {
     let message: Message | FetchError, edit: Message | FetchError
 
-    message = await sendPhoto(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, photo: new File([SQUARE_512_WEBP], 'square.webp') })
+    message = await sendPhoto({ chat_id: SUPER_GROUP_CHAT_ID, photo: new File([SQUARE_512_WEBP], 'square.webp') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
 
-    edit = await editMessageMedia(BOT_TOKEN, {
+    edit = await editMessageMedia({
       chat_id: SUPER_GROUP_CHAT_ID,
       media: { media: new File([SQUARE_1024_WEBP], 'square.webp'), type: 'photo' },
       message_id: message.message_id
@@ -110,12 +110,12 @@ describe('Edit Requests', () => {
   it('edits a message reply markup', async () => {
     let message: Message | FetchError, edit: Message | FetchError
 
-    message = await sendMessage(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, reply_markup: { inline_keyboard: [] }, text: generateRandomString() })
+    message = await sendMessage({ chat_id: SUPER_GROUP_CHAT_ID, reply_markup: { inline_keyboard: [] }, text: generateRandomString() })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
 
-    edit = await editMessageReplyMarkup(BOT_TOKEN, {
+    edit = await editMessageReplyMarkup({
       chat_id: SUPER_GROUP_CHAT_ID,
       message_id: message.message_id,
       reply_markup: { inline_keyboard: [[getInlineKeyboardUrlButton('Aracna', 'https://aracna.dariosechi.it')]] }
@@ -128,12 +128,12 @@ describe('Edit Requests', () => {
   it('edits a message text', async () => {
     let message: Message | FetchError, edit: Message | FetchError
 
-    message = await sendMessage(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, text: generateRandomString() })
+    message = await sendMessage({ chat_id: SUPER_GROUP_CHAT_ID, text: generateRandomString() })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
 
-    edit = await editMessageText(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_id: message.message_id, text: generateRandomString() })
+    edit = await editMessageText({ chat_id: SUPER_GROUP_CHAT_ID, message_id: message.message_id, text: generateRandomString() })
     if (edit instanceof Error) throw edit
 
     expect(edit.text).not.toBe(message.text)

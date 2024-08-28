@@ -9,13 +9,13 @@ import {
   createNewStickerSet
 } from '../../src/requests/create-requests'
 import { deleteForumTopic, deleteStickerSet } from '../../src/requests/delete-requests'
-import { BOT_ID, BOT_NAME, BOT_TOKEN, PRIVATE_CHAT_ID, SQUARE_512_WEBP, STRIPE_TOKEN, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { BOT_ID, BOT_NAME, PRIVATE_CHAT_ID, SQUARE_512_WEBP, STRIPE_TOKEN, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Create Requests', () => {
   it('creates a chat invite link', async () => {
     let link: ChatInviteLink | FetchError
 
-    link = await createChatInviteLink(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID })
+    link = await createChatInviteLink({ chat_id: SUPER_GROUP_CHAT_ID })
     if (link instanceof Error) throw link
 
     expect(link.creator.id).toBe(BOT_ID)
@@ -27,7 +27,7 @@ describe('Create Requests', () => {
 
     // needs an exclusive channel
 
-    link = await createChatSubscriptionInviteLink(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, subscription_period: 2592000, subscription_price: 1 })
+    link = await createChatSubscriptionInviteLink({ chat_id: SUPER_GROUP_CHAT_ID, subscription_period: 2592000, subscription_price: 1 })
     if (link instanceof Error) throw link
 
     expect(link.creator.id).toBe(BOT_ID)
@@ -37,16 +37,16 @@ describe('Create Requests', () => {
   it('creates a forum topic', async () => {
     let topic: ForumTopic | FetchError
 
-    topic = await createForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
+    topic = await createForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, name: generateRandomString() })
     if (topic instanceof Error) throw topic
 
-    await deleteForumTopic(BOT_TOKEN, { chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
+    await deleteForumTopic({ chat_id: SUPER_GROUP_CHAT_ID, message_thread_id: topic.message_thread_id })
   })
 
   it('creates an invoice link', async () => {
     let link: string | FetchError
 
-    link = await createInvoiceLink(BOT_TOKEN, {
+    link = await createInvoiceLink({
       currency: 'EUR',
       description: generateRandomString(),
       payload: generateRandomString(),
@@ -64,7 +64,7 @@ describe('Create Requests', () => {
 
     name = generateRandomString({ prefix: 'A', separator: '_', suffix: `by_${BOT_NAME}` })
 
-    create = await createNewStickerSet(BOT_TOKEN, {
+    create = await createNewStickerSet({
       name,
       stickers: [
         {
@@ -78,6 +78,6 @@ describe('Create Requests', () => {
     })
     if (create instanceof Error) throw create
 
-    await deleteStickerSet(BOT_TOKEN, { name })
+    await deleteStickerSet({ name })
   })
 })

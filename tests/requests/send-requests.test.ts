@@ -25,19 +25,19 @@ import {
   sendVideoNote,
   sendVoice
 } from '../../src/requests/send-requests'
-import { AUDIO_MP3, BOT_TOKEN, PRIVATE_CHAT_ID, SQUARE_512_GIF, SQUARE_512_WEBP, STRIPE_TOKEN, VIDEO_MP4 } from '../../vitest/constants'
+import { AUDIO_MP3, PRIVATE_CHAT_ID, SQUARE_512_GIF, SQUARE_512_WEBP, STRIPE_TOKEN, VIDEO_MP4 } from '../../vitest/constants'
 
 describe('Send Requests', () => {
   let messageIDs: number[] = []
 
   afterAll(async () => {
-    await deleteMessages(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, message_ids: messageIDs })
+    await deleteMessages({ chat_id: PRIVATE_CHAT_ID, message_ids: messageIDs })
   })
 
   it('sends an animation', async () => {
     let message: Message | FetchError
 
-    message = await sendAnimation(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, animation: new File([SQUARE_512_GIF], 'square.gif') })
+    message = await sendAnimation({ chat_id: PRIVATE_CHAT_ID, animation: new File([SQUARE_512_GIF], 'square.gif') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -48,7 +48,7 @@ describe('Send Requests', () => {
   it('sends an audio', async () => {
     let message: Message | FetchError
 
-    message = await sendAudio(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, audio: new File([AUDIO_MP3], 'audio.mp3') })
+    message = await sendAudio({ chat_id: PRIVATE_CHAT_ID, audio: new File([AUDIO_MP3], 'audio.mp3') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -59,7 +59,7 @@ describe('Send Requests', () => {
   it('sends a document', async () => {
     let message: Message | FetchError
 
-    message = await sendDocument(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, document: new File([encodeText('a')], 'document.txt') })
+    message = await sendDocument({ chat_id: PRIVATE_CHAT_ID, document: new File([encodeText('a')], 'document.txt') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -70,7 +70,7 @@ describe('Send Requests', () => {
   it('sends a chat action', async () => {
     let action: boolean | FetchError
 
-    action = await sendChatAction(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, action: 'typing' })
+    action = await sendChatAction({ chat_id: PRIVATE_CHAT_ID, action: 'typing' })
     if (action instanceof Error) throw action
 
     expect(action).toBe(true)
@@ -79,7 +79,7 @@ describe('Send Requests', () => {
   it('sends a contact', async () => {
     let message: Message | FetchError
 
-    message = await sendContact(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, first_name: 'John', phone_number: '+1 (177) 529-6883' })
+    message = await sendContact({ chat_id: PRIVATE_CHAT_ID, first_name: 'John', phone_number: '+1 (177) 529-6883' })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -90,7 +90,7 @@ describe('Send Requests', () => {
   it('sends a dice', async () => {
     let message: Message | FetchError
 
-    message = await sendDice(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID })
+    message = await sendDice({ chat_id: PRIVATE_CHAT_ID })
     if (message instanceof Error) throw message
 
     //messageIDs.push(message.message_id)
@@ -101,7 +101,7 @@ describe('Send Requests', () => {
   it('sends a game', async () => {
     let message: Message | FetchError
 
-    message = await sendGame(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, game_short_name: 'game' })
+    message = await sendGame({ chat_id: PRIVATE_CHAT_ID, game_short_name: 'game' })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -112,7 +112,7 @@ describe('Send Requests', () => {
   it('sends an invoice', async () => {
     let message: Message | FetchError
 
-    message = await sendInvoice(BOT_TOKEN, {
+    message = await sendInvoice({
       chat_id: PRIVATE_CHAT_ID,
       currency: 'EUR',
       description: generateRandomString(),
@@ -131,7 +131,7 @@ describe('Send Requests', () => {
   it('sends a location', async () => {
     let message: Message | FetchError
 
-    message = await sendLocation(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, latitude: 0, longitude: 0 })
+    message = await sendLocation({ chat_id: PRIVATE_CHAT_ID, latitude: 0, longitude: 0 })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -142,7 +142,7 @@ describe('Send Requests', () => {
   it('sends a media group', async () => {
     let messages: Message[] | FetchError
 
-    messages = await sendMediaGroup(BOT_TOKEN, {
+    messages = await sendMediaGroup({
       chat_id: PRIVATE_CHAT_ID,
       media: [
         { type: 'photo', media: new File([SQUARE_512_WEBP], 'square-1.webp') },
@@ -161,7 +161,7 @@ describe('Send Requests', () => {
   it('sends a message', async () => {
     let message: Message | FetchError
 
-    message = await sendMessage(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, text: generateRandomString() })
+    message = await sendMessage({ chat_id: PRIVATE_CHAT_ID, text: generateRandomString() })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -172,7 +172,7 @@ describe('Send Requests', () => {
   it('sends a html message', async () => {
     let message: Message | FetchError
 
-    message = await sendMessageHTML(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, text: `<b>${generateRandomString()}</b>` })
+    message = await sendMessageHTML({ chat_id: PRIVATE_CHAT_ID, text: `<b>${generateRandomString()}</b>` })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -183,7 +183,7 @@ describe('Send Requests', () => {
   it('sends a paid media', async () => {
     let message: Message | FetchError
 
-    message = await sendPaidMedia(BOT_TOKEN, {
+    message = await sendPaidMedia({
       chat_id: PRIVATE_CHAT_ID,
       media: [
         { type: 'photo', media: new File([SQUARE_512_WEBP], 'square-1.webp') },
@@ -201,7 +201,7 @@ describe('Send Requests', () => {
   it('sends a photo', async () => {
     let message: Message | FetchError
 
-    message = await sendPhoto(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, photo: new File([SQUARE_512_WEBP], 'square.webp') })
+    message = await sendPhoto({ chat_id: PRIVATE_CHAT_ID, photo: new File([SQUARE_512_WEBP], 'square.webp') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -212,7 +212,7 @@ describe('Send Requests', () => {
   it('sends a poll', async () => {
     let message: Message | FetchError
 
-    message = await sendPoll(BOT_TOKEN, {
+    message = await sendPoll({
       chat_id: PRIVATE_CHAT_ID,
       options: [{ text: generateRandomString() }, { text: generateRandomString() }],
       question: generateRandomString()
@@ -227,11 +227,11 @@ describe('Send Requests', () => {
   it('sends a repliable message', async () => {
     let message: Message | FetchError
 
-    message = await sendRepliableMessage(BOT_TOKEN, {
+    message = await sendRepliableMessage({
       chat_id: PRIVATE_CHAT_ID,
+      command: generateRandomString(),
       data: 0,
-      text: generateRandomString(),
-      type: generateRandomString()
+      text: generateRandomString()
     })
     if (message instanceof Error) throw message
 
@@ -243,7 +243,7 @@ describe('Send Requests', () => {
   it('sends a sticker', async () => {
     let message: Message | FetchError
 
-    message = await sendSticker(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, sticker: new File([SQUARE_512_WEBP], 'square.webp') })
+    message = await sendSticker({ chat_id: PRIVATE_CHAT_ID, sticker: new File([SQUARE_512_WEBP], 'square.webp') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -254,7 +254,7 @@ describe('Send Requests', () => {
   it('sends a venue', async () => {
     let message: Message | FetchError
 
-    message = await sendVenue(BOT_TOKEN, {
+    message = await sendVenue({
       chat_id: PRIVATE_CHAT_ID,
       address: generateRandomString(),
       latitude: 0,
@@ -271,7 +271,7 @@ describe('Send Requests', () => {
   it.skip('sends a video', async () => {
     let message: Message | FetchError
 
-    message = await sendVideo(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, video: new File([VIDEO_MP4], 'video.mp4') })
+    message = await sendVideo({ chat_id: PRIVATE_CHAT_ID, video: new File([VIDEO_MP4], 'video.mp4') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -282,7 +282,7 @@ describe('Send Requests', () => {
   it.skip('sends a video note', async () => {
     let message: Message | FetchError
 
-    message = await sendVideoNote(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, video_note: new File([VIDEO_MP4], 'video.mp4') })
+    message = await sendVideoNote({ chat_id: PRIVATE_CHAT_ID, video_note: new File([VIDEO_MP4], 'video.mp4') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
@@ -293,7 +293,7 @@ describe('Send Requests', () => {
   it.skip('sends a voice', async () => {
     let message: Message | FetchError
 
-    message = await sendVoice(BOT_TOKEN, { chat_id: PRIVATE_CHAT_ID, voice: new File([AUDIO_MP3], 'audio.mp3') })
+    message = await sendVoice({ chat_id: PRIVATE_CHAT_ID, voice: new File([AUDIO_MP3], 'audio.mp3') })
     if (message instanceof Error) throw message
 
     messageIDs.push(message.message_id)
