@@ -1,4 +1,4 @@
-import type { FetchError } from '@aracna/core'
+import { isInstanceOf, type FetchError } from '@aracna/core'
 import type { AddStickerToSet } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
 import { TelegramApiConfig } from '../definitions/interfaces'
@@ -10,9 +10,9 @@ export async function addStickerToSet(body: AddStickerToSet, config?: TelegramAp
       ...body,
       sticker: {
         ...body.sticker,
-        sticker: body.sticker.sticker instanceof Blob ? `attach://sticker_blob` : body.sticker.sticker
+        sticker: isInstanceOf(body.sticker.sticker, Blob) ? `attach://sticker_blob` : body.sticker.sticker
       },
-      ...(body.sticker.sticker instanceof Blob && { sticker_blob: body.sticker.sticker })
+      ...(isInstanceOf(body.sticker.sticker, Blob) && { sticker_blob: body.sticker.sticker })
     },
     config
   )

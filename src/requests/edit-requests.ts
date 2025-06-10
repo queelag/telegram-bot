@@ -10,6 +10,7 @@ import type {
   EditMessageMedia,
   EditMessageReplyMarkup,
   EditMessageText,
+  EditUserStarSubscription,
   Message
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
@@ -61,4 +62,8 @@ export async function editMessageReplyMarkup(body: EditMessageReplyMarkup, confi
 
 export async function editMessageText(body: EditMessageText, config?: TelegramApiConfig): Promise<Message | FetchError> {
   return TelegramAPI.post<Message, EditMessageText>('editMessageText', body, config)
+}
+
+export async function editUserStarSubscription(body: EditUserStarSubscription, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, EditUserStarSubscription>('editUserStarSubscription', body, config)
 }

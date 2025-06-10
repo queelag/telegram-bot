@@ -4,13 +4,11 @@ import type {
   BotDescription,
   BotName,
   BotShortDescription,
-  BusinessConnection,
   Chat,
   ChatAdministratorRights,
   ChatMember,
   File,
   GameHighScore,
-  GetBusinessConnection,
   GetChat,
   GetChatAdministrators,
   GetChatMember,
@@ -41,10 +39,6 @@ import type {
 import { TelegramAPI } from '../apis/telegram-api'
 import { DEFAULT_ALLOWED_UPDATES } from '../definitions/constants'
 import type { TelegramApiConfig } from '../definitions/interfaces'
-
-export async function getBusinessConnection(body: GetBusinessConnection, config?: TelegramApiConfig): Promise<BusinessConnection | FetchError> {
-  return TelegramAPI.post<BusinessConnection, GetBusinessConnection>('getBusinessConnection', body, config)
-}
 
 export async function getChat(body: GetChat, config?: TelegramApiConfig): Promise<Chat | FetchError> {
   return TelegramAPI.post<Chat, GetChat>('getChat', body, config)

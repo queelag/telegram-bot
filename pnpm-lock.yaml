@@ -12,8 +12,8 @@ importers:
         specifier: ^1.3.1
         version: 1.3.1
       '@aracna/telegram-bot-types':
-        specifier: ^1.2.15
-        version: 1.2.15
+        specifier: ^1.2.16
+        version: 1.2.16
       '@fastify/multipart':
         specifier: ^9.0.3
         version: 9.0.3
@@ -59,9 +59,9 @@ packages:
     resolution: {integrity: sha512-t8n7lU29Eq/Z/fXVOKaU8F+KVMusqxrM40MVqrXn/6u6KIuI44oK5BjV9VeDjF+Ck5YxRWvfluKGAIrEfWF3uQ==}
     engines: {node: '>=18', pnpm: '>=10'}
 
-  '@aracna/telegram-bot-types@1.2.15':
-    resolution: {integrity: sha512-6unyafmQA6K8tmblZEbp/Sm1pH/M1lY9zoCHTUJnC4F4MJ5OvadrfWloX93eOErj3qRmIMFwW/GSA45qFEwf0A==}
-    engines: {node: '>=16', pnpm: '>=8'}
+  '@aracna/telegram-bot-types@1.2.16':
+    resolution: {integrity: sha512-hCMjQqHEsdlhajtPAhwc7OzVliVE1JFXcJFrljBakLcHO7+x08IAyTPiNvRsVB9D4AhFVA2kfdkFGx/0zOSbOw==}
+    engines: {node: '>=18', pnpm: '>=10'}
 
   '@babel/helper-string-parser@7.27.1':
     resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
@@ -1411,7 +1411,7 @@ snapshots:
       nanoid: 5.1.5
       rfc4648: 1.5.4
 
-  '@aracna/telegram-bot-types@1.2.15': {}
+  '@aracna/telegram-bot-types@1.2.16': {}
 
   '@babel/helper-string-parser@7.27.1': {}
 

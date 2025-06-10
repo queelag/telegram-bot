@@ -19,6 +19,7 @@ import type {
   MessageReactionCountUpdated,
   MessageReactionUpdated,
   CallbackQuery as NativeCallbackQuery,
+  PaidMediaPurchased,
   Poll,
   PollAnswer,
   PreCheckoutQuery,
@@ -96,6 +97,7 @@ export interface Context {
   poll: Poll
   poll_answer: PollAnswer
   pre_checkout_query: PreCheckoutQuery
+  purchased_paid_media: PaidMediaPurchased
   removed_chat_boost: ChatBoostRemoved
   reply_to_message: ReplyToMessage
   shipping_query: ShippingQuery

@@ -200,6 +200,9 @@ export class Client {
       case hasObjectProperty(update, 'pre_checkout_query'):
         listener = this.handlePreCheckoutQuery(update.pre_checkout_query as any)
         break
+      case hasObjectProperty(update, 'purchased_paid_media'):
+        listener = this.handlePurchasedPaidMedia(update.purchased_paid_media as any)
+        break
       case hasObjectProperty(update, 'removed_chat_boost'):
         listener = this.handleRemovedChatBoost(update.removed_chat_boost as any)
         break
@@ -440,6 +443,17 @@ export class Client {
     if (!listener) return
 
     listener.middleware(query)
+
+    return listener
+  }
+
+  protected handlePurchasedPaidMedia(media: Message): ClientListener | undefined {
+    let listener: ClientListener | undefined
+
+    listener = this.findListener('purchased_paid_media')
+    if (!listener) return
+
+    listener.middleware(media)
 
     return listener
   }

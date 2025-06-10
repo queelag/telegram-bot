@@ -130,7 +130,15 @@ export async function sendVenue(body: SendVenue, config?: TelegramApiConfig): Pr
 }
 
 export async function sendVideo(body: SendVideo, config?: TelegramApiConfig): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, SendVideo>('sendVideo', body, config)
+  return TelegramAPI.post<Message, SendVideo>(
+    'sendVideo',
+    {
+      ...body,
+      cover: body.cover instanceof Blob ? `attach://cover_blob` : body.cover,
+      ...(body.cover instanceof Blob ? { cover_blob: body.cover } : {})
+    },
+    config
+  )
 }
 
 export async function sendVideoNote(body: SendVideoNote, config?: TelegramApiConfig): Promise<Message | FetchError> {

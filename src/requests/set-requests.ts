@@ -1,4 +1,4 @@
-import type { FetchError } from '@aracna/core'
+import { type FetchError } from '@aracna/core'
 import type {
   SetChatAdministratorCustomTitle,
   SetChatDescription,
@@ -21,7 +21,8 @@ import type {
   SetStickerMaskPosition,
   SetStickerPositionInSet,
   SetStickerSetThumbnail,
-  SetStickerSetTitle
+  SetStickerSetTitle,
+  SetUserEmojiStatus
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api'
 import type { TelegramApiConfig } from '../definitions/interfaces'
@@ -120,4 +121,8 @@ export async function setStickerSetThumbnail(body: SetStickerSetThumbnail, confi
 
 export async function setStickerSetTitle(body: SetStickerSetTitle, config?: TelegramApiConfig): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, SetStickerSetTitle>('setStickerSetTitle', body, config)
+}
+
+export async function setUserEmojiStatus(body: SetUserEmojiStatus, config?: TelegramApiConfig): Promise<boolean | FetchError> {
+  return TelegramAPI.post<boolean, SetUserEmojiStatus>('setUserEmojiStatus', body, config)
 }

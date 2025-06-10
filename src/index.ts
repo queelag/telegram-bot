@@ -51,6 +51,20 @@ export {
 } from './requests/answer-requests'
 export { approveChatJoinRequest as approveTelegramChatJoinRequest } from './requests/approve-requests'
 export { banChatMember as banTelegramChatMember, banChatSenderChat as banTelegramChatSenderChat } from './requests/ban-requests'
+export {
+  deleteBusinessMessages as deleteTelegramBusinessMessages,
+  getBusinessAccountGifts as getTelegramBusinessAccountGifts,
+  getBusinessAccountStarBalance as getTelegramBusinessAccountStarBalance,
+  getBusinessConnection as getTelegramBusinessConnection,
+  readBusinessMessage as readTelegramBusinessMessage,
+  removeBusinessAccountProfilePhoto as removeTelegramBusinessAccountProfilePhoto,
+  setBusinessAccountBio as setTelegramBusinessAccountBio,
+  setBusinessAccountGiftSettings as setTelegramBusinessAccountGiftSettings,
+  setBusinessAccountName as setTelegramBusinessAccountName,
+  setBusinessAccountProfilePhoto as setTelegramBusinessAccountProfilePhoto,
+  setBusinessAccountUsername as setTelegramBusinessAccountUsername,
+  transferBusinessAccountStars as transferTelegramBusinessAccountStars
+} from './requests/business-requests'
 export { closeForumTopic as closeTelegramForumTopic, closeGeneralForumTopic as closeTelegramGeneralForumTopic } from './requests/close-requests'
 export { copyMessage as copyTelegramMessage, copyMessages as copyTelegramMessages } from './requests/copy-requests'
 export {
@@ -81,7 +95,8 @@ export {
   editMessageLiveLocation as editTelegramMessageLiveLocation,
   editMessageMedia as editTelegramMessageMedia,
   editMessageReplyMarkup as editTelegramMessageReplyMarkup,
-  editMessageText as editTelegramMessageText
+  editMessageText as editTelegramMessageText,
+  editUserStarSubscription as editTelegramUserStarSubscription
 } from './requests/edit-requests'
 export { exportChatInviteLink as exportTelegramChatInviteLink } from './requests/export-requests'
 export { forwardMessage as forwardTelegramMessage, forwardMessages as forwardTelegramMessages } from './requests/forward-requests'
@@ -91,7 +106,6 @@ export {
   getMyDescription as getMyTelegramDescription,
   getMyName as getMyTelegramName,
   getMyShortDescription as getMyTelegramShortDescription,
-  getBusinessConnection as getTelegramBusinessConnection,
   getChat as getTelegramChat,
   getChatAdministrators as getTelegramChatAdministrators,
   getChatMember as getTelegramChatMember,
@@ -108,6 +122,14 @@ export {
   getUserChatBoosts as getTelegramUserChatBoosts,
   getUserProfilePhotos as getTelegramUserProfilePhotos
 } from './requests/get-requests'
+export {
+  convertGiftToStars as convertTelegramGiftToStars,
+  getAvailableGifts as getTelegramAvailableGifts,
+  giftPremiumSubscription as giftTelegramPremiumSubscription,
+  sendGift as sendTelegramGift,
+  transferGift as transferTelegramGift,
+  upgradeGift as upgradeTelegramGift
+} from './requests/gift-requests'
 export { hideGeneralForumTopic as hideTelegramGeneralForumTopic } from './requests/hide-requests'
 export { leaveChat as leaveTelegramChat } from './requests/leave-requests'
 export { logOut as logOutTelegram } from './requests/log-requests'
@@ -118,6 +140,7 @@ export { reopenForumTopic as reopenTelegramForumTopic, reopenGeneralForumTopic a
 export { replaceStickerInSet as replaceTelegramStickerInSet } from './requests/replace-requests'
 export { restrictChatMember as restrictTelegramChatMember } from './requests/restrict-requests'
 export { revokeChatInviteLink as revokeTelegramChatInviteLink } from './requests/revoke-requests'
+export { savePreparedInlineMessage as saveTelegramPreparedInlineMessage } from './requests/save-requests'
 export {
   sendAnimation as sendTelegramAnimation,
   sendAudio as sendTelegramAudio,
@@ -163,9 +186,11 @@ export {
   setStickerMaskPosition as setTelegramStickerMaskPosition,
   setStickerPositionInSet as setTelegramStickerPositionInSet,
   setStickerSetThumbnail as setTelegramStickerSetThumbnail,
-  setStickerSetTitle as setTelegramStickerSetTitle
+  setStickerSetTitle as setTelegramStickerSetTitle,
+  setUserEmojiStatus as setTelegramUserEmojiStatus
 } from './requests/set-requests'
 export { stopMessageLiveLocation as stopTelegramMessageLiveLocation, stopPoll as stopTelegramPoll } from './requests/stop-requests'
+export { deleteStory as deleteTelegramStory, editStory as editTelegramStory, postStory as postTelegramStory } from './requests/story-requests'
 export { unbanChatMember as unbanTelegramChatMember, unbanChatSenderChat as unbanTelegramChatSenderChat } from './requests/unban-requests'
 export { unhideGeneralForumTopic as unhideTelegramGeneralForumTopic } from './requests/unhide-requests'
 export {
@@ -175,6 +200,12 @@ export {
   unpinChatMessage as unpinTelegramChatMessage
 } from './requests/unpin-requests'
 export { uploadStickerFile as uploadTelegramStickerFile } from './requests/upload-requests'
+export {
+  removeChatVerification as removeTelegramChatVerification,
+  removeUserVerification as removeTelegramUserVerification,
+  verifyChat as verifyTelegramChat,
+  verifyUser as verifyTelegramUser
+} from './requests/verification-requests'
 export {
   closeWebhook as closeTelegramWebhook,
   deleteWebhook as deleteTelegramWebhook,

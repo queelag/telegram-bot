@@ -27,6 +27,7 @@ export type UpdateType =
   | 'poll'
   | 'poll_answer'
   | 'pre_checkout_query'
+  | 'purchased_paid_media'
   | 'removed_chat_boost'
   | 'reply_to_message'
   | 'shipping_query'
