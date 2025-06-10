@@ -1,4 +1,4 @@
-import { isInstanceOf, type FetchError } from '@aracna/core'
+import { type FetchError } from '@aracna/core'
 import type {
   BusinessConnection,
   DeleteBusinessMessages,
@@ -60,14 +60,14 @@ export async function setBusinessAccountProfilePhoto(body: SetBusinessAccountPro
     {
       ...body,
       photo:
-        'animation' in body.photo && isInstanceOf(body.photo.animation, Blob)
+        'animation' in body.photo && body.photo.animation instanceof Blob
           ? { ...body.photo, animation: 'attach://photo_blob' }
-          : 'photo' in body.photo && isInstanceOf(body.photo.photo, Blob)
+          : 'photo' in body.photo && body.photo.photo instanceof Blob
           ? { ...body.photo, photo: 'attach://photo_blob' }
           : body.photo,
-      ...('animation' in body.photo && isInstanceOf(body.photo.animation, Blob)
+      ...('animation' in body.photo && body.photo.animation instanceof Blob
         ? { photo_blob: body.photo.animation }
-        : 'photo' in body.photo && isInstanceOf(body.photo.photo, Blob)
+        : 'photo' in body.photo && body.photo.photo instanceof Blob
         ? { photo_blob: body.photo.photo }
         : {})
     },

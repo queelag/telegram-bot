@@ -1,4 +1,4 @@
-import { isInstanceOf, type FetchError } from '@aracna/core'
+import { type FetchError } from '@aracna/core'
 import type {
   ChatInviteLink,
   CreateChatInviteLink,
@@ -38,7 +38,7 @@ export async function createNewStickerSet(body: CreateNewStickerSet, config?: Te
       ...body,
       stickers: body.stickers.map((sticker: InputSticker, index: number) => ({
         ...sticker,
-        sticker: isInstanceOf(sticker.sticker, Blob) ? `attach://sticker_${index}` : sticker.sticker
+        sticker: sticker.sticker instanceof Blob ? `attach://sticker_${index}` : sticker.sticker
       })),
       ...body.stickers.reduce((result: object, sticker: InputSticker, index: number) => ({ ...result, [`sticker_${index}`]: sticker.sticker }), {})
     },
