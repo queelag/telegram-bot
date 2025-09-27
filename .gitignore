@@ -1,8 +1,8 @@
-node_modules
-database
 dist
-declarations
+node_modules
+packages/@aracna/core
+packages/@aracna/telegram-bot-types
 play
-.env
+
 .DS_Store
-yarn-error.log
+.env
