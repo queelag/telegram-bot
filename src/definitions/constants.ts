@@ -1,5 +1,5 @@
 import { DecodeJsonOptions, EncodeJsonOptions } from '@aracna/core'
-import { CallbackQueryBody, ClientListenerOptions, ReplyToMessageBody, StartBody } from './interfaces'
+import { CallbackQueryBody, ClientListenerOptions, ReplyToMessageBody, StartBody } from './interfaces.js'
 
 export const DEFAULT_ALLOWED_UPDATES: string[] = [
   'business_connection',

@@ -24,8 +24,8 @@ import type {
   SetStickerSetTitle,
   SetUserEmojiStatus
 } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
-import type { TelegramApiConfig } from '../definitions/interfaces'
+import { TelegramAPI } from '../apis/telegram-api.js'
+import type { TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function setChatAdministratorCustomTitle(body: SetChatAdministratorCustomTitle, config?: TelegramApiConfig): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, SetChatAdministratorCustomTitle>('setChatAdministratorCustomTitle', body, config)

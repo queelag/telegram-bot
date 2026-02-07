@@ -1,6 +1,6 @@
 import { decodeBase64, decodeJSON, decodeText, encodeBase64, encodeJSON, encodeText, tc } from '@aracna/core'
-import { DEFAULT_CALLBACK_QUERY_BODY, DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS } from '../definitions/constants'
-import type { CallbackQueryBody, EncodeCallbackQueryBodyOptions } from '../definitions/interfaces'
+import { DEFAULT_CALLBACK_QUERY_BODY, DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS } from '../definitions/constants.js'
+import type { CallbackQueryBody, EncodeCallbackQueryBodyOptions } from '../definitions/interfaces.js'
 
 export function decodeCallbackQueryBody<T>(data?: string): CallbackQueryBody<T> {
   let body: CallbackQueryBody<T> | Error

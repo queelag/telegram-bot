@@ -10,7 +10,7 @@ import {
   RestAPI,
   serializeFormData
 } from '@aracna/core'
-import { TelegramApiConfig, TelegramApiResponse } from '../definitions/interfaces'
+import { TelegramApiConfig, TelegramApiResponse } from '../definitions/interfaces.js'
 
 class API extends RestAPI<TelegramApiConfig> {
   queue: Queue = new Queue({ autostart: true })

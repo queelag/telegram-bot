@@ -1,8 +1,8 @@
 import type { FetchError } from '@aracna/core'
 import type { File, PhotoSize, UserProfilePhotos } from '@aracna/telegram-bot-types'
-import { TelegramFileAPI } from '../apis/telegram-file-api'
-import type { TelegramApiConfig, TelegramFileApiConfig } from '../definitions/interfaces'
-import { getFile, getUserProfilePhotos } from './get-requests'
+import { TelegramFileAPI } from '../apis/telegram-file-api.js'
+import type { TelegramApiConfig, TelegramFileApiConfig } from '../definitions/interfaces.js'
+import { getFile, getUserProfilePhotos } from './get-requests.js'
 
 export async function downloadFile(fileID: string, config?: TelegramApiConfig & TelegramFileApiConfig): Promise<Blob | FetchError> {
   let file: File | FetchError, blob: Blob | FetchError

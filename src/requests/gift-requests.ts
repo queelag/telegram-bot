@@ -1,7 +1,7 @@
 import type { FetchError } from '@aracna/core'
 import type { ConvertGiftToStars, GiftPremiumSubscription, Gifts, SendGift, TransferGift, UpgradeGift } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
-import type { TelegramApiConfig } from '../definitions/interfaces'
+import { TelegramAPI } from '../apis/telegram-api.js'
+import type { TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function convertGiftToStars(body: ConvertGiftToStars, config?: TelegramApiConfig): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, ConvertGiftToStars>('convertGiftToStars', body, config)

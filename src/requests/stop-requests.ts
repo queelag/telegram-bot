@@ -1,7 +1,7 @@
 import type { FetchError } from '@aracna/core'
 import type { Message, Poll, StopMessageLiveLocation, StopPoll } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
-import type { TelegramApiConfig } from '../definitions/interfaces'
+import { TelegramAPI } from '../apis/telegram-api.js'
+import type { TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function stopMessageLiveLocation(body: StopMessageLiveLocation, config?: TelegramApiConfig): Promise<Message | boolean | FetchError> {
   return TelegramAPI.post<Message | boolean, StopMessageLiveLocation>('stopMessageLiveLocation', body, config)

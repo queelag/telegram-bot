@@ -9,8 +9,8 @@ import type {
   ForumTopic,
   InputSticker
 } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
-import type { TelegramApiConfig } from '../definitions/interfaces'
+import { TelegramAPI } from '../apis/telegram-api.js'
+import type { TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function createChatInviteLink(body: CreateChatInviteLink, config?: TelegramApiConfig): Promise<ChatInviteLink | FetchError> {
   return TelegramAPI.post<ChatInviteLink, CreateChatInviteLink>('createChatInviteLink', body, config)

@@ -1,6 +1,6 @@
-export * from './apis/telegram-api'
-export * from './apis/telegram-file-api'
-export { Client as TelegramClient } from './classes/client'
+export * from './apis/telegram-api.js'
+export * from './apis/telegram-file-api.js'
+export { Client as TelegramClient } from './classes/client.js'
 export {
   DEFAULT_ALLOWED_UPDATES as DEFAULT_TELEGRAM_ALLOWED_UPDATES,
   DEFAULT_CALLBACK_QUERY_BODY as DEFAULT_TELEGRAM_CALLBACK_QUERY_BODY,
@@ -10,8 +10,8 @@ export {
   DEFAULT_START_MESSAGE_BODY as DEFAULT_TELEGRAM_START_MESSAGE_BODY,
   REGEXP_COMMAND as REGEXP_TELEGRAM_COMMAND,
   REGEXP_COMMAND_WITH_USERNAME as REGEXP_TELEGRAM_COMMAND_WITH_USERNAME
-} from './definitions/constants'
-export { LoggerName as TelegramLoggerName } from './definitions/enums'
+} from './definitions/constants.js'
+export { LoggerName as TelegramLoggerName } from './definitions/enums.js'
 export type {
   CallbackQuery,
   CallbackQueryBody,
@@ -33,24 +33,24 @@ export type {
   ClientDisconnectOptions as TelegramClientDisconnectOptions,
   ClientListener as TelegramClientListener,
   ClientListenerOptions as TelegramClientListenerOptions
-} from './definitions/interfaces'
+} from './definitions/interfaces.js'
 export type {
   InputFile,
   ClientConnectionMode as TelegramClientConnectionMode,
   ClientListenerMiddleware as TelegramClientListenerMiddleware,
   UpdateType
-} from './definitions/types'
-export { ClassLogger as TelegramClassLogger } from './loggers/class-logger'
-export { addStickerToSet as addTelegramStickerToSet } from './requests/add-requests'
+} from './definitions/types.js'
+export { ClassLogger as TelegramClassLogger } from './loggers/class-logger.js'
+export { addStickerToSet as addTelegramStickerToSet } from './requests/add-requests.js'
 export {
   answerCallbackQuery as answerTelegramCallbackQuery,
   answerInlineQuery as answerTelegramInlineQuery,
   answerPreCheckoutQuery as answerTelegramPreCheckoutQuery,
   answerShippingQuery as answerTelegramShippingQuery,
   answerWebAppQuery as answerTelegramWebAppQuery
-} from './requests/answer-requests'
-export { approveChatJoinRequest as approveTelegramChatJoinRequest } from './requests/approve-requests'
-export { banChatMember as banTelegramChatMember, banChatSenderChat as banTelegramChatSenderChat } from './requests/ban-requests'
+} from './requests/answer-requests.js'
+export { approveChatJoinRequest as approveTelegramChatJoinRequest } from './requests/approve-requests.js'
+export { banChatMember as banTelegramChatMember, banChatSenderChat as banTelegramChatSenderChat } from './requests/ban-requests.js'
 export {
   deleteBusinessMessages as deleteTelegramBusinessMessages,
   getBusinessAccountGifts as getTelegramBusinessAccountGifts,
@@ -64,17 +64,17 @@ export {
   setBusinessAccountProfilePhoto as setTelegramBusinessAccountProfilePhoto,
   setBusinessAccountUsername as setTelegramBusinessAccountUsername,
   transferBusinessAccountStars as transferTelegramBusinessAccountStars
-} from './requests/business-requests'
-export { closeForumTopic as closeTelegramForumTopic, closeGeneralForumTopic as closeTelegramGeneralForumTopic } from './requests/close-requests'
-export { copyMessage as copyTelegramMessage, copyMessages as copyTelegramMessages } from './requests/copy-requests'
+} from './requests/business-requests.js'
+export { closeForumTopic as closeTelegramForumTopic, closeGeneralForumTopic as closeTelegramGeneralForumTopic } from './requests/close-requests.js'
+export { copyMessage as copyTelegramMessage, copyMessages as copyTelegramMessages } from './requests/copy-requests.js'
 export {
   createChatInviteLink as createTelegramChatInviteLink,
   createChatSubscriptionInviteLink as createTelegramChatSubscriptionInviteLink,
   createForumTopic as createTelegramForumTopic,
   createInvoiceLink as createTelegramInvoiceLink,
   createNewStickerSet as createTelegramNewStickerSet
-} from './requests/create-requests'
-export { declineChatJoinRequest as declineTelegramChatJoinRequest } from './requests/decline-requests'
+} from './requests/create-requests.js'
+export { declineChatJoinRequest as declineTelegramChatJoinRequest } from './requests/decline-requests.js'
 export {
   deleteChatPhoto as deleteTelegramChatPhoto,
   deleteChatStickerSet as deleteTelegramChatStickerSet,
@@ -84,8 +84,8 @@ export {
   deleteMessages as deleteTelegramMessages,
   deleteStickerFromSet as deleteTelegramStickerFromSet,
   deleteStickerSet as deleteTelegramStickerSet
-} from './requests/delete-requests'
-export { downloadFile as downloadTelegramFile, downloadUserFirstProfilePhoto as downloadTelegramUserFirstProfilePhoto } from './requests/download-requests'
+} from './requests/delete-requests.js'
+export { downloadFile as downloadTelegramFile, downloadUserFirstProfilePhoto as downloadTelegramUserFirstProfilePhoto } from './requests/download-requests.js'
 export {
   editChatInviteLink as editTelegramChatInviteLink,
   editChatSubscriptionInviteLink as editTelegramChatSubscriptionInviteLink,
@@ -97,9 +97,9 @@ export {
   editMessageReplyMarkup as editTelegramMessageReplyMarkup,
   editMessageText as editTelegramMessageText,
   editUserStarSubscription as editTelegramUserStarSubscription
-} from './requests/edit-requests'
-export { exportChatInviteLink as exportTelegramChatInviteLink } from './requests/export-requests'
-export { forwardMessage as forwardTelegramMessage, forwardMessages as forwardTelegramMessages } from './requests/forward-requests'
+} from './requests/edit-requests.js'
+export { exportChatInviteLink as exportTelegramChatInviteLink } from './requests/export-requests.js'
+export { forwardMessage as forwardTelegramMessage, forwardMessages as forwardTelegramMessages } from './requests/forward-requests.js'
 export {
   getMyCommands as getMyTelegramCommands,
   getMyDefaultAdministratorRights as getMyTelegramDefaultAdministratorRights,
@@ -121,7 +121,7 @@ export {
   getUpdates as getTelegramUpdates,
   getUserChatBoosts as getTelegramUserChatBoosts,
   getUserProfilePhotos as getTelegramUserProfilePhotos
-} from './requests/get-requests'
+} from './requests/get-requests.js'
 export {
   convertGiftToStars as convertTelegramGiftToStars,
   getAvailableGifts as getTelegramAvailableGifts,
@@ -129,18 +129,18 @@ export {
   sendGift as sendTelegramGift,
   transferGift as transferTelegramGift,
   upgradeGift as upgradeTelegramGift
-} from './requests/gift-requests'
-export { hideGeneralForumTopic as hideTelegramGeneralForumTopic } from './requests/hide-requests'
-export { leaveChat as leaveTelegramChat } from './requests/leave-requests'
-export { logOut as logOutTelegram } from './requests/log-requests'
-export { pinChatMessage as pinTelegramChatMessage } from './requests/pin-requests'
-export { promoteChatMember as promoteTelegramChatMember } from './requests/promote-requests'
-export { refundStarPayment as refundTelegramStarPayment } from './requests/refund-requests'
-export { reopenForumTopic as reopenTelegramForumTopic, reopenGeneralForumTopic as reopenTelegramGeneralForumTopic } from './requests/reopen-requests'
-export { replaceStickerInSet as replaceTelegramStickerInSet } from './requests/replace-requests'
-export { restrictChatMember as restrictTelegramChatMember } from './requests/restrict-requests'
-export { revokeChatInviteLink as revokeTelegramChatInviteLink } from './requests/revoke-requests'
-export { savePreparedInlineMessage as saveTelegramPreparedInlineMessage } from './requests/save-requests'
+} from './requests/gift-requests.js'
+export { hideGeneralForumTopic as hideTelegramGeneralForumTopic } from './requests/hide-requests.js'
+export { leaveChat as leaveTelegramChat } from './requests/leave-requests.js'
+export { logOut as logOutTelegram } from './requests/log-requests.js'
+export { pinChatMessage as pinTelegramChatMessage } from './requests/pin-requests.js'
+export { promoteChatMember as promoteTelegramChatMember } from './requests/promote-requests.js'
+export { refundStarPayment as refundTelegramStarPayment } from './requests/refund-requests.js'
+export { reopenForumTopic as reopenTelegramForumTopic, reopenGeneralForumTopic as reopenTelegramGeneralForumTopic } from './requests/reopen-requests.js'
+export { replaceStickerInSet as replaceTelegramStickerInSet } from './requests/replace-requests.js'
+export { restrictChatMember as restrictTelegramChatMember } from './requests/restrict-requests.js'
+export { revokeChatInviteLink as revokeTelegramChatInviteLink } from './requests/revoke-requests.js'
+export { savePreparedInlineMessage as saveTelegramPreparedInlineMessage } from './requests/save-requests.js'
 export {
   sendAnimation as sendTelegramAnimation,
   sendAudio as sendTelegramAudio,
@@ -163,7 +163,7 @@ export {
   sendVideo as sendTelegramVideo,
   sendVideoNote as sendTelegramVideoNote,
   sendVoice as sendTelegramVoice
-} from './requests/send-requests'
+} from './requests/send-requests.js'
 export {
   setMyCommands as setMyTelegramCommands,
   setMyDefaultAdministratorRights as setMyTelegramDefaultAdministratorRights,
@@ -188,35 +188,39 @@ export {
   setStickerSetThumbnail as setTelegramStickerSetThumbnail,
   setStickerSetTitle as setTelegramStickerSetTitle,
   setUserEmojiStatus as setTelegramUserEmojiStatus
-} from './requests/set-requests'
-export { stopMessageLiveLocation as stopTelegramMessageLiveLocation, stopPoll as stopTelegramPoll } from './requests/stop-requests'
-export { deleteStory as deleteTelegramStory, editStory as editTelegramStory, postStory as postTelegramStory } from './requests/story-requests'
-export { unbanChatMember as unbanTelegramChatMember, unbanChatSenderChat as unbanTelegramChatSenderChat } from './requests/unban-requests'
-export { unhideGeneralForumTopic as unhideTelegramGeneralForumTopic } from './requests/unhide-requests'
+} from './requests/set-requests.js'
+export { stopMessageLiveLocation as stopTelegramMessageLiveLocation, stopPoll as stopTelegramPoll } from './requests/stop-requests.js'
+export { deleteStory as deleteTelegramStory, editStory as editTelegramStory, postStory as postTelegramStory } from './requests/story-requests.js'
+export { unbanChatMember as unbanTelegramChatMember, unbanChatSenderChat as unbanTelegramChatSenderChat } from './requests/unban-requests.js'
+export { unhideGeneralForumTopic as unhideTelegramGeneralForumTopic } from './requests/unhide-requests.js'
 export {
   unpinAllChatMessages as unpinAllTelegramChatMessages,
   unpinAllForumTopicMessages as unpinAllTelegramForumTopicMessages,
   unpinAllGeneralForumTopicMessages as unpinAllTelegramGeneralForumTopicMessages,
   unpinChatMessage as unpinTelegramChatMessage
-} from './requests/unpin-requests'
-export { uploadStickerFile as uploadTelegramStickerFile } from './requests/upload-requests'
+} from './requests/unpin-requests.js'
+export { uploadStickerFile as uploadTelegramStickerFile } from './requests/upload-requests.js'
 export {
   removeChatVerification as removeTelegramChatVerification,
   removeUserVerification as removeTelegramUserVerification,
   verifyChat as verifyTelegramChat,
   verifyUser as verifyTelegramUser
-} from './requests/verification-requests'
+} from './requests/verification-requests.js'
 export {
   closeWebhook as closeTelegramWebhook,
   deleteWebhook as deleteTelegramWebhook,
   getWebhookInfo as getTelegramWebhookInfo,
   setWebhook as setTelegramWebhook
-} from './requests/webhook-requests'
+} from './requests/webhook-requests.js'
 export {
   decodeCallbackQueryBody as decodeTelegramCallbackQueryBody,
   encodeCallbackQueryBody as encodeTelegramCallbackQueryBody
-} from './utils/callback-query-utils'
-export { getCommand as getTelegramCommand, getCommandByContext as getTelegramCommandByContext, omitCommand as omitTelegramCommand } from './utils/command-utils'
+} from './utils/callback-query-utils.js'
+export {
+  getCommand as getTelegramCommand,
+  getCommandByContext as getTelegramCommandByContext,
+  omitCommand as omitTelegramCommand
+} from './utils/command-utils.js'
 export {
   getContextChat as getTelegramContextChat,
   getContextChatID as getTelegramContextChatID,
@@ -226,8 +230,8 @@ export {
   getContextUserID as getTelegramContextUserID,
   getContextUserLastName as getTelegramContextUserLastName,
   getContextUserUsername as getTelegramContextUserUsername
-} from './utils/context-utils'
-export { getProgressHTML as getTelegramProgressHTML, sanitizeHTML as sanitizeTelegramHTML } from './utils/html-utils'
+} from './utils/context-utils.js'
+export { getProgressHTML as getTelegramProgressHTML, sanitizeHTML as sanitizeTelegramHTML } from './utils/html-utils.js'
 export {
   getInlineKeyboardCallbackButton as getTelegramInlineKeyboardCallbackButton,
   getInlineKeyboardGameButton as getTelegramInlineKeyboardGameButton,
@@ -239,17 +243,17 @@ export {
   getInlineKeyboardTextButton as getTelegramInlineKeyboardTextButton,
   getInlineKeyboardUrlButton as getTelegramInlineKeyboardUrlButton,
   getInlineKeyboardWebAppButton as getTelegramInlineKeyboardWebAppButton
-} from './utils/inline-keyboard-utils'
+} from './utils/inline-keyboard-utils.js'
 export {
   decodeReplyToMessageBody as decodeTelegramReplyToMessageBody,
   encodeReplyToMessageBody as encodeTelegramReplyToMessageBody,
   encodeReplyToMessageBodyToAnchorTag as encodeTelegramReplyToMessageBodyToAnchorTag,
   encodeReplyToMessageBodyToURL as encodeTelegramReplyToMessageBodyToURL
-} from './utils/reply-to-message-utils'
+} from './utils/reply-to-message-utils.js'
 export {
   decodeStartBody as decodeTelegramStartBody,
   encodeStartBody as encodeTelegramStartBody,
   encodeStartBodyToAnchorTag as encodeTelegramStartBodyToAnchorTag,
   encodeStartBodyToText as encodeTelegramStartBodyToText,
   encodeStartBodyToURL as encodeTelegramStartBodyToURL
-} from './utils/start-message-utils'
+} from './utils/start-message-utils.js'

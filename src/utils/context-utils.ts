@@ -1,7 +1,7 @@
 import { getObjectProperty, hasObjectProperty } from '@aracna/core'
 import type { Chat, User } from '@aracna/telegram-bot-types'
-import type { Context } from '../definitions/interfaces'
-import type { UpdateType } from '../definitions/types'
+import type { Context } from '../definitions/interfaces.js'
+import type { UpdateType } from '../definitions/types.js'
 
 export function getContextChat<T extends UpdateType>(context: Context[T]): Chat | undefined {
   if (hasObjectProperty(context, 'chat')) {

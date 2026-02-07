@@ -21,7 +21,7 @@ import type {
   SendVideoNote,
   SendVoice
 } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
+import { TelegramAPI } from '../apis/telegram-api.js'
 import type {
   InputMediaAlternative,
   InputPaidMediaAlternative,
@@ -29,9 +29,9 @@ import type {
   SendPaidMediaAlternative,
   SendRepliableMessage,
   TelegramApiConfig
-} from '../definitions/interfaces'
-import { sanitizeHTML } from '../utils/html-utils'
-import { encodeReplyToMessageBodyToAnchorTag } from '../utils/reply-to-message-utils'
+} from '../definitions/interfaces.js'
+import { sanitizeHTML } from '../utils/html-utils.js'
+import { encodeReplyToMessageBodyToAnchorTag } from '../utils/reply-to-message-utils.js'
 
 export async function sendAnimation(body: SendAnimation, config?: TelegramApiConfig): Promise<Message | FetchError> {
   return TelegramAPI.post<Message, SendAnimation>('sendAnimation', body, config)

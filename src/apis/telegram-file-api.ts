@@ -1,5 +1,5 @@
 import { FetchError, type FetchResponse, RestAPI } from '@aracna/core'
-import type { TelegramFileApiConfig } from '../definitions/interfaces'
+import type { TelegramFileApiConfig } from '../definitions/interfaces.js'
 
 class API extends RestAPI<TelegramFileApiConfig> {
   async get<V, W = undefined>(path: string, config?: TelegramFileApiConfig): Promise<V | FetchError<W>> {

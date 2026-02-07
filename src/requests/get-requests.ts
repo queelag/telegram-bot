@@ -36,9 +36,9 @@ import type {
   UserChatBoosts,
   UserProfilePhotos
 } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
-import { DEFAULT_ALLOWED_UPDATES } from '../definitions/constants'
-import type { TelegramApiConfig } from '../definitions/interfaces'
+import { TelegramAPI } from '../apis/telegram-api.js'
+import { DEFAULT_ALLOWED_UPDATES } from '../definitions/constants.js'
+import type { TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function getChat(body: GetChat, config?: TelegramApiConfig): Promise<Chat | FetchError> {
   return TelegramAPI.post<Chat, GetChat>('getChat', body, config)

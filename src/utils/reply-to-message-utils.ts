@@ -1,7 +1,7 @@
 import { appendSearchParamsToURL, decodeBase64, decodeJSON, decodeText, encodeBase64, encodeJSON, encodeText, tc } from '@aracna/core'
 import type { MessageEntity } from '@aracna/telegram-bot-types'
-import { DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS, DEFAULT_REPLY_TO_MESSAGE_BODY } from '../definitions/constants'
-import type { EncodeReplyToMessageBodyOptions, ReplyToMessageBody } from '../definitions/interfaces'
+import { DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS, DEFAULT_REPLY_TO_MESSAGE_BODY } from '../definitions/constants.js'
+import type { EncodeReplyToMessageBodyOptions, ReplyToMessageBody } from '../definitions/interfaces.js'
 
 export function decodeReplyToMessageBody<T>(entities: MessageEntity[]): ReplyToMessageBody<T> {
   let entity: MessageEntity | undefined, encoded: string | null, body: ReplyToMessageBody<T> | Error

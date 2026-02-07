@@ -7,8 +7,8 @@ import type {
   AnswerWebAppQuery,
   SentWebAppMessage
 } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
-import type { TelegramApiConfig } from '../definitions/interfaces'
+import { TelegramAPI } from '../apis/telegram-api.js'
+import type { TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function answerCallbackQuery(body: AnswerCallbackQuery, config?: TelegramApiConfig): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, AnswerCallbackQuery>('answerCallbackQuery', body, config)

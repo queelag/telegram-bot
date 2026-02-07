@@ -29,7 +29,7 @@ import type {
   SetWebhook,
   ShippingQuery
 } from '@aracna/telegram-bot-types'
-import type { ClientListenerMiddleware, InputFile, UpdateType } from './types'
+import type { ClientListenerMiddleware, InputFile, UpdateType } from './types.js'
 
 export interface CallbackQuery<T = any> extends NativeCallbackQuery {
   body: CallbackQueryBody<T>

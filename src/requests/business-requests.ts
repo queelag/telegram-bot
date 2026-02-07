@@ -15,8 +15,8 @@ import type {
   SetBusinessAccountUsername,
   TransferBusinessAccountStars
 } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
-import type { TelegramApiConfig } from '../definitions/interfaces'
+import { TelegramAPI } from '../apis/telegram-api.js'
+import type { TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function deleteBusinessMessages(body: DeleteBusinessMessages, config?: TelegramApiConfig): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, DeleteBusinessMessages>('deleteBusinessMessages', body, config)
@@ -63,13 +63,13 @@ export async function setBusinessAccountProfilePhoto(body: SetBusinessAccountPro
         'animation' in body.photo && body.photo.animation instanceof Blob
           ? { ...body.photo, animation: 'attach://photo_blob' }
           : 'photo' in body.photo && body.photo.photo instanceof Blob
-          ? { ...body.photo, photo: 'attach://photo_blob' }
-          : body.photo,
+            ? { ...body.photo, photo: 'attach://photo_blob' }
+            : body.photo,
       ...('animation' in body.photo && body.photo.animation instanceof Blob
         ? { photo_blob: body.photo.animation }
         : 'photo' in body.photo && body.photo.photo instanceof Blob
-        ? { photo_blob: body.photo.photo }
-        : {})
+          ? { photo_blob: body.photo.photo }
+          : {})
     },
     config
   )

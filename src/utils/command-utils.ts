@@ -1,7 +1,7 @@
 import { getObjectProperty, hasObjectProperty } from '@aracna/core'
 import type { Context } from 'vm'
-import { REGEXP_COMMAND, REGEXP_COMMAND_WITH_USERNAME } from '../definitions/constants'
-import type { UpdateType } from '../definitions/types'
+import { REGEXP_COMMAND, REGEXP_COMMAND_WITH_USERNAME } from '../definitions/constants.js'
+import type { UpdateType } from '../definitions/types.js'
 
 export function getCommandByContext<T extends UpdateType>(context: Context[T]): string | undefined {
   let string: string | undefined

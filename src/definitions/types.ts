@@ -1,4 +1,4 @@
-import type { Context } from './interfaces'
+import type { Context } from './interfaces.js'
 
 export type ClientConnectionMode = 'polling' | 'webhook'
 

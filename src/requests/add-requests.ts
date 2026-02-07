@@ -1,7 +1,7 @@
 import { type FetchError } from '@aracna/core'
 import type { AddStickerToSet } from '@aracna/telegram-bot-types'
-import { TelegramAPI } from '../apis/telegram-api'
-import { TelegramApiConfig } from '../definitions/interfaces'
+import { TelegramAPI } from '../apis/telegram-api.js'
+import { TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function addStickerToSet(body: AddStickerToSet, config?: TelegramApiConfig): Promise<boolean | FetchError> {
   return TelegramAPI.post<boolean, AddStickerToSet>(

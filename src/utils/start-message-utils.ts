@@ -1,6 +1,6 @@
 import { appendSearchParamsToURL, decodeBase64, decodeJSON, decodeText, encodeBase64, encodeJSON, encodeText, tc } from '@aracna/core'
-import { DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS, DEFAULT_START_MESSAGE_BODY } from '../definitions/constants'
-import type { EncodeStartBodyOptions, StartBody } from '../definitions/interfaces'
+import { DEFAULT_DECODE_JSON_OPTIONS, DEFAULT_ENCODE_JSON_OPTIONS, DEFAULT_START_MESSAGE_BODY } from '../definitions/constants.js'
+import type { EncodeStartBodyOptions, StartBody } from '../definitions/interfaces.js'
 
 export function decodeStartBody<T>(text: string | undefined): StartBody<T> {
   let encoded: string, body: StartBody<T> | Error

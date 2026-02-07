@@ -30,7 +30,7 @@ import type {
   ShippingQuery,
   Update
 } from '@aracna/telegram-bot-types'
-import { DEFAULT_ALLOWED_UPDATES, DEFAULT_CLIENT_LISTENER_OPTIONS, DEFAULT_CLIENT_POLLING_MS } from '../definitions/constants'
+import { DEFAULT_ALLOWED_UPDATES, DEFAULT_CLIENT_LISTENER_OPTIONS, DEFAULT_CLIENT_POLLING_MS } from '../definitions/constants.js'
 import type {
   CallbackQueryBody,
   ClientConnectionOptions,
@@ -40,16 +40,16 @@ import type {
   ClientListenerOptions,
   ReplyToMessageBody,
   StartBody
-} from '../definitions/interfaces'
-import type { ClientConnectionMode, ClientListenerMiddleware, UpdateType } from '../definitions/types'
-import { ClassLogger } from '../loggers/class-logger'
-import { deleteMessage, deleteMessages } from '../requests/delete-requests'
-import { getUpdates } from '../requests/get-requests'
-import { deleteWebhook, setWebhook } from '../requests/webhook-requests'
-import { decodeCallbackQueryBody } from '../utils/callback-query-utils'
-import { getCommand } from '../utils/command-utils'
-import { decodeReplyToMessageBody } from '../utils/reply-to-message-utils'
-import { decodeStartBody } from '../utils/start-message-utils'
+} from '../definitions/interfaces.js'
+import type { ClientConnectionMode, ClientListenerMiddleware, UpdateType } from '../definitions/types.js'
+import { ClassLogger } from '../loggers/class-logger.js'
+import { deleteMessage, deleteMessages } from '../requests/delete-requests.js'
+import { getUpdates } from '../requests/get-requests.js'
+import { deleteWebhook, setWebhook } from '../requests/webhook-requests.js'
+import { decodeCallbackQueryBody } from '../utils/callback-query-utils.js'
+import { getCommand } from '../utils/command-utils.js'
+import { decodeReplyToMessageBody } from '../utils/reply-to-message-utils.js'
+import { decodeStartBody } from '../utils/start-message-utils.js'
 
 export class Client {
   protected listeners: ClientListener[]
@@ -510,7 +510,7 @@ export class Client {
     listener.middleware(start)
 
     if (listener.id.length > 0 && listener.options.deleteOnMessageStart) {
-      deleteMessage({ chat_id: body.c ? start.from?.id ?? 0n : start.chat.id, message_id: start.message_id }, { token: this.token })
+      deleteMessage({ chat_id: body.c ? (start.from?.id ?? 0n) : start.chat.id, message_id: start.message_id }, { token: this.token })
     }
 
     return listener

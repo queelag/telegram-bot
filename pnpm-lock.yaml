@@ -55,10 +55,6 @@ importers:
         version: 3.2.4(@types/node@24.5.2)(@vitest/ui@3.2.4)
     publishDirectory: dist
 
-  packages/@aracna/core: {}
-
-  packages/@aracna/telegram-bot-types: {}
-
 packages:
 
   '@ampproject/remapping@2.3.0':
