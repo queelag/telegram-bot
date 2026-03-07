@@ -9,12 +9,7 @@ export default defineConfig({
     },
     include: ['tests/**/*.test.ts'],
     maxConcurrency: 1,
-    poolOptions: {
-      threads: {
-        maxThreads: 1,
-        minThreads: 0
-      }
-    },
+    maxWorkers: 1,
     setupFiles: ['vitest/mock-telegram-api.ts', 'vitest/mock-telegram-file-api.ts', 'vitest/setup.ts'],
     testTimeout: 1000
   }
