@@ -23,3 +23,11 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          VITE_BOT_ID: ${{ secrets.VITE_BOT_ID }}
+          VITE_BOT_NAME: ${{ secrets.VITE_BOT_NAME }}
+          VITE_BOT_TOKEN: ${{ secrets.VITE_BOT_TOKEN }}
+          VITE_GROUP_CHAT_ID: ${{ secrets.VITE_GROUP_CHAT_ID }}
+          VITE_NGROK_AUTH_TOKEN: ${{ secrets.VITE_NGROK_AUTH_TOKEN }}
+          VITE_PRIVATE_CHAT_ID: ${{ secrets.VITE_PRIVATE_CHAT_ID }}
+          VITE_STRIPE_TOKEN: ${{ secrets.VITE_STRIPE_TOKEN }}
+          VITE_SUPER_GROUP_CHAT_ID: ${{ secrets.VITE_SUPER_GROUP_CHAT_ID }}
