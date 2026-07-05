@@ -14,8 +14,7 @@ import type {
   Message
 } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api.js'
-import type { TelegramApiConfig } from '../definitions/interfaces.js'
-import { EditMessageMediaAlternative } from '../definitions/interfaces.js'
+import type { EditMessageMediaAlternative, TelegramApiConfig } from '../definitions/interfaces.js'
 
 export async function editChatInviteLink(body: EditChatInviteLink, config?: TelegramApiConfig): Promise<ChatInviteLink | FetchError> {
   return TelegramAPI.post<ChatInviteLink, EditChatInviteLink>('editChatInviteLink', body, config)

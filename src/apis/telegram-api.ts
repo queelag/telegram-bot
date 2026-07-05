@@ -1,16 +1,16 @@
 import {
   DeferredPromise,
-  EventEmitterListenerCallback,
+  type EventEmitterListenerCallback,
   FetchError,
   isObject,
   Queue,
-  QueueFunction,
-  QueueProcess,
+  type QueueFunction,
+  type QueueProcess,
   type RequestMethod,
   RestAPI,
   serializeFormData
 } from '@aracna/core'
-import { TelegramApiConfig, TelegramApiResponse } from '../definitions/interfaces.js'
+import type { TelegramApiConfig, TelegramApiResponse } from '../definitions/interfaces.js'
 
 class API extends RestAPI<TelegramApiConfig> {
   queue: Queue = new Queue({ autostart: true })
@@ -45,7 +45,7 @@ class API extends RestAPI<TelegramApiConfig> {
     return promise.instance
   }
 
-  async transformBody<V>(method: RequestMethod, path: string, body: V, config: TelegramApiConfig): Promise<V | FormData | undefined> {
+  async transformBody<V>(method: RequestMethod, _: string, body: V, __: TelegramApiConfig): Promise<V | FormData | undefined> {
     if (method !== 'POST') {
       return
     }
@@ -54,8 +54,8 @@ class API extends RestAPI<TelegramApiConfig> {
       return
     }
 
-    for (let key in body) {
-      if (body[key] instanceof Blob) {
+    for (let key of Object.keys(body)) {
+      if (body[key as keyof V] instanceof Blob) {
         return serializeFormData(body)
       }
     }

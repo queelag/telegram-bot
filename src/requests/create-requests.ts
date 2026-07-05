@@ -1,4 +1,4 @@
-import { type FetchError } from '@aracna/core'
+import type { FetchError } from '@aracna/core'
 import type {
   ChatInviteLink,
   CreateChatInviteLink,
@@ -32,16 +32,19 @@ export async function createInvoiceLink(body: CreateInvoiceLink, config?: Telegr
 }
 
 export async function createNewStickerSet(body: CreateNewStickerSet, config?: TelegramApiConfig): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, CreateNewStickerSet>(
-    'createNewStickerSet',
-    {
-      ...body,
-      stickers: body.stickers.map((sticker: InputSticker, index: number) => ({
-        ...sticker,
-        sticker: sticker.sticker instanceof Blob ? `attach://sticker_${index}` : sticker.sticker
-      })),
-      ...body.stickers.reduce((result: object, sticker: InputSticker, index: number) => ({ ...result, [`sticker_${index}`]: sticker.sticker }), {})
-    },
-    config
-  )
+  let b: CreateNewStickerSet = { ...body }
+
+  b.stickers = body.stickers.map((sticker: InputSticker, index: number) => ({
+    ...sticker,
+    sticker: sticker.sticker instanceof Blob ? `attach://sticker_${index}` : sticker.sticker
+  }))
+
+  for (let i = 0; i < body.stickers.length; i++) {
+    const { sticker } = body.stickers[i]
+
+    // @ts-expect-error
+    b[`sticker_${i}`] = sticker
+  }
+
+  return TelegramAPI.post<boolean, CreateNewStickerSet>('createNewStickerSet', b, config)
 }

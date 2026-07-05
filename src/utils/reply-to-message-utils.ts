@@ -6,7 +6,7 @@ import type { EncodeReplyToMessageBodyOptions, ReplyToMessageBody } from '../def
 export function decodeReplyToMessageBody<T>(entities: MessageEntity[]): ReplyToMessageBody<T> {
   let entity: MessageEntity | undefined, encoded: string | null, body: ReplyToMessageBody<T> | Error
 
-  entity = entities[entities.length - 1]
+  entity = entities.at(-1)
   if (!entity?.url) return DEFAULT_REPLY_TO_MESSAGE_BODY()
 
   encoded = new URL(entity.url).searchParams.get('a')

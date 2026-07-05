@@ -15,7 +15,7 @@ import {
 } from '../../src/requests/edit-requests'
 import { sendLocation, sendMessage, sendPhoto } from '../../src/requests/send-requests'
 import { getInlineKeyboardUrlButton } from '../../src/utils/inline-keyboard-utils'
-import { SQUARE_1024_WEBP, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { SQUARE_512_WEBP, SQUARE_1024_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Edit Requests', () => {
   let messageIDs: number[] = []

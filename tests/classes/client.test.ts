@@ -1,7 +1,7 @@
 import { DeferredPromise, Fetch, FetchError, generateRandomString, parseNumber } from '@aracna/core'
 import { Update } from '@aracna/telegram-bot-types'
 import { authtoken, forward, Listener } from '@ngrok/ngrok'
-import { fastify, FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyInstance, FastifyReply, FastifyRequest, fastify } from 'fastify'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { Client } from '../../src/classes/client'
 import { CallbackQueryBody, Context, ReplyToMessageBody, StartBody } from '../../src/definitions/interfaces'

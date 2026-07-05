@@ -1,4 +1,4 @@
-import { type FetchError } from '@aracna/core'
+import type { FetchError } from '@aracna/core'
 import type {
   SetChatAdministratorCustomTitle,
   SetChatDescription,

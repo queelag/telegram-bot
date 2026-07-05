@@ -1,4 +1,4 @@
-import { type FetchError } from '@aracna/core'
+import type { FetchError } from '@aracna/core'
 import type {
   BusinessConnection,
   DeleteBusinessMessages,
@@ -55,24 +55,19 @@ export async function setBusinessAccountName(body: SetBusinessAccountName, confi
 }
 
 export async function setBusinessAccountProfilePhoto(body: SetBusinessAccountProfilePhoto, config?: TelegramApiConfig): Promise<boolean | FetchError> {
-  return TelegramAPI.post<boolean, SetBusinessAccountProfilePhoto>(
-    'setBusinessAccountProfilePhoto',
-    {
-      ...body,
-      photo:
-        'animation' in body.photo && body.photo.animation instanceof Blob
-          ? { ...body.photo, animation: 'attach://photo_blob' }
-          : 'photo' in body.photo && body.photo.photo instanceof Blob
-            ? { ...body.photo, photo: 'attach://photo_blob' }
-            : body.photo,
-      ...('animation' in body.photo && body.photo.animation instanceof Blob
-        ? { photo_blob: body.photo.animation }
-        : 'photo' in body.photo && body.photo.photo instanceof Blob
-          ? { photo_blob: body.photo.photo }
-          : {})
-    },
-    config
-  )
+  let b: SetBusinessAccountProfilePhoto = { ...body }
+
+  if ('animation' in body.photo && body.photo.animation instanceof Blob) {
+    b.photo = { ...body.photo, animation: 'attach://photo_blob' }
+    // @ts-expect-error
+    b.photo_blob = body.photo.animation
+  } else if ('photo' in body.photo && body.photo.photo instanceof Blob) {
+    b.photo = { ...body.photo, photo: 'attach://photo_blob' }
+    // @ts-expect-error
+    b.photo_blob = body.photo.photo
+  }
+
+  return TelegramAPI.post<boolean, SetBusinessAccountProfilePhoto>('setBusinessAccountProfilePhoto', b, config)
 }
 
 export async function setBusinessAccountUsername(body: SetBusinessAccountUsername, config?: TelegramApiConfig): Promise<boolean | FetchError> {

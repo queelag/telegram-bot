@@ -1,5 +1,5 @@
-import { DecodeJsonOptions, EncodeJsonOptions } from '@aracna/core'
-import { CallbackQueryBody, ClientListenerOptions, ReplyToMessageBody, StartBody } from './interfaces.js'
+import type { DecodeJsonOptions, EncodeJsonOptions } from '@aracna/core'
+import type { CallbackQueryBody, ClientListenerOptions, ReplyToMessageBody, StartBody } from './interfaces.js'
 
 export const DEFAULT_ALLOWED_UPDATES: string[] = [
   'business_connection',
@@ -54,6 +54,8 @@ export const DEFAULT_REPLY_TO_MESSAGE_BODY: () => ReplyToMessageBody<any> = () =
 export const DEFAULT_START_MESSAGE_BODY: () => StartBody<any> = () => ({
   d: null
 })
+
+export const MAX_COMMAND_LENGTH: number = 512
 
 export const REGEXP_COMMAND: RegExp = /\/[a-z_]+/m
 export const REGEXP_COMMAND_WITH_USERNAME: RegExp = /\/[a-zA-Z0-9_@]+/

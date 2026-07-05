@@ -1,11 +1,12 @@
 import {
   clearInterval,
-  FetchError,
+  type FetchError,
   generateRandomString,
   hasObjectProperty,
   isIntervalSet,
   mergeObjects,
   omitObjectProperties,
+  parseNumber,
   setInterval,
   setObjectProperty
 } from '@aracna/core'
@@ -89,6 +90,8 @@ export class Client {
 
         break
       }
+      default:
+        break
     }
   }
 
@@ -110,8 +113,8 @@ export class Client {
       command: options?.command,
       description: options?.description,
       id: generateRandomString({ blacklist: this.listenerIDs }),
-      middleware: middleware,
-      type: type,
+      middleware,
+      type,
       options: mergeObjects(DEFAULT_CLIENT_LISTENER_OPTIONS(), omitObjectProperties(options ?? {}, ['description', 'key']))
     }
 
@@ -533,7 +536,7 @@ export class Client {
       this.handle(update)
     }
 
-    this.offset = updates.length > 0 ? updates[updates.length - 1].update_id + 1 : this.offset
+    this.offset = updates.length > 0 ? parseNumber(updates.at(-1)?.update_id) + 1 : this.offset
     ClassLogger.verbose('Telegram', 'poll', `The offset has been set.`, [this.offset])
 
     if (typeof options?.offset === 'number' && typeof this.offset === 'number' && isIntervalSet(this.id)) {
@@ -568,6 +571,12 @@ export class Client {
   }
 
   protected get listenerIDs(): string[] {
-    return this.listeners.reduce((r: string[], v: ClientListener) => [...r, v.id], [])
+    let ids: string[] = []
+
+    for (let listener of this.listeners) {
+      ids.push(listener.id)
+    }
+
+    return ids
   }
 }

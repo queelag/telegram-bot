@@ -1,4 +1,4 @@
-import { type FetchError } from '@aracna/core'
+import type { FetchError } from '@aracna/core'
 import type { ReplaceStickerInSet } from '@aracna/telegram-bot-types'
 import { TelegramAPI } from '../apis/telegram-api.js'
 import type { TelegramApiConfig } from '../definitions/interfaces.js'

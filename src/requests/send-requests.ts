@@ -1,4 +1,4 @@
-import { type FetchError } from '@aracna/core'
+import type { FetchError } from '@aracna/core'
 import type {
   Message,
   SendAnimation,
@@ -70,15 +70,18 @@ export async function sendLocation(body: SendLocation, config?: TelegramApiConfi
 }
 
 export async function sendMediaGroup(body: SendMediaGroupAlternative, config?: TelegramApiConfig): Promise<Message[] | FetchError> {
-  return TelegramAPI.post<Message[], SendMediaGroup>(
-    'sendMediaGroup',
-    {
-      ...body,
-      media: body.media.map((media: InputMediaAlternative, index: number) => ({ ...media, media: `attach://media_${index}` })),
-      ...body.media.reduce((result: object, media: InputMediaAlternative, index: number) => ({ ...result, [`media_${index}`]: media.media }), {})
-    },
-    config
-  )
+  let b: SendMediaGroupAlternative = { ...body }
+
+  b.media = body.media.map((media: InputMediaAlternative, index: number) => ({ ...media, media: `attach://media_${index}` }))
+
+  for (let i = 0; i < body.media.length; i++) {
+    const { media } = body.media[i]
+
+    // @ts-expect-error
+    b[`media_${i}`] = media
+  }
+
+  return TelegramAPI.post<Message[], SendMediaGroup>('sendMediaGroup', b, config)
 }
 
 export async function sendMessage(body: SendMessage, config?: TelegramApiConfig): Promise<Message | FetchError> {
@@ -90,15 +93,18 @@ export async function sendMessageHTML(body: SendMessage, config?: TelegramApiCon
 }
 
 export async function sendPaidMedia(body: SendPaidMediaAlternative, config?: TelegramApiConfig): Promise<Message | FetchError> {
-  return TelegramAPI.post<Message, SendPaidMedia>(
-    'sendPaidMedia',
-    {
-      ...body,
-      media: body.media.map((v: InputPaidMediaAlternative, k: number) => ({ ...v, media: `attach://media_${k}` })),
-      ...body.media.reduce((r: object, v: InputPaidMediaAlternative, k: number) => ({ ...r, [`media_${k}`]: v.media }), {})
-    },
-    config
-  )
+  let b: SendPaidMediaAlternative = { ...body }
+
+  b.media = body.media.map((v: InputPaidMediaAlternative, k: number) => ({ ...v, media: `attach://media_${k}` }))
+
+  for (let i = 0; i < body.media.length; i++) {
+    const { media } = body.media[i]
+
+    // @ts-expect-error
+    b[`media_${i}`] = media
+  }
+
+  return TelegramAPI.post<Message, SendPaidMedia>('sendPaidMedia', b, config)
 }
 
 export async function sendPhoto(body: SendPhoto, config?: TelegramApiConfig): Promise<Message | FetchError> {

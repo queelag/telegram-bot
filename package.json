@@ -1,8 +1,28 @@
 {
+  "name": "@aracna/telegram-bot",
+  "version": "2.0.12",
+  "repository": "https://github.com/queelag/telegram-bot",
+  "license": "MIT",
   "author": "Dario Sechi",
+  "type": "module",
+  "exports": {
+    "types": "./index.d.ts",
+    "import": "./index.js",
+    "require": "./index.cjs"
+  },
+  "main": "index.cjs",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "lint": "biome check --write",
+    "prepublish": "vitest run && node scripts/build.mjs",
+    "test": "vitest run"
+  },
   "devDependencies": {
     "@aracna/core": "workspace:*",
     "@aracna/telegram-bot-types": "workspace:*",
+    "@biomejs/biome": "^2.5.2",
     "@fastify/multipart": "^10.0.0",
     "@microsoft/api-extractor": "^7.58.7",
     "@ngrok/ngrok": "^1.7.0",
@@ -17,41 +37,16 @@
     "typescript": "^6.0.3",
     "vitest": "^4.1.7"
   },
-  "engines": {
-    "node": ">=18",
-    "pnpm": ">=11"
-  },
-  "exports": {
-    "types": "./index.d.ts",
-    "import": "./index.js",
-    "require": "./index.cjs"
-  },
-  "license": "MIT",
-  "main": "index.cjs",
-  "module": "index.js",
-  "name": "@aracna/telegram-bot",
-  "packageManager": "pnpm@11.5.0+sha512.dbfcc4f81cf48597afd4bc391ffdf12c11f1a9fb83a395bfa6b0a2d9cc2fd8ffebafdb1ccbd529632153f793904c2615b7f09fe1a345473fd1c35845172a8eb1",
   "peerDependencies": {
     "@aracna/core": ">= 1.5.0",
     "@aracna/telegram-bot-types": ">= 1.2.0"
   },
-  "prettier": {
-    "jsxSingleQuote": true,
-    "printWidth": 160,
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "none"
+  "packageManager": "pnpm@11.5.0+sha512.dbfcc4f81cf48597afd4bc391ffdf12c11f1a9fb83a395bfa6b0a2d9cc2fd8ffebafdb1ccbd529632153f793904c2615b7f09fe1a345473fd1c35845172a8eb1",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=11"
   },
   "publishConfig": {
     "directory": "dist"
-  },
-  "repository": "https://github.com/queelag/telegram-bot",
-  "scripts": {
-    "build": "node scripts/build.mjs",
-    "prepublish": "vitest run && node scripts/build.mjs",
-    "test": "vitest run"
-  },
-  "type": "module",
-  "types": "index.d.ts",
-  "version": "2.0.12"
+  }
 }

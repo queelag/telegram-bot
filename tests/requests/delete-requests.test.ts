@@ -15,7 +15,7 @@ import {
 import { getStickerSet } from '../../src/requests/get-requests'
 import { sendMessage } from '../../src/requests/send-requests'
 import { setChatPhoto } from '../../src/requests/set-requests'
-import { BOT_NAME, PRIVATE_CHAT_ID, SQUARE_1024_WEBP, SQUARE_512_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
+import { BOT_NAME, PRIVATE_CHAT_ID, SQUARE_512_WEBP, SQUARE_1024_WEBP, SUPER_GROUP_CHAT_ID } from '../../vitest/constants'
 
 describe('Delete Requests', () => {
   it.skip('deletes a chat photo', async () => {

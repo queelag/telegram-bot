@@ -70,8 +70,8 @@ export interface ClientListener<T extends UpdateType = any, U extends ClientList
 export interface ClientListenerOptions {
   command?: string
   deleteOnCallbackQuery?: boolean
-  deleteOnReply?: boolean
   deleteOnMessageStart?: boolean
+  deleteOnReply?: boolean
   description?: string
 }
 

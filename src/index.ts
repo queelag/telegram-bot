@@ -15,6 +15,12 @@ export { LoggerName as TelegramLoggerName } from './definitions/enums.js'
 export type {
   CallbackQuery,
   CallbackQueryBody,
+  ClientConnectionOptions as TelegramClientConnectionOptions,
+  ClientConnectionOptionsPolling as TelegramClientConnectionOptionsPolling,
+  ClientConnectionOptionsWebhook as TelegramClientConnectionOptionsWebhook,
+  ClientDisconnectOptions as TelegramClientDisconnectOptions,
+  ClientListener as TelegramClientListener,
+  ClientListenerOptions as TelegramClientListenerOptions,
   Context,
   EditMessageMediaAlternative,
   EncodeCallbackQueryBodyOptions as EncodeTelegramCallbackQueryBodyOptions,
@@ -26,18 +32,12 @@ export type {
   ReplyToMessageBody,
   SendRepliableMessage,
   Start,
-  StartBody,
-  ClientConnectionOptions as TelegramClientConnectionOptions,
-  ClientConnectionOptionsPolling as TelegramClientConnectionOptionsPolling,
-  ClientConnectionOptionsWebhook as TelegramClientConnectionOptionsWebhook,
-  ClientDisconnectOptions as TelegramClientDisconnectOptions,
-  ClientListener as TelegramClientListener,
-  ClientListenerOptions as TelegramClientListenerOptions
+  StartBody
 } from './definitions/interfaces.js'
 export type {
-  InputFile,
   ClientConnectionMode as TelegramClientConnectionMode,
   ClientListenerMiddleware as TelegramClientListenerMiddleware,
+  InputFile,
   UpdateType
 } from './definitions/types.js'
 export { ClassLogger as TelegramClassLogger } from './loggers/class-logger.js'
@@ -78,10 +78,10 @@ export { declineChatJoinRequest as declineTelegramChatJoinRequest } from './requ
 export {
   deleteChatPhoto as deleteTelegramChatPhoto,
   deleteChatStickerSet as deleteTelegramChatStickerSet,
-  deleteMyCommands as deleteTelegramCommands,
   deleteForumTopic as deleteTelegramForumTopic,
   deleteMessage as deleteTelegramMessage,
   deleteMessages as deleteTelegramMessages,
+  deleteMyCommands as deleteTelegramCommands,
   deleteStickerFromSet as deleteTelegramStickerFromSet,
   deleteStickerSet as deleteTelegramStickerSet
 } from './requests/delete-requests.js'
@@ -101,11 +101,6 @@ export {
 export { exportChatInviteLink as exportTelegramChatInviteLink } from './requests/export-requests.js'
 export { forwardMessage as forwardTelegramMessage, forwardMessages as forwardTelegramMessages } from './requests/forward-requests.js'
 export {
-  getMyCommands as getMyTelegramCommands,
-  getMyDefaultAdministratorRights as getMyTelegramDefaultAdministratorRights,
-  getMyDescription as getMyTelegramDescription,
-  getMyName as getMyTelegramName,
-  getMyShortDescription as getMyTelegramShortDescription,
   getChat as getTelegramChat,
   getChatAdministrators as getTelegramChatAdministrators,
   getChatMember as getTelegramChatMember,
@@ -116,6 +111,11 @@ export {
   getForumTopicIconStickers as getTelegramForumTopicIconStickers,
   getGameHighScores as getTelegramGameHighScores,
   getMe as getTelegramMe,
+  getMyCommands as getMyTelegramCommands,
+  getMyDefaultAdministratorRights as getMyTelegramDefaultAdministratorRights,
+  getMyDescription as getMyTelegramDescription,
+  getMyName as getMyTelegramName,
+  getMyShortDescription as getMyTelegramShortDescription,
   getStarTransactions as getTelegramStarTransactions,
   getStickerSet as getTelegramStickerSet,
   getUpdates as getTelegramUpdates,
@@ -165,11 +165,6 @@ export {
   sendVoice as sendTelegramVoice
 } from './requests/send-requests.js'
 export {
-  setMyCommands as setMyTelegramCommands,
-  setMyDefaultAdministratorRights as setMyTelegramDefaultAdministratorRights,
-  setMyDescription as setMyTelegramDescription,
-  setMyName as setMyTelegramName,
-  setMyShortDescription as setMyTelegramShortDescription,
   setChatAdministratorCustomTitle as setTelegramChatAdministratorCustomTitle,
   setChatDescription as setTelegramChatDescription,
   setChatMenuButton as setTelegramChatMenuButton,
@@ -180,6 +175,11 @@ export {
   setCustomEmojiStickerSetThumbnail as setTelegramCustomEmojiStickerSetThumbnail,
   setGameScore as setTelegramGameScore,
   setMessageReaction as setTelegramMessageReaction,
+  setMyCommands as setMyTelegramCommands,
+  setMyDefaultAdministratorRights as setMyTelegramDefaultAdministratorRights,
+  setMyDescription as setMyTelegramDescription,
+  setMyName as setMyTelegramName,
+  setMyShortDescription as setMyTelegramShortDescription,
   setPassportDataErrors as setTelegramPassportDataErrors,
   setStickerEmojiList as setTelegramStickerEmojiList,
   setStickerKeywords as setTelegramStickerKeywords,
